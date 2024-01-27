@@ -118,10 +118,10 @@ namespace FindInFiles {
 					var path = data.GetProperty("path").GetProperty("text").GetString();
 					Invoke(AppendText, $"{MarkerPath}{path}{Environment.NewLine}", Color.Blue);
 				} else if (dataType == "match") {
+					afterMatch = true;
 					var text = data.GetProperty("lines").GetProperty("text").GetString()?.TrimEnd('\r', '\n');
 					var number = data.GetProperty("line_number").GetInt32().ToString();
 					var matches = data.GetProperty("submatches");
-					afterMatch = true;
 					Invoke(AddMatchLine, number, text, matches);
 				} else if (dataType == "context") {
 					if (maxContextLine != 0 && afterMatch) {
@@ -173,8 +173,9 @@ namespace FindInFiles {
 			}
 			var ascii = GetLeadingAsciiCount(line);
 			var startIndex = ascii;
-			for (var index = 0; index < count; index++) {
-				var match = matches[index];
+			var byteCount = ascii;
+			for (var index = 0; index < count;) {
+				var match = matches[index++];
 				var start = match.GetProperty("start").GetInt32();
 				var end = match.GetProperty("end").GetInt32() - start;
 				var text = match.GetProperty("match").GetProperty("text").GetString();
@@ -184,8 +185,13 @@ namespace FindInFiles {
 					// convert byte offset to character index
 					end = text.Length;
 					if (start > ascii) {
-						start = line.IndexOf(text, startIndex);
-						startIndex += end;
+						//start = line.IndexOf(text, startIndex, StringComparison.Ordinal);
+						//startIndex = start + end;
+						start = GetCharIndex(line, startIndex, ref byteCount, start);
+						if (index < count) {
+							startIndex = start + end;
+							byteCount += GetUTF8ByteCount(text);
+						}
 					}
 				}
 				richTextBox.Select(start + docOffset, end);
@@ -274,10 +280,6 @@ namespace FindInFiles {
 			SetFindResultFont(fontDialog.Font);
 		}
 
-		private static bool IsSameFont(Font font, Font other) {
-			return font == other || (font.Name == other.Name && font.Style == other.Style && font.Size == other.Size);
-		}
-
 		private static void StartEditor(string path, int line) {
 			var exePath = FindExePath("Notepad2.exe");
 			if (!File.Exists(exePath)) {
@@ -302,6 +304,53 @@ namespace FindInFiles {
 				}
 			}
 			return count;
+		}
+
+		private static unsafe int GetUTF8ByteCount(string text) {
+			var count = 0;
+			fixed (char* ptr = text) {
+				char* p = ptr;
+				char* end = p + text.Length;
+				while (p < end) {
+					var ch = *p++;
+					if (ch < 0x80) {
+						count += 1;
+					} else if (ch < 0x800) {
+						count += 2;
+					} else if (p < end && char.IsSurrogatePair(ch, *p)) {
+						++p;
+						count += 4;
+					} else {
+						count += 3;
+					}
+				}
+			}
+			return count;
+		}
+
+		private static unsafe int GetCharIndex(string text, int startIndex, ref int byteCount, int bytePos) {
+			var count = byteCount;
+			fixed (char* ptr = text) {
+				char* p = ptr + startIndex;
+				char* end = p + text.Length;
+				while (p < end && count < bytePos) {
+					var ch = *p++;
+					++startIndex;
+					if (ch < 0x80) {
+						count += 1;
+					} else if (ch < 0x800) {
+						count += 2;
+					} else if (p < end && char.IsSurrogatePair(ch, *p)) {
+						++p;
+						++startIndex;
+						count += 4;
+					} else {
+						count += 3;
+					}
+				}
+			}
+			byteCount = count;
+			return startIndex;
 		}
 
 		private static string FindExePath(string name) {
