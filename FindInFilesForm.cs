@@ -93,7 +93,8 @@ namespace FindInFiles {
 		private int maxContextLine = 0;
 		private int contextLineCount = 0;
 		private bool afterMatch = false;
-		private const char MarkerPath = '\u200C'; // zero width non-joiner
+		private static readonly string MarkerPath = "\u200C"; // zero width non-joiner
+		private static readonly string MarkerLine = "\u200D"; // zero width joiner
 
 		private void ResetMatchResult() {
 			richTextBox.Clear();
@@ -151,11 +152,11 @@ namespace FindInFiles {
 		private void AddContextLine(string number, string? line) {
 			AppendText(number, Color.Green);
 			line = string.IsNullOrEmpty(line) ? "-" : $"- {line}";
-			AppendText($"{line}{Environment.NewLine}", SystemColors.WindowText);
+			AppendText($"{MarkerLine}{line}{Environment.NewLine}", SystemColors.WindowText);
 		}
 
 		private void AddMatchLine(string number, string? line, JsonElement matches) {
-			AppendText($"{number}:", Color.Green);
+			AppendText($"{number}{MarkerLine}:", Color.Green);
 			var docOffset = richTextBox.TextLength + 1;
 			AppendText($" {line}{Environment.NewLine}", SystemColors.WindowText);
 			if (string.IsNullOrEmpty(line)) {
@@ -182,8 +183,7 @@ namespace FindInFiles {
 						startIndex += end;
 					}
 				}
-				richTextBox.SelectionStart = start + docOffset;
-				richTextBox.SelectionLength = end;
+				richTextBox.Select(start + docOffset, end);
 				richTextBox.SelectionColor = Color.Red;
 				if (space) {
 					richTextBox.SelectionBackColor = Color.Green;
@@ -220,26 +220,25 @@ namespace FindInFiles {
 			if (lineno < 1) {
 				return;
 			}
-			var lines = richTextBox.Lines;
-			var line = lines[lineno];
-			start = 0;
-			foreach (var ch in line) {
-				if (ch >= '0' && ch <= '9') {
-					start = start * 10 + (ch - '0');
-				} else {
-					break;
-				}
-			}
-			if (start > 0) {
-				do {
-					--lineno;
-					line = lines[lineno];
-					if (line.Length > 1 && line[0] == MarkerPath) {
-						line = line.Substring(1).Trim();
-						StartEditor(line, start);
-						break;
+			var end = richTextBox.GetFirstCharIndexFromLine(lineno + 1);
+			end = richTextBox.Find(MarkerLine, start, end, RichTextBoxFinds.MatchCase | RichTextBoxFinds.NoHighlight);
+			if (end > start) {
+				var selStart = richTextBox.SelectionStart;
+				var selLength = richTextBox.SelectionLength;
+				richTextBox.Select(start, end - start);
+				var text = richTextBox.SelectedText;
+				if (int.TryParse(text, out var num)) {
+					start = richTextBox.Find(MarkerPath, 0, start, RichTextBoxFinds.MatchCase | RichTextBoxFinds.Reverse | RichTextBoxFinds.NoHighlight);
+					if (start >= 0) {
+						++start;
+						lineno = richTextBox.GetLineFromCharIndex(start);
+						end = richTextBox.GetFirstCharIndexFromLine(lineno + 1);
+						richTextBox.Select(start, end - start);
+						text = richTextBox.SelectedText.Trim();
+						StartEditor(text, num);
 					}
-				} while (lineno > 0);
+				}
+				richTextBox.Select(selStart, selLength);
 			}
 		}
 
