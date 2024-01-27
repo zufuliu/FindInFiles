@@ -23,6 +23,7 @@
 		///  the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
+			components = new System.ComponentModel.Container();
 			label2 = new Label();
 			textBoxSearchPath = new TextBox();
 			label3 = new Label();
@@ -32,10 +33,16 @@
 			checkBoxMatchCase = new CheckBox();
 			buttonFind = new Button();
 			richTextBox = new RichTextBox();
+			contextMenuStrip = new ContextMenuStrip(components);
+			clearAllToolStripMenuItem = new ToolStripMenuItem();
+			toolStripMenuItem1 = new ToolStripSeparator();
+			selectFontToolStripMenuItem = new ToolStripMenuItem();
 			checkBoxInvert = new CheckBox();
 			checkBoxMultiline = new CheckBox();
 			checkBoxPcre2 = new CheckBox();
 			checkBoxRecursive = new CheckBox();
+			fontDialog = new FontDialog();
+			contextMenuStrip.SuspendLayout();
 			SuspendLayout();
 			// 
 			// label2
@@ -112,6 +119,7 @@
 			// 
 			richTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
 			richTextBox.BorderStyle = BorderStyle.FixedSingle;
+			richTextBox.ContextMenuStrip = contextMenuStrip;
 			richTextBox.DetectUrls = false;
 			richTextBox.Font = new Font("Consolas", 10.5F, FontStyle.Regular, GraphicsUnit.Point, 0);
 			richTextBox.Location = new Point(7, 108);
@@ -121,6 +129,31 @@
 			richTextBox.Text = "";
 			richTextBox.WordWrap = false;
 			richTextBox.DoubleClick += richTextBox_DoubleClick;
+			// 
+			// contextMenuStrip
+			// 
+			contextMenuStrip.Items.AddRange(new ToolStripItem[] { clearAllToolStripMenuItem, toolStripMenuItem1, selectFontToolStripMenuItem });
+			contextMenuStrip.Name = "contextMenuStrip";
+			contextMenuStrip.Size = new Size(181, 76);
+			// 
+			// clearAllToolStripMenuItem
+			// 
+			clearAllToolStripMenuItem.Name = "clearAllToolStripMenuItem";
+			clearAllToolStripMenuItem.Size = new Size(180, 22);
+			clearAllToolStripMenuItem.Text = "Clear All";
+			clearAllToolStripMenuItem.Click += clearAllToolStripMenuItem_Click;
+			// 
+			// toolStripMenuItem1
+			// 
+			toolStripMenuItem1.Name = "toolStripMenuItem1";
+			toolStripMenuItem1.Size = new Size(177, 6);
+			// 
+			// selectFontToolStripMenuItem
+			// 
+			selectFontToolStripMenuItem.Name = "selectFontToolStripMenuItem";
+			selectFontToolStripMenuItem.Size = new Size(180, 22);
+			selectFontToolStripMenuItem.Text = "Select Font";
+			selectFontToolStripMenuItem.Click += selectFontToolStripMenuItem_Click;
 			// 
 			// checkBoxInvert
 			// 
@@ -162,6 +195,12 @@
 			checkBoxRecursive.Text = "Recursive";
 			checkBoxRecursive.UseVisualStyleBackColor = true;
 			// 
+			// fontDialog
+			// 
+			fontDialog.ShowApply = true;
+			fontDialog.ShowColor = true;
+			fontDialog.Apply += fontDialog_Apply;
+			// 
 			// FindInFilesForm
 			// 
 			AllowDrop = true;
@@ -186,6 +225,7 @@
 			Text = "Find in Files";
 			DragDrop += FindInFilesForm_DragDrop;
 			DragEnter += FindInFilesForm_DragEnter;
+			contextMenuStrip.ResumeLayout(false);
 			ResumeLayout(false);
 			PerformLayout();
 		}
@@ -204,5 +244,10 @@
 		private CheckBox checkBoxMultiline;
 		private CheckBox checkBoxPcre2;
 		private CheckBox checkBoxRecursive;
+		private FontDialog fontDialog;
+		private ContextMenuStrip contextMenuStrip;
+		private ToolStripMenuItem selectFontToolStripMenuItem;
+		private ToolStripMenuItem clearAllToolStripMenuItem;
+		private ToolStripSeparator toolStripMenuItem1;
 	}
 }

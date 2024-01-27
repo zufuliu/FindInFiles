@@ -7,6 +7,10 @@ namespace FindInFiles {
 	public partial class FindInFilesForm : Form {
 		public FindInFilesForm(string[] args) {
 			InitializeComponent();
+			var font = Properties.Settings.Default.FindResultFont;
+			if (font != null) {
+				SetFindResultFont(font);
+			}
 			textBoxContexLine.Text = "0";
 			checkBoxRecursive.Checked = true;
 			checkBoxMatchCase.Checked = true;
@@ -241,6 +245,37 @@ namespace FindInFiles {
 				}
 				richTextBox.Select(selStart, selLength);
 			}
+		}
+
+		private void clearAllToolStripMenuItem_Click(object sender, EventArgs e) {
+			richTextBox.Clear();
+		}
+
+		private void selectFontToolStripMenuItem_Click(object sender, EventArgs e) {
+			var font = richTextBox.Font;
+			fontDialog.Font = font;
+			if (fontDialog.ShowDialog(this) == DialogResult.OK) {
+				font = fontDialog.Font;
+				Properties.Settings.Default.FindResultFont = font;
+				Properties.Settings.Default.Save();
+			}
+			SetFindResultFont(font);
+		}
+
+		private void SetFindResultFont(Font font) {
+			var current = richTextBox.Font;
+			if (font == current || (font.Name == current.Name && font.Style == current.Style && font.Size == current.Size)) {
+				return; // highlighting is lost when change font
+			}
+			richTextBox.Font = font;
+		}
+
+		private void fontDialog_Apply(object sender, EventArgs e) {
+			SetFindResultFont(fontDialog.Font);
+		}
+
+		private static bool IsSameFont(Font font, Font other) {
+			return font == other || (font.Name == other.Name && font.Style == other.Style && font.Size == other.Size);
 		}
 
 		private static void StartEditor(string path, int line) {
