@@ -150,15 +150,16 @@ namespace FindInFiles {
 		}
 
 		private void AddContextLine(string number, string? line) {
-			AppendText(number, Color.Green);
-			line = string.IsNullOrEmpty(line) ? "-" : $"- {line}";
-			AppendText($"{MarkerLine}{line}{Environment.NewLine}", SystemColors.WindowText);
+			AppendText($"{number}{MarkerLine}-", Color.Olive);
+			var padding = string.IsNullOrEmpty(line) ? "" : " ";
+			AppendText($"{padding}{line}{Environment.NewLine}", SystemColors.WindowText);
 		}
 
 		private void AddMatchLine(string number, string? line, JsonElement matches) {
 			AppendText($"{number}{MarkerLine}:", Color.Green);
-			var docOffset = richTextBox.TextLength + 1;
-			AppendText($" {line}{Environment.NewLine}", SystemColors.WindowText);
+			var padding = string.IsNullOrEmpty(line) ? "" : " ";
+			var docOffset = richTextBox.TextLength + padding.Length;
+			AppendText($"{padding}{line}{Environment.NewLine}", SystemColors.WindowText);
 			if (string.IsNullOrEmpty(line)) {
 				return;
 			}
