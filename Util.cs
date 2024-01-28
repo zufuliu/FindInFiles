@@ -3,6 +3,22 @@ using System.Runtime.InteropServices;
 
 namespace FindInFiles {
 	internal static class Util {
+		public static string RemoveLineEnding(string? line) {
+			if (string.IsNullOrEmpty(line)) {
+				return string.Empty;
+			}
+			var length = line.Length;
+			var ch = line[length - 1];
+			if (ch == '\n' || ch == '\r') {
+				length -= 1;
+				if (ch == '\n' && length > 0 && line[length - 1] == '\r') {
+					length -= 1;
+				}
+				line = (length == 0) ? string.Empty : line[..length];
+			}
+			return line;
+		}
+
 		public static unsafe int GetLeadingAsciiCount(string text) {
 			var count = 0;
 			fixed (char* ptr = text) {
@@ -38,7 +54,7 @@ namespace FindInFiles {
 			return count;
 		}
 
-		public static unsafe int GetCharIndex(string text, int startIndex, ref int byteCount, int bytePos) {
+		public static unsafe int GetCharacterIndex(string text, int startIndex, ref int byteCount, int bytePos) {
 			var count = byteCount;
 			fixed (char* ptr = text) {
 				char* p = ptr + startIndex;

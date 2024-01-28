@@ -118,8 +118,8 @@ namespace FindInFiles {
 					Invoke(AppendText, $"{MarkerPath}{path}{Environment.NewLine}", Color.Blue);
 				} else if (dataType == "match") {
 					afterMatch = true;
-					var text = data.GetProperty("lines").GetProperty("text").GetString()?.TrimEnd('\r', '\n');
-					var number = data.GetProperty("line_number").GetInt32().ToString();
+					var text = data.GetProperty("lines").GetProperty("text").GetString();
+					var number = data.GetProperty("line_number").GetInt32();
 					var matches = data.GetProperty("submatches");
 					Invoke(AddMatchLine, number, text, matches);
 				} else if (dataType == "context") {
@@ -130,8 +130,8 @@ namespace FindInFiles {
 							Invoke(AppendText, $"--{Environment.NewLine}", Color.Gray);
 						}
 					}
-					var text = data.GetProperty("lines").GetProperty("text").GetString()?.TrimEnd('\r', '\n');
-					var number = data.GetProperty("line_number").GetInt32().ToString();
+					var text = data.GetProperty("lines").GetProperty("text").GetString();
+					var number = data.GetProperty("line_number").GetInt32();
 					Invoke(AddContextLine, number, text);
 				} else if (dataType == "end" || dataType == "summary") {
 					var stats = data.GetProperty("stats");
@@ -152,18 +152,20 @@ namespace FindInFiles {
 			}
 		}
 
-		private void AddContextLine(string number, string? line) {
+		private void AddContextLine(int number, string? line) {
 			AppendText($"{number}{MarkerLine}-", Color.Olive);
-			var padding = string.IsNullOrEmpty(line) ? "" : " ";
+			line = Util.RemoveLineEnding(line);
+			var padding = (line.Length == 0) ? "" : " ";
 			AppendText($"{padding}{line}{Environment.NewLine}", SystemColors.WindowText);
 		}
 
-		private void AddMatchLine(string number, string? line, JsonElement matches) {
+		private void AddMatchLine(int number, string? line, JsonElement matches) {
 			AppendText($"{number}{MarkerLine}:", Color.Green);
-			var padding = string.IsNullOrEmpty(line) ? "" : " ";
+			line = Util.RemoveLineEnding(line);
+			var padding = (line.Length == 0) ? "" : " ";
 			var docOffset = richTextBox.TextLength + padding.Length;
 			AppendText($"{padding}{line}{Environment.NewLine}", SystemColors.WindowText);
-			if (string.IsNullOrEmpty(line)) {
+			if (line.Length == 0) {
 				return;
 			}
 			var count = matches.GetArrayLength();
@@ -186,7 +188,7 @@ namespace FindInFiles {
 					if (start > ascii) {
 						//start = line.IndexOf(text, startIndex, StringComparison.Ordinal);
 						//startIndex = start + end;
-						start = Util.GetCharIndex(line, startIndex, ref byteCount, start);
+						start = Util.GetCharacterIndex(line, startIndex, ref byteCount, start);
 						if (index < count) {
 							startIndex = start + end;
 							byteCount += Util.GetUTF8ByteCount(text);
