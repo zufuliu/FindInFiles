@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 
@@ -23,7 +22,7 @@ namespace FindInFiles {
 		}
 
 		private async void buttonStart_Click(object sender, EventArgs e) {
-			var exePath = FindExePath("rg.exe");
+			var exePath = Util.FindExePath("rg.exe");
 			if (!File.Exists(exePath)) {
 				AppendText($"ripgrep (rg.exe) not found {Environment.NewLine}", Color.Red);
 				return;
@@ -171,7 +170,7 @@ namespace FindInFiles {
 			if (count == 0) { // invert
 				return;
 			}
-			var ascii = GetLeadingAsciiCount(line);
+			var ascii = Util.GetLeadingAsciiCount(line);
 			var startIndex = ascii;
 			var byteCount = ascii;
 			for (var index = 0; index < count;) {
@@ -187,10 +186,10 @@ namespace FindInFiles {
 					if (start > ascii) {
 						//start = line.IndexOf(text, startIndex, StringComparison.Ordinal);
 						//startIndex = start + end;
-						start = GetCharIndex(line, startIndex, ref byteCount, start);
+						start = Util.GetCharIndex(line, startIndex, ref byteCount, start);
 						if (index < count) {
 							startIndex = start + end;
-							byteCount += GetUTF8ByteCount(text);
+							byteCount += Util.GetUTF8ByteCount(text);
 						}
 					}
 				}
@@ -246,7 +245,7 @@ namespace FindInFiles {
 						end = richTextBox.GetFirstCharIndexFromLine(lineno + 1);
 						richTextBox.Select(start, end - start);
 						text = richTextBox.SelectedText.Trim();
-						StartEditor(text, num);
+						Util.StartEditor(text, num);
 					}
 				}
 				richTextBox.Select(selStart, selLength);
@@ -279,94 +278,5 @@ namespace FindInFiles {
 		private void fontDialog_Apply(object sender, EventArgs e) {
 			SetFindResultFont(fontDialog.Font);
 		}
-
-		private static void StartEditor(string path, int line) {
-			var exePath = FindExePath("Notepad2.exe");
-			if (!File.Exists(exePath)) {
-				return;
-			}
-			var startInfo = new ProcessStartInfo {
-				UseShellExecute = false,
-				FileName = exePath,
-				Arguments = $"/g {line} \"{path}\"",
-			};
-			using var process = Process.Start(startInfo);
-		}
-
-		private static unsafe int GetLeadingAsciiCount(string text) {
-			var count = 0;
-			fixed (char* ptr = text) {
-				char* p = ptr;
-				char* end = p + text.Length;
-				while (p < end && *p < 0x80) {
-					++p;
-					++count;
-				}
-			}
-			return count;
-		}
-
-		private static unsafe int GetUTF8ByteCount(string text) {
-			var count = 0;
-			fixed (char* ptr = text) {
-				char* p = ptr;
-				char* end = p + text.Length;
-				while (p < end) {
-					var ch = *p++;
-					if (ch < 0x80) {
-						count += 1;
-					} else if (ch < 0x800) {
-						count += 2;
-					} else if (p < end && char.IsSurrogatePair(ch, *p)) {
-						++p;
-						count += 4;
-					} else {
-						count += 3;
-					}
-				}
-			}
-			return count;
-		}
-
-		private static unsafe int GetCharIndex(string text, int startIndex, ref int byteCount, int bytePos) {
-			var count = byteCount;
-			fixed (char* ptr = text) {
-				char* p = ptr + startIndex;
-				char* end = p + text.Length;
-				while (p < end && count < bytePos) {
-					var ch = *p++;
-					++startIndex;
-					if (ch < 0x80) {
-						count += 1;
-					} else if (ch < 0x800) {
-						count += 2;
-					} else if (p < end && char.IsSurrogatePair(ch, *p)) {
-						++p;
-						++startIndex;
-						count += 4;
-					} else {
-						count += 3;
-					}
-				}
-			}
-			byteCount = count;
-			return startIndex;
-		}
-
-		private static string FindExePath(string name) {
-			var path = Path.Combine(Application.StartupPath, name);
-			if (File.Exists(path)) {
-				return path;
-			}
-			char[] buffer = new char[260];
-			int length = SearchPathW(null, name, null, buffer.Length, buffer, 0);
-			if (length > 0 && length < buffer.Length) {
-				name = new string(buffer, 0, length);
-			}
-			return name;
-		}
-
-		[DllImport("kernel32.dll", CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Unicode)]
-		static extern int SearchPathW(string? lpPath, string lpFileName, string? lpExtension, int nBufferLength, char[] lpBuffer, IntPtr lpFilePart);
 	}
 }
