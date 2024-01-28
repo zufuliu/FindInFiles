@@ -14,7 +14,7 @@ namespace FindInFiles {
 			checkBoxRecursive.Checked = true;
 			checkBoxMatchCase.Checked = true;
 			foreach (var arg in args) {
-				if (Path.Exists(arg)) {
+				if (Util.PathExists(arg)) {
 					textBoxSearchPath.Text = arg;
 					break;
 				}
@@ -28,7 +28,7 @@ namespace FindInFiles {
 				return;
 			}
 			var searchPath = textBoxSearchPath.Text.Trim();
-			if (!Path.Exists(searchPath)) {
+			if (!Util.PathExists(searchPath)) {
 				return;
 			}
 			var pattern = textBoxPattern.Text;

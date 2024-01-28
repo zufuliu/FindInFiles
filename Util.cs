@@ -89,6 +89,16 @@ namespace FindInFiles {
 			return name;
 		}
 
+		public static bool PathExists(string? path) {
+			if (string.IsNullOrEmpty(path)) {
+				return false;
+			}
+			return GetFileAttributesW(path) != -1;
+		}
+
+		[DllImport("kernel32.dll", CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Unicode)]
+		static extern int GetFileAttributesW(string lpFileName);
+
 		[DllImport("kernel32.dll", CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Unicode)]
 		static extern int SearchPathW(string? lpPath, string lpFileName, string? lpExtension, int nBufferLength, char[] lpBuffer, IntPtr lpFilePart);
 	}
