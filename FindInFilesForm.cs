@@ -235,22 +235,19 @@ namespace FindInFiles {
 			var end = richTextBox.GetFirstCharIndexFromLine(lineno + 1);
 			end = richTextBox.Find(MarkerLine, start, end, RichTextBoxFinds.MatchCase | RichTextBoxFinds.NoHighlight);
 			if (end > start) {
-				var selStart = richTextBox.SelectionStart;
-				var selLength = richTextBox.SelectionLength;
-				richTextBox.Select(start, end - start);
-				var text = richTextBox.SelectedText;
+				var text = richTextBox.GetTextRange(start, end);
 				if (int.TryParse(text, out var num)) {
+					var column = start + text.Length + 2;
 					start = richTextBox.Find(MarkerPath, 0, start, RichTextBoxFinds.MatchCase | RichTextBoxFinds.Reverse | RichTextBoxFinds.NoHighlight);
 					if (start >= 0) {
 						++start;
 						lineno = richTextBox.GetLineFromCharIndex(start);
 						end = richTextBox.GetFirstCharIndexFromLine(lineno + 1);
-						richTextBox.Select(start, end - start);
-						text = richTextBox.SelectedText.Trim();
-						Util.StartEditor(text, num);
+						text = richTextBox.GetTextRange(start, end).Trim();
+						column = richTextBox.SelectionStart - column;
+						Util.StartEditor(text, num, column);
 					}
 				}
-				richTextBox.Select(selStart, selLength);
 			}
 		}
 

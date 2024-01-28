@@ -79,7 +79,7 @@ namespace FindInFiles {
 			return startIndex;
 		}
 
-		public static void StartEditor(string path, int line) {
+		public static void StartEditor(string path, int line, int column) {
 			var exePath = FindExePath("Notepad2.exe");
 			if (!File.Exists(exePath)) {
 				return;
@@ -87,7 +87,7 @@ namespace FindInFiles {
 			var startInfo = new ProcessStartInfo {
 				UseShellExecute = false,
 				FileName = exePath,
-				Arguments = $"/g {line} \"{path}\"",
+				Arguments = $"/g {line},{column} \"{path}\"",
 			};
 			using var process = Process.Start(startInfo);
 		}
@@ -117,5 +117,38 @@ namespace FindInFiles {
 
 		[DllImport("kernel32.dll", CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Unicode)]
 		static extern int SearchPathW(string? lpPath, string lpFileName, string? lpExtension, int nBufferLength, char[] lpBuffer, IntPtr lpFilePart);
+
+		public static unsafe string GetTextRange(this TextBoxBase textBox, int start, int end) {
+			var buffer = new char[end - start];
+			fixed (char* ptr = buffer) {
+				TEXTRANGE range;
+				range.chrg.cpMin = start;
+				range.chrg.cpMax = end;
+				range.lpstrText = new IntPtr(ptr);
+				int length = SendMessage(textBox.Handle, EM_GETTEXTRANGE, UIntPtr.Zero, range);
+				if (length > 0) {
+					return new string(buffer, 0, length);
+				}
+			}
+			return string.Empty;
+		}
+
+		private const int WM_USER = 0x0400;
+		private const int EM_GETTEXTRANGE = WM_USER + 75;
+
+		[StructLayout(LayoutKind.Sequential)]
+		private struct CHARRANGE {
+			public int cpMin;
+			public int cpMax;
+		}
+
+		[StructLayout(LayoutKind.Sequential)]
+		private struct TEXTRANGE {
+			public CHARRANGE chrg;
+			public IntPtr lpstrText;
+		}
+
+		[DllImport("user32.dll", CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Unicode)]
+		static extern int SendMessage(IntPtr hwnd, int msg, UIntPtr wParam, TEXTRANGE lParam);
 	}
 }
