@@ -10,9 +10,6 @@ namespace FindInFiles {
 			if (font != null) {
 				SetFindResultFont(font);
 			}
-			textBoxContexLine.Text = "0";
-			checkBoxRecursive.Checked = true;
-			checkBoxMatchCase.Checked = true;
 			foreach (var arg in args) {
 				if (Util.PathExists(arg)) {
 					textBoxSearchPath.Text = arg;
@@ -45,17 +42,23 @@ namespace FindInFiles {
 				maxContextLine = line;
 				argList.Add($"-C {line}");
 			}
-			if (!checkBoxRecursive.Checked) {
-				argList.Add("-d 1");
+			if (!checkBoxRegex.Checked) {
+				argList.Add("-F");
 			}
 			if (!checkBoxMatchCase.Checked) {
 				argList.Add("-i");
+			}
+			if (checkBoxWholeWord.Checked) {
+				argList.Add("-w");
 			}
 			if (checkBoxMultiline.Checked) {
 				argList.Add("-U --multiline-dotall");
 			}
 			if (checkBoxPcre2.Checked) {
 				argList.Add("-P");
+			}
+			if (!checkBoxRecursive.Checked) {
+				argList.Add("-d 1");
 			}
 			if (checkBoxInvert.Checked) {
 				argList.Add("-v");
@@ -76,10 +79,12 @@ namespace FindInFiles {
 				process.StartInfo.FileName = exePath;
 				process.StartInfo.Arguments = argument;
 				process.OutputDataReceived += Process_OutputDataReceived;
+				buttonFind.Enabled = false;
 				process.Start();
 				process.BeginOutputReadLine();
 				var error = await process.StandardError.ReadToEndAsync();
 				await process.WaitForExitAsync();
+				buttonFind.Enabled = true;
 				if (!string.IsNullOrEmpty(error)) {
 					AppendText($"{error}{Environment.NewLine}", Color.Red);
 				}

@@ -42,6 +42,8 @@
 			checkBoxPcre2 = new CheckBox();
 			checkBoxRecursive = new CheckBox();
 			fontDialog = new FontDialog();
+			checkBoxWholeWord = new CheckBox();
+			checkBoxRegex = new CheckBox();
 			contextMenuStrip.SuspendLayout();
 			SuspendLayout();
 			// 
@@ -59,7 +61,7 @@
 			textBoxSearchPath.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
 			textBoxSearchPath.Location = new Point(108, 12);
 			textBoxSearchPath.Name = "textBoxSearchPath";
-			textBoxSearchPath.Size = new Size(670, 23);
+			textBoxSearchPath.Size = new Size(710, 23);
 			textBoxSearchPath.TabIndex = 0;
 			// 
 			// label3
@@ -76,7 +78,7 @@
 			textBoxPattern.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
 			textBoxPattern.Location = new Point(108, 42);
 			textBoxPattern.Name = "textBoxPattern";
-			textBoxPattern.Size = new Size(670, 23);
+			textBoxPattern.Size = new Size(710, 23);
 			textBoxPattern.TabIndex = 1;
 			// 
 			// label4
@@ -94,23 +96,26 @@
 			textBoxContexLine.Name = "textBoxContexLine";
 			textBoxContexLine.Size = new Size(50, 23);
 			textBoxContexLine.TabIndex = 2;
+			textBoxContexLine.Text = "0";
 			// 
 			// checkBoxMatchCase
 			// 
 			checkBoxMatchCase.AutoSize = true;
-			checkBoxMatchCase.Location = new Point(254, 77);
+			checkBoxMatchCase.Checked = true;
+			checkBoxMatchCase.CheckState = CheckState.Checked;
+			checkBoxMatchCase.Location = new Point(233, 77);
 			checkBoxMatchCase.Name = "checkBoxMatchCase";
-			checkBoxMatchCase.Size = new Size(95, 21);
+			checkBoxMatchCase.Size = new Size(93, 21);
 			checkBoxMatchCase.TabIndex = 4;
-			checkBoxMatchCase.Text = "Match Case";
+			checkBoxMatchCase.Text = "Match case";
 			checkBoxMatchCase.UseVisualStyleBackColor = true;
 			// 
 			// buttonFind
 			// 
-			buttonFind.Location = new Point(580, 72);
+			buttonFind.Location = new Point(742, 72);
 			buttonFind.Name = "buttonFind";
 			buttonFind.Size = new Size(75, 30);
-			buttonFind.TabIndex = 8;
+			buttonFind.TabIndex = 10;
 			buttonFind.Text = "Find All";
 			buttonFind.UseVisualStyleBackColor = true;
 			buttonFind.Click += buttonStart_Click;
@@ -124,7 +129,7 @@
 			richTextBox.Font = new Font("Consolas", 10.5F, FontStyle.Regular, GraphicsUnit.Point, 0);
 			richTextBox.Location = new Point(7, 108);
 			richTextBox.Name = "richTextBox";
-			richTextBox.Size = new Size(771, 449);
+			richTextBox.Size = new Size(811, 449);
 			richTextBox.TabIndex = 11;
 			richTextBox.Text = "";
 			richTextBox.WordWrap = false;
@@ -134,64 +139,66 @@
 			// 
 			contextMenuStrip.Items.AddRange(new ToolStripItem[] { clearAllToolStripMenuItem, toolStripMenuItem1, selectFontToolStripMenuItem });
 			contextMenuStrip.Name = "contextMenuStrip";
-			contextMenuStrip.Size = new Size(181, 76);
+			contextMenuStrip.Size = new Size(140, 54);
 			// 
 			// clearAllToolStripMenuItem
 			// 
 			clearAllToolStripMenuItem.Name = "clearAllToolStripMenuItem";
-			clearAllToolStripMenuItem.Size = new Size(180, 22);
+			clearAllToolStripMenuItem.Size = new Size(139, 22);
 			clearAllToolStripMenuItem.Text = "Clear All";
 			clearAllToolStripMenuItem.Click += clearAllToolStripMenuItem_Click;
 			// 
 			// toolStripMenuItem1
 			// 
 			toolStripMenuItem1.Name = "toolStripMenuItem1";
-			toolStripMenuItem1.Size = new Size(177, 6);
+			toolStripMenuItem1.Size = new Size(136, 6);
 			// 
 			// selectFontToolStripMenuItem
 			// 
 			selectFontToolStripMenuItem.Name = "selectFontToolStripMenuItem";
-			selectFontToolStripMenuItem.Size = new Size(180, 22);
+			selectFontToolStripMenuItem.Size = new Size(139, 22);
 			selectFontToolStripMenuItem.Text = "Select Font";
 			selectFontToolStripMenuItem.Click += selectFontToolStripMenuItem_Click;
 			// 
 			// checkBoxInvert
 			// 
 			checkBoxInvert.AutoSize = true;
-			checkBoxInvert.Location = new Point(513, 77);
+			checkBoxInvert.Location = new Point(676, 77);
 			checkBoxInvert.Name = "checkBoxInvert";
 			checkBoxInvert.Size = new Size(60, 21);
-			checkBoxInvert.TabIndex = 7;
+			checkBoxInvert.TabIndex = 9;
 			checkBoxInvert.Text = "Invert";
 			checkBoxInvert.UseVisualStyleBackColor = true;
 			// 
 			// checkBoxMultiline
 			// 
 			checkBoxMultiline.AutoSize = true;
-			checkBoxMultiline.Location = new Point(357, 77);
+			checkBoxMultiline.Location = new Point(436, 77);
 			checkBoxMultiline.Name = "checkBoxMultiline";
 			checkBoxMultiline.Size = new Size(76, 21);
-			checkBoxMultiline.TabIndex = 5;
+			checkBoxMultiline.TabIndex = 6;
 			checkBoxMultiline.Text = "Multiline";
 			checkBoxMultiline.UseVisualStyleBackColor = true;
 			// 
 			// checkBoxPcre2
 			// 
 			checkBoxPcre2.AutoSize = true;
-			checkBoxPcre2.Location = new Point(441, 77);
+			checkBoxPcre2.Location = new Point(518, 77);
 			checkBoxPcre2.Name = "checkBoxPcre2";
 			checkBoxPcre2.Size = new Size(64, 21);
-			checkBoxPcre2.TabIndex = 6;
+			checkBoxPcre2.TabIndex = 7;
 			checkBoxPcre2.Text = "PCRE2";
 			checkBoxPcre2.UseVisualStyleBackColor = true;
 			// 
 			// checkBoxRecursive
 			// 
 			checkBoxRecursive.AutoSize = true;
-			checkBoxRecursive.Location = new Point(164, 77);
+			checkBoxRecursive.Checked = true;
+			checkBoxRecursive.CheckState = CheckState.Checked;
+			checkBoxRecursive.Location = new Point(588, 77);
 			checkBoxRecursive.Name = "checkBoxRecursive";
 			checkBoxRecursive.Size = new Size(82, 21);
-			checkBoxRecursive.TabIndex = 3;
+			checkBoxRecursive.TabIndex = 8;
 			checkBoxRecursive.Text = "Recursive";
 			checkBoxRecursive.UseVisualStyleBackColor = true;
 			// 
@@ -201,12 +208,36 @@
 			fontDialog.ShowColor = true;
 			fontDialog.Apply += fontDialog_Apply;
 			// 
+			// checkBoxWholeWord
+			// 
+			checkBoxWholeWord.AutoSize = true;
+			checkBoxWholeWord.Location = new Point(332, 77);
+			checkBoxWholeWord.Name = "checkBoxWholeWord";
+			checkBoxWholeWord.Size = new Size(98, 21);
+			checkBoxWholeWord.TabIndex = 5;
+			checkBoxWholeWord.Text = "Whole word";
+			checkBoxWholeWord.UseVisualStyleBackColor = true;
+			// 
+			// checkBoxRegex
+			// 
+			checkBoxRegex.AutoSize = true;
+			checkBoxRegex.Checked = true;
+			checkBoxRegex.CheckState = CheckState.Checked;
+			checkBoxRegex.Location = new Point(164, 77);
+			checkBoxRegex.Name = "checkBoxRegex";
+			checkBoxRegex.Size = new Size(63, 21);
+			checkBoxRegex.TabIndex = 3;
+			checkBoxRegex.Text = "Regex";
+			checkBoxRegex.UseVisualStyleBackColor = true;
+			// 
 			// FindInFilesForm
 			// 
 			AllowDrop = true;
 			AutoScaleDimensions = new SizeF(7F, 17F);
 			AutoScaleMode = AutoScaleMode.Font;
-			ClientSize = new Size(784, 561);
+			ClientSize = new Size(824, 561);
+			Controls.Add(checkBoxRegex);
+			Controls.Add(checkBoxWholeWord);
 			Controls.Add(checkBoxRecursive);
 			Controls.Add(checkBoxPcre2);
 			Controls.Add(checkBoxMultiline);
@@ -249,5 +280,7 @@
 		private ToolStripMenuItem selectFontToolStripMenuItem;
 		private ToolStripMenuItem clearAllToolStripMenuItem;
 		private ToolStripSeparator toolStripMenuItem1;
+		private CheckBox checkBoxWholeWord;
+		private CheckBox checkBoxRegex;
 	}
 }
