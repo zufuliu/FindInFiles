@@ -10,6 +10,9 @@ namespace FindInFiles {
 			if (font != null) {
 				SetFindResultFont(font);
 			}
+			richTextBox.AllowDrop = true;
+			richTextBox.DragEnter += FindInFilesForm_DragEnter;
+			richTextBox.DragDrop += FindInFilesForm_DragDrop;
 			foreach (var arg in args) {
 				if (Util.PathExists(arg)) {
 					textBoxSearchPath.Text = arg;
@@ -214,7 +217,7 @@ namespace FindInFiles {
 			richTextBox.SelectedText = text;
 		}
 
-		private void FindInFilesForm_DragEnter(object sender, DragEventArgs e) {
+		private void FindInFilesForm_DragEnter(object? sender, DragEventArgs e) {
 			if (e.Data != null && e.Data.GetDataPresent(DataFormats.FileDrop)) {
 				e.Effect = DragDropEffects.Copy;
 			} else {
@@ -222,7 +225,7 @@ namespace FindInFiles {
 			}
 		}
 
-		private void FindInFilesForm_DragDrop(object sender, DragEventArgs e) {
+		private void FindInFilesForm_DragDrop(object? sender, DragEventArgs e) {
 			if (e.Data != null && e.Data.GetDataPresent(DataFormats.FileDrop)) {
 				if (e.Data.GetData(DataFormats.FileDrop) is string[] files && files.Length > 0) {
 					textBoxSearchPath.Text = files[0];
