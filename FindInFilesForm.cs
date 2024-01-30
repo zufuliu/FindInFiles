@@ -6,6 +6,7 @@ namespace FindInFiles {
 	public partial class FindInFilesForm : Form {
 		public FindInFilesForm(string[] args) {
 			InitializeComponent();
+			lineParser = new OutputLineParser(this, RenderOutput);
 			var font = Properties.Settings.Default.FindResultFont;
 			if (font != null) {
 				SetFindResultFont(font);
@@ -40,9 +41,9 @@ namespace FindInFiles {
 				"--json --crlf"
 			};
 			var text = textBoxContexLine.Text.Trim();
-			maxContextLine = 0;
+			lineParser.MaxContextLine = 0;
 			if (int.TryParse(text, out int line) && line > 0) {
-				maxContextLine = line;
+				lineParser.MaxContextLine = line;
 				argList.Add($"-C {line}");
 			}
 			if (!checkBoxRegex.Checked) {
@@ -69,7 +70,7 @@ namespace FindInFiles {
 			argList.Add($"-e \"{pattern}\"");
 			argList.Add($"\"{searchPath}\"");
 			var argument = string.Join(" ", argList);
-			ResetMatchResult();
+			ClearMatchResult();
 			AppendText($"{argument}{Environment.NewLine}", Color.Gray);
 
 			using (var process = new Process()) {
@@ -88,6 +89,7 @@ namespace FindInFiles {
 				var error = await process.StandardError.ReadToEndAsync();
 				await process.WaitForExitAsync();
 				buttonFind.Enabled = true;
+				lineParser.Flush();
 				if (!string.IsNullOrEmpty(error)) {
 					AppendText($"{error}{Environment.NewLine}", Color.Red);
 				}
@@ -97,67 +99,45 @@ namespace FindInFiles {
 		private void Process_OutputDataReceived(object sender, DataReceivedEventArgs e) {
 			var data = e.Data;
 			if (!string.IsNullOrEmpty(data)) {
-				ProcessOutputLine(data);
+				lineParser.Parse(data);
 			}
 		}
 
-		private int maxContextLine = 0;
-		private int contextLineCount = 0;
-		private bool afterMatch = false;
+		private readonly OutputLineParser lineParser;
 		private static readonly string MarkerPath = "\u200C"; // zero width non-joiner
 		private static readonly string MarkerLine = "\u200D"; // zero width joiner
 
-		private void ResetMatchResult() {
+		private void ClearMatchResult() {
+			var page = (int)(richTextBox.Height / richTextBox.GetLineHeight());
+			page += page / 4;
+			page = Math.Max(page, 5);
 			richTextBox.Clear();
-			contextLineCount = 0;
-			afterMatch = false;
+			lineParser.MaxCachedLine = page;
+			lineParser.Clear();
 		}
 
-		private void ProcessOutputLine(string line) {
-			var root = JsonDocument.Parse(line).RootElement;
-			if (root.ValueKind == JsonValueKind.Object && root.TryGetProperty("type", out var type) && root.TryGetProperty("data", out var data)) {
-				var dataType = type.GetString();
-				if (dataType != "context") {
-					contextLineCount = 0;
-				}
-				if (dataType == "begin") {
-					afterMatch = false;
-					var path = data.GetProperty("path").GetProperty("text").GetString();
-					Invoke(AppendText, $"{MarkerPath}{path}{Environment.NewLine}", Color.Blue);
-				} else if (dataType == "match") {
-					afterMatch = true;
-					var text = data.GetProperty("lines").GetProperty("text").GetString();
-					var number = data.GetProperty("line_number").GetInt32();
-					var matches = data.GetProperty("submatches");
-					Invoke(AddMatchLine, number, text, matches);
-				} else if (dataType == "context") {
-					if (maxContextLine != 0 && afterMatch) {
-						++contextLineCount;
-						if (contextLineCount > maxContextLine) {
-							afterMatch = false;
-							Invoke(AppendText, $"--{Environment.NewLine}", Color.Gray);
-						}
-					}
-					var text = data.GetProperty("lines").GetProperty("text").GetString();
-					var number = data.GetProperty("line_number").GetInt32();
-					Invoke(AddContextLine, number, text);
-				} else if (dataType == "end" || dataType == "summary") {
-					var stats = data.GetProperty("stats");
-					var matched_lines = stats.GetProperty("matched_lines").GetInt32();
-					var matches = stats.GetProperty("matches").GetInt32();
-					var elapsed = stats.GetProperty("elapsed").GetProperty("human").GetString();
-					var summary = $"matched lines: {matched_lines}, matches: {matches}, elapsed: {elapsed}";
-					if (dataType == "end") {
-						var path = data.GetProperty("path").GetProperty("text").GetString();
-						path = Path.GetFileName(path);
-						summary = $"-- {path}, {summary}{Environment.NewLine}";
-					} else {
-						var elapsed_total = data.GetProperty("elapsed_total").GetProperty("human").GetString();
-						summary = $"-- total {summary}, total elapsed: {elapsed_total}{Environment.NewLine}";
-					}
-					Invoke(AppendText, summary, Color.Gray);
+		private void RenderOutput(List<OutputLine> lines) {
+			richTextBox.SetRedraw(false);
+			foreach (var line in lines) {
+				switch (line.LineType) {
+				case OutputLineType.Path:
+					AppendText($"{MarkerPath}{line.Text}{Environment.NewLine}", Color.Blue);
+					break;
+
+				case OutputLineType.Match:
+					AddMatchLine(line.Number, line.Text, line.Matches);
+					break;
+
+				case OutputLineType.Context:
+					AddContextLine(line.Number, line.Text);
+					break;
+
+				default:
+					AppendText($"{line.Text}{Environment.NewLine}", Color.Gray);
+					break;
 				}
 			}
+			richTextBox.SetRedraw(true);
 		}
 
 		private void AddContextLine(int number, string? line) {
@@ -167,15 +147,16 @@ namespace FindInFiles {
 			AppendText($"{padding}{line}{Environment.NewLine}", SystemColors.WindowText);
 		}
 
-		private void AddMatchLine(int number, string? line, JsonElement matches) {
+		private void AddMatchLine(int number, string? line, JsonElement? submatches) {
 			AppendText($"{number}{MarkerLine}:", Color.Green);
 			line = Util.RemoveLineEnding(line);
 			var padding = (line.Length == 0) ? "" : " ";
 			var docOffset = richTextBox.TextLength + padding.Length;
 			AppendText($"{padding}{line}{Environment.NewLine}", SystemColors.WindowText);
-			if (line.Length == 0) {
+			if (line.Length == 0 || submatches == null) {
 				return;
 			}
+			var matches = submatches.Value;
 			var count = matches.GetArrayLength();
 			if (count == 0) { // invert
 				return;

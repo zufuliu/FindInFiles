@@ -125,7 +125,7 @@ namespace FindInFiles {
 				range.chrg.cpMin = start;
 				range.chrg.cpMax = end;
 				range.lpstrText = new IntPtr(ptr);
-				int length = SendMessage(textBox.Handle, EM_GETTEXTRANGE, UIntPtr.Zero, range);
+				int length = SendMessage(textBox.Handle, EM_GETTEXTRANGE, IntPtr.Zero, range);
 				if (length > 0) {
 					return new string(buffer, 0, length);
 				}
@@ -133,6 +133,26 @@ namespace FindInFiles {
 			return string.Empty;
 		}
 
+		public static float GetLineHeight(this TextBoxBase textBox) {
+			var font = textBox.Font;
+			var family = font.FontFamily;
+			var style = font.Style;
+			var emHeight = family.GetEmHeight(style);
+			var lineSpacing = family.GetLineSpacing(style);
+			var ascent = family.GetCellAscent(style);
+			var descent = family.GetCellDescent(style);
+			var height = font.Size * (lineSpacing + ascent + descent) / emHeight;
+			return height;
+		}
+
+		public static void SetRedraw(this Control control, bool redraw) {
+			SendMessage(control.Handle, WM_SETREDRAW, new IntPtr(redraw ? 1 : 0), IntPtr.Zero);
+			if (redraw) {
+				control.Invalidate();
+			}
+		}
+
+		private const int WM_SETREDRAW = 0x000B;
 		private const int WM_USER = 0x0400;
 		private const int EM_GETTEXTRANGE = WM_USER + 75;
 
@@ -149,6 +169,8 @@ namespace FindInFiles {
 		}
 
 		[DllImport("user32.dll", CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Unicode)]
-		static extern int SendMessage(IntPtr hwnd, int msg, UIntPtr wParam, TEXTRANGE lParam);
+		static extern int SendMessage(IntPtr hwnd, int msg, IntPtr wParam, TEXTRANGE lParam);
+		[DllImport("user32.dll", CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Unicode)]
+		static extern int SendMessage(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam);
 	}
 }
