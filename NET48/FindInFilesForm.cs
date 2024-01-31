@@ -88,13 +88,12 @@ namespace FindInFiles {
 				process.StartInfo.FileName = exePath;
 				process.StartInfo.Arguments = argument;
 				process.OutputDataReceived += Process_OutputDataReceived;
-				buttonFind.Enabled = false;
 				process.Start();
 				process.BeginOutputReadLine();
 				var error = await process.StandardError.ReadToEndAsync();
 			 	await Task.Run(() => process.WaitForExit());
-				buttonFind.Enabled = true;
 				lineParser.Flush();
+				richTextBox.Invalidate();
 				if (!string.IsNullOrEmpty(error)) {
 					AppendText($"{error}{Environment.NewLine}", Color.Red);
 				}
@@ -111,17 +110,28 @@ namespace FindInFiles {
 		private readonly OutputLineParser lineParser;
 		private static readonly string MarkerPath = "\u200C"; // zero width non-joiner
 		private static readonly string MarkerLine = "\u200D"; // zero width joiner
+		private int visibleDelta = 0;
 
 		private void ClearMatchResult() {
 			var page = (int)(richTextBox.Height / richTextBox.GetLineHeight());
-			page += page / 4;
 			page = Math.Max(page, 5);
+			visibleDelta = page * 2;
 			richTextBox.Clear();
 			lineParser.MaxCachedLine = page;
 			lineParser.Clear();
 		}
 
 		private void RenderOutput(List<OutputLine> lines) {
+			var visible = richTextBox.Focused;
+			if (!visible) {
+				var last = richTextBox.GetLineFromCharIndex(-1);
+				if (last < visibleDelta) {
+					visible = true;
+				} else {
+					var top = richTextBox.GetLineFromCharIndex(richTextBox.GetCharIndexFromPosition(new Point(1, 1)));
+					visible = last - top < visibleDelta;
+				}
+			}
 			richTextBox.SetRedraw(false);
 			foreach (var line in lines) {
 				switch (line.LineType) {
@@ -143,6 +153,9 @@ namespace FindInFiles {
 				}
 			}
 			richTextBox.SetRedraw(true);
+			if (visible) {
+				richTextBox.Invalidate();
+			}
 		}
 
 		private void AddContextLine(string number, string line) {

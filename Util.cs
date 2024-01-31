@@ -141,15 +141,12 @@ namespace FindInFiles {
 			var lineSpacing = family.GetLineSpacing(style);
 			var ascent = family.GetCellAscent(style);
 			var descent = family.GetCellDescent(style);
-			var height = font.Size * (lineSpacing + ascent + descent) / emHeight;
+			var height = font.Size * (lineSpacing + (ascent + descent) / 2) / emHeight;
 			return height;
 		}
 
 		public static void SetRedraw(this Control control, bool redraw) {
 			SendMessage(control.Handle, WM_SETREDRAW, new IntPtr(redraw ? 1 : 0), IntPtr.Zero);
-			if (redraw) {
-				control.Invalidate();
-			}
 		}
 
 		private const int WM_SETREDRAW = 0x000B;

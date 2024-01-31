@@ -24,7 +24,7 @@ namespace FindInFiles {
 
 		public void Flush() {
 			if (cachedLines.Count != 0) {
-				owner.Invoke(callback, cachedLines);
+				callback(cachedLines);
 				cachedLines.Clear();
 			}
 		}
