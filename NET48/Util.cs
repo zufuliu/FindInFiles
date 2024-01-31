@@ -108,12 +108,19 @@ namespace FindInFiles {
 			return name;
 		}
 
-		public static bool PathExists(string path) {
-			if (string.IsNullOrEmpty(path)) {
-				return false;
+		public static (bool exist, bool directory) PathExists(string path) {
+			if (!string.IsNullOrEmpty(path)) {
+				var attr = GetFileAttributesW(path);
+				if (attr != INVALID_FILE_ATTRIBUTES) {
+					var directory = (attr & FILE_ATTRIBUTE_DIRECTORY) != 0;
+					return (true, directory);
+				}
 			}
-			return GetFileAttributesW(path) != -1;
+			return (false, false);
 		}
+
+		private const int INVALID_FILE_ATTRIBUTES = -1;
+		private const int FILE_ATTRIBUTE_DIRECTORY = 0x00000010;
 
 		[DllImport("kernel32.dll", CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Unicode)]
 		static extern int GetFileAttributesW(string lpFileName);

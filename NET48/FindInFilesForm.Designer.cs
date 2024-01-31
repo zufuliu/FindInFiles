@@ -46,6 +46,7 @@ namespace FindInFiles {
 			this.fontDialog = new System.Windows.Forms.FontDialog();
 			this.checkBoxRegex = new System.Windows.Forms.CheckBox();
 			this.checkBoxWholeWord = new System.Windows.Forms.CheckBox();
+			this.textBoxGlob = new System.Windows.Forms.TextBox();
 			this.contextMenuStrip.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -65,7 +66,7 @@ namespace FindInFiles {
 			this.textBoxSearchPath.Location = new System.Drawing.Point(103, 8);
 			this.textBoxSearchPath.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.textBoxSearchPath.Name = "textBoxSearchPath";
-			this.textBoxSearchPath.Size = new System.Drawing.Size(677, 21);
+			this.textBoxSearchPath.Size = new System.Drawing.Size(570, 21);
 			this.textBoxSearchPath.TabIndex = 0;
 			// 
 			// label3
@@ -124,7 +125,7 @@ namespace FindInFiles {
 			this.buttonFind.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.buttonFind.Name = "buttonFind";
 			this.buttonFind.Size = new System.Drawing.Size(64, 21);
-			this.buttonFind.TabIndex = 10;
+			this.buttonFind.TabIndex = 11;
 			this.buttonFind.Text = "Find All";
 			this.buttonFind.UseVisualStyleBackColor = true;
 			this.buttonFind.Click += new System.EventHandler(this.buttonStart_Click);
@@ -141,7 +142,7 @@ namespace FindInFiles {
 			this.richTextBox.Location = new System.Drawing.Point(6, 79);
 			this.richTextBox.Name = "richTextBox";
 			this.richTextBox.Size = new System.Drawing.Size(773, 480);
-			this.richTextBox.TabIndex = 11;
+			this.richTextBox.TabIndex = 12;
 			this.richTextBox.Text = "";
 			this.richTextBox.WordWrap = false;
 			this.richTextBox.DoubleClick += new System.EventHandler(this.richTextBox_DoubleClick);
@@ -250,12 +251,23 @@ namespace FindInFiles {
 			this.checkBoxWholeWord.Text = "Whole word";
 			this.checkBoxWholeWord.UseVisualStyleBackColor = true;
 			// 
+			// textBoxGlob
+			// 
+			this.textBoxGlob.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBoxGlob.Location = new System.Drawing.Point(679, 8);
+			this.textBoxGlob.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.textBoxGlob.Name = "textBoxGlob";
+			this.textBoxGlob.Size = new System.Drawing.Size(100, 21);
+			this.textBoxGlob.TabIndex = 10;
+			this.textBoxGlob.Text = "*.*";
+			// 
 			// FindInFilesForm
 			// 
 			this.AllowDrop = true;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(784, 561);
+			this.Controls.Add(this.textBoxGlob);
 			this.Controls.Add(this.checkBoxWholeWord);
 			this.Controls.Add(this.checkBoxRegex);
 			this.Controls.Add(this.checkBoxRecursive);
@@ -304,5 +316,6 @@ namespace FindInFiles {
 		private ToolStripSeparator toolStripMenuItem1;
 		private CheckBox checkBoxRegex;
 		private CheckBox checkBoxWholeWord;
+		private TextBox textBoxGlob;
 	}
 }

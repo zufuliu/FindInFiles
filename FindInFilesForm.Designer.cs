@@ -44,6 +44,7 @@
 			fontDialog = new FontDialog();
 			checkBoxWholeWord = new CheckBox();
 			checkBoxRegex = new CheckBox();
+			textBoxGlob = new TextBox();
 			contextMenuStrip.SuspendLayout();
 			SuspendLayout();
 			// 
@@ -61,13 +62,13 @@
 			textBoxSearchPath.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
 			textBoxSearchPath.Location = new Point(108, 12);
 			textBoxSearchPath.Name = "textBoxSearchPath";
-			textBoxSearchPath.Size = new Size(710, 23);
+			textBoxSearchPath.Size = new Size(598, 23);
 			textBoxSearchPath.TabIndex = 0;
 			// 
 			// label3
 			// 
 			label3.AutoSize = true;
-			label3.Location = new Point(7, 45);
+			label3.Location = new Point(7, 41);
 			label3.Name = "label3";
 			label3.Size = new Size(95, 17);
 			label3.TabIndex = 5;
@@ -76,7 +77,7 @@
 			// textBoxPattern
 			// 
 			textBoxPattern.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-			textBoxPattern.Location = new Point(108, 42);
+			textBoxPattern.Location = new Point(108, 38);
 			textBoxPattern.Name = "textBoxPattern";
 			textBoxPattern.Size = new Size(710, 23);
 			textBoxPattern.TabIndex = 1;
@@ -84,7 +85,7 @@
 			// label4
 			// 
 			label4.AutoSize = true;
-			label4.Location = new Point(14, 79);
+			label4.Location = new Point(14, 69);
 			label4.Name = "label4";
 			label4.Size = new Size(88, 17);
 			label4.TabIndex = 7;
@@ -92,7 +93,7 @@
 			// 
 			// textBoxContexLine
 			// 
-			textBoxContexLine.Location = new Point(108, 76);
+			textBoxContexLine.Location = new Point(108, 66);
 			textBoxContexLine.Name = "textBoxContexLine";
 			textBoxContexLine.Size = new Size(50, 23);
 			textBoxContexLine.TabIndex = 2;
@@ -103,7 +104,7 @@
 			checkBoxMatchCase.AutoSize = true;
 			checkBoxMatchCase.Checked = true;
 			checkBoxMatchCase.CheckState = CheckState.Checked;
-			checkBoxMatchCase.Location = new Point(233, 77);
+			checkBoxMatchCase.Location = new Point(233, 68);
 			checkBoxMatchCase.Name = "checkBoxMatchCase";
 			checkBoxMatchCase.Size = new Size(93, 21);
 			checkBoxMatchCase.TabIndex = 4;
@@ -112,10 +113,10 @@
 			// 
 			// buttonFind
 			// 
-			buttonFind.Location = new Point(742, 72);
+			buttonFind.Location = new Point(742, 63);
 			buttonFind.Name = "buttonFind";
 			buttonFind.Size = new Size(75, 30);
-			buttonFind.TabIndex = 10;
+			buttonFind.TabIndex = 11;
 			buttonFind.Text = "Find All";
 			buttonFind.UseVisualStyleBackColor = true;
 			buttonFind.Click += buttonStart_Click;
@@ -127,10 +128,10 @@
 			richTextBox.ContextMenuStrip = contextMenuStrip;
 			richTextBox.DetectUrls = false;
 			richTextBox.Font = new Font("Consolas", 10.5F, FontStyle.Regular, GraphicsUnit.Point, 0);
-			richTextBox.Location = new Point(7, 108);
+			richTextBox.Location = new Point(7, 95);
 			richTextBox.Name = "richTextBox";
-			richTextBox.Size = new Size(811, 449);
-			richTextBox.TabIndex = 11;
+			richTextBox.Size = new Size(811, 462);
+			richTextBox.TabIndex = 12;
 			richTextBox.Text = "";
 			richTextBox.WordWrap = false;
 			richTextBox.DoubleClick += richTextBox_DoubleClick;
@@ -163,7 +164,7 @@
 			// checkBoxInvert
 			// 
 			checkBoxInvert.AutoSize = true;
-			checkBoxInvert.Location = new Point(676, 77);
+			checkBoxInvert.Location = new Point(676, 68);
 			checkBoxInvert.Name = "checkBoxInvert";
 			checkBoxInvert.Size = new Size(60, 21);
 			checkBoxInvert.TabIndex = 9;
@@ -173,7 +174,7 @@
 			// checkBoxMultiline
 			// 
 			checkBoxMultiline.AutoSize = true;
-			checkBoxMultiline.Location = new Point(436, 77);
+			checkBoxMultiline.Location = new Point(436, 68);
 			checkBoxMultiline.Name = "checkBoxMultiline";
 			checkBoxMultiline.Size = new Size(76, 21);
 			checkBoxMultiline.TabIndex = 6;
@@ -183,7 +184,7 @@
 			// checkBoxPcre2
 			// 
 			checkBoxPcre2.AutoSize = true;
-			checkBoxPcre2.Location = new Point(518, 77);
+			checkBoxPcre2.Location = new Point(518, 68);
 			checkBoxPcre2.Name = "checkBoxPcre2";
 			checkBoxPcre2.Size = new Size(64, 21);
 			checkBoxPcre2.TabIndex = 7;
@@ -195,7 +196,7 @@
 			checkBoxRecursive.AutoSize = true;
 			checkBoxRecursive.Checked = true;
 			checkBoxRecursive.CheckState = CheckState.Checked;
-			checkBoxRecursive.Location = new Point(588, 77);
+			checkBoxRecursive.Location = new Point(588, 68);
 			checkBoxRecursive.Name = "checkBoxRecursive";
 			checkBoxRecursive.Size = new Size(82, 21);
 			checkBoxRecursive.TabIndex = 8;
@@ -211,7 +212,7 @@
 			// checkBoxWholeWord
 			// 
 			checkBoxWholeWord.AutoSize = true;
-			checkBoxWholeWord.Location = new Point(332, 77);
+			checkBoxWholeWord.Location = new Point(332, 68);
 			checkBoxWholeWord.Name = "checkBoxWholeWord";
 			checkBoxWholeWord.Size = new Size(98, 21);
 			checkBoxWholeWord.TabIndex = 5;
@@ -223,12 +224,21 @@
 			checkBoxRegex.AutoSize = true;
 			checkBoxRegex.Checked = true;
 			checkBoxRegex.CheckState = CheckState.Checked;
-			checkBoxRegex.Location = new Point(164, 77);
+			checkBoxRegex.Location = new Point(164, 68);
 			checkBoxRegex.Name = "checkBoxRegex";
 			checkBoxRegex.Size = new Size(63, 21);
 			checkBoxRegex.TabIndex = 3;
 			checkBoxRegex.Text = "Regex";
 			checkBoxRegex.UseVisualStyleBackColor = true;
+			// 
+			// textBoxGlob
+			// 
+			textBoxGlob.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+			textBoxGlob.Location = new Point(712, 12);
+			textBoxGlob.Name = "textBoxGlob";
+			textBoxGlob.Size = new Size(105, 23);
+			textBoxGlob.TabIndex = 10;
+			textBoxGlob.Text = "*.*";
 			// 
 			// FindInFilesForm
 			// 
@@ -236,6 +246,7 @@
 			AutoScaleDimensions = new SizeF(7F, 17F);
 			AutoScaleMode = AutoScaleMode.Font;
 			ClientSize = new Size(824, 561);
+			Controls.Add(textBoxGlob);
 			Controls.Add(checkBoxRegex);
 			Controls.Add(checkBoxWholeWord);
 			Controls.Add(checkBoxRecursive);
@@ -282,5 +293,6 @@
 		private ToolStripSeparator toolStripMenuItem1;
 		private CheckBox checkBoxWholeWord;
 		private CheckBox checkBoxRegex;
+		private TextBox textBoxGlob;
 	}
 }

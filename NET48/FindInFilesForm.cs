@@ -20,7 +20,7 @@ namespace FindInFiles {
 			richTextBox.DragEnter += FindInFilesForm_DragEnter;
 			richTextBox.DragDrop += FindInFilesForm_DragDrop;
 			foreach (var arg in args) {
-				if (Util.PathExists(arg)) {
+				if (Util.PathExists(arg).exist) {
 					textBoxSearchPath.Text = arg;
 					break;
 				}
@@ -34,7 +34,8 @@ namespace FindInFiles {
 				return;
 			}
 			var searchPath = textBoxSearchPath.Text.Trim();
-			if (!Util.PathExists(searchPath)) {
+			var (exist, directory) = Util.PathExists(searchPath);
+			if (!exist) {
 				return;
 			}
 			var pattern = textBoxPattern.Text;
@@ -71,6 +72,15 @@ namespace FindInFiles {
 			}
 			if (checkBoxInvert.Checked) {
 				argList.Add("-v");
+			}
+			if (directory) {
+				var items = textBoxGlob.Text.Split(';');
+				for (var i = 0; i < items.Length; i++) {
+					var item = items[i].Trim();
+					if (!string.IsNullOrEmpty(item) && item != "*.*") {
+						argList.Add($"-g \"{item}\"");
+					}
+				}
 			}
 			argList.Add($"-e \"{pattern}\"");
 			argList.Add($"\"{searchPath}\"");
