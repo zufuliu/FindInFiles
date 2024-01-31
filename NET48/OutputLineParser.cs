@@ -33,8 +33,7 @@ namespace FindInFiles {
 		}
 
 		public void Parse(string line) {
-			var parser = new JsonParser();
-			var root = parser.Parse(line);
+			var root = JsonParser.Parse(line);
 			if (root == null || root.ValueType != JsonValueType.Object) {
 				return;
 			}

@@ -1,12 +1,10 @@
 using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 
 namespace FindInFiles {
-	internal class JsonParser {
-		private readonly StringBuilder builder = new StringBuilder();
+	internal static class JsonParser {
 
-		public unsafe JsonValue Parse(string json) {
+		public static unsafe JsonValue Parse(string json) {
 			fixed (char* ptr = json) {
 				var p = ptr;
 				var end = ptr + json.Length;
@@ -15,7 +13,7 @@ namespace FindInFiles {
 			}
 		}
 
-		private unsafe JsonValue ParseValue(char* p, char* end, ref char* next) {
+		private static unsafe JsonValue ParseValue(char* p, char* end, ref char* next) {
 			while (p < end) {
 				var ch = *p++;
 				switch (ch) {
@@ -52,7 +50,7 @@ namespace FindInFiles {
 			return null;
 		}
 
-		private unsafe JsonValue ParseArray(char* p, char* end, ref char* next) {
+		private static unsafe JsonValue ParseArray(char* p, char* end, ref char* next) {
 			var list = new List<JsonValue>();
 			var hasValue = false;
 			while (p < end) {
@@ -86,7 +84,7 @@ namespace FindInFiles {
 			return null;
 		}
 
-		private unsafe JsonValue ParseObject(char* p, char* end, ref char* next) {
+		private static unsafe JsonValue ParseObject(char* p, char* end, ref char* next) {
 			var dict = new Dictionary<string, JsonValue>();
 			var hasValue = false;
 			while (p < end) {
@@ -136,31 +134,37 @@ namespace FindInFiles {
 			return null;
 		}
 
-		private unsafe string ScanString(char* p, char* end, ref char* next) {
-			builder.Clear();
+		private static unsafe string ScanString(char* p, char* end, ref char* next) {
+			var begin = p;
+			var back = p;
 			var start = p;
 			var stop = p;
 			while (p < end) {
 				var ch = *p++;
 				if (ch == '\"') {
-					next = p;
-					var trail = (int)(stop - start);
-					if (builder.Length == 0) {
-						if (trail == 0) {
-							return string.Empty;
+					if (back == begin) {
+						back = stop;
+					} else {
+						while (start != stop) {
+							*back++ = *start++;
 						}
-						return new string(start, 0, trail);
 					}
-					if (trail != 0) {
-						builder.Append(start, trail);
+					next = p;
+					var len = (int)(back - begin);
+					if (len == 0) {
+						return string.Empty;
 					}
-					return builder.ToString();
+					return new string(begin, 0, len);
 				}
 				if (ch != '\\' || p == end) {
 					++stop;
 				} else {
-					if (start != stop) {
-						builder.Append(start, (int)(stop - start));
+					if (back == begin) {
+						back = stop;
+					} else {
+						while (start != stop) {
+							*back++ = *start++;
+						}
 					}
 					var chNext = *p++;
 					switch(chNext) {
@@ -171,7 +175,7 @@ namespace FindInFiles {
 					case 'b':
 						chNext = '\b';
 						break;
-					case '\f':
+					case 'f':
 						chNext = '\f';
 						break;
 					case 'n':
@@ -214,7 +218,7 @@ namespace FindInFiles {
 
 					start = p;
 					stop = p;
-					builder.Append(chNext);
+					*back++ = chNext;
 				}
 			}
 			return null;
