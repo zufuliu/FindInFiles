@@ -13,27 +13,38 @@ namespace FindInFiles {
 			richTextBox.AllowDrop = true;
 			richTextBox.DragEnter += FindInFilesForm_DragEnter;
 			richTextBox.DragDrop += FindInFilesForm_DragDrop;
+			var searchPath = false;
 			foreach (var arg in args) {
 				if (Util.PathExists(arg).exist) {
+					searchPath = true;
 					textBoxSearchPath.Text = arg;
 					break;
 				}
+			}
+			if (!searchPath) {
+				AppendText($"drag & drop file or folder to search!{Environment.NewLine}", Color.Gray);
 			}
 		}
 
 		private async void buttonStart_Click(object sender, EventArgs e) {
 			var exePath = Util.FindExePath("rg.exe");
 			if (!File.Exists(exePath)) {
-				AppendText($"ripgrep (rg.exe) not found {Environment.NewLine}", Color.Red);
+				AppendText($"ripgrep (rg.exe) not found!{Environment.NewLine}", Color.Red);
 				return;
 			}
 			var searchPath = textBoxSearchPath.Text.Trim();
+			if (string.IsNullOrEmpty(searchPath)) {
+				AppendText($"drag & drop file or folder to search!{Environment.NewLine}", Color.Red);
+				return;
+			}
 			var (exist, directory) = Util.PathExists(searchPath);
 			if (!exist) {
+				AppendText($"file or folder \"{searchPath}\" not exists!{Environment.NewLine}", Color.Red);
 				return;
 			}
 			var pattern = textBoxPattern.Text;
 			if (string.IsNullOrEmpty(pattern)) {
+				AppendText($"empty search pattern!{Environment.NewLine}", Color.Red);
 				return;
 			}
 
