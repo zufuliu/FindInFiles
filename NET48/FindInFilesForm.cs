@@ -175,45 +175,19 @@ namespace FindInFiles {
 			AppendText($"{padding}{line}{Environment.NewLine}", SystemColors.WindowText);
 		}
 
-		private void AddMatchLine(string number, string line, JsonValue matches) {
+		private void AddMatchLine(string number, string line, MatchTextRange[] matches) {
 			AppendText($"{number}{MarkerLine}:", Color.Green);
 			line = Util.RemoveLineEnding(line);
 			var padding = (line.Length == 0) ? "" : " ";
 			var docOffset = richTextBox.TextLength + padding.Length;
 			AppendText($"{padding}{line}{Environment.NewLine}", SystemColors.WindowText);
-			if (line.Length == 0) {
+			if (matches == null) {
 				return;
 			}
-			var count = matches.Count;
-			if (count == 0) { // invert
-				return;
-			}
-			var ascii = Util.GetLeadingAsciiCount(line);
-			var startIndex = ascii;
-			var byteCount = ascii;
-			for (var index = 0; index < count;) {
-				var match = matches[index++];
-				var start = match["start"].GetInt32();
-				var end = match["end"].GetInt32() - start;
-				var text = match["match"]["text"].GetString();
-				var space = false;
-				if (!string.IsNullOrEmpty(text)) {
-					space = char.IsWhiteSpace(text[0]) || char.IsWhiteSpace(text[text.Length - 1]);
-					// convert byte offset to character index
-					end = text.Length;
-					if (start > ascii) {
-						//start = line.IndexOf(text, startIndex, StringComparison.Ordinal);
-						//startIndex = start + end;
-						start = Util.GetCharacterIndex(line, startIndex, ref byteCount, start);
-						if (index < count) {
-							startIndex = start + end;
-							byteCount += Util.GetUTF8ByteCount(text);
-						}
-					}
-				}
-				richTextBox.Select(start + docOffset, end);
+			foreach (var match in matches) {
+				richTextBox.Select(match.Start + docOffset, match.Length);
 				richTextBox.SelectionColor = Color.Red;
-				if (space) {
+				if (match.Space) {
 					richTextBox.SelectionBackColor = Color.Green;
 				}
 			}

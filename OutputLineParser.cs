@@ -39,19 +39,28 @@ namespace FindInFiles {
 			}
 			OutputLine outputLine;
 			var dataType = type.GetString();
-			if (dataType == "begin") {
+			switch (dataType) {
+			case "begin": {
 				var path = data.GetProperty("path").GetProperty("text").GetString();
 				outputLine = new OutputLine { LineType = OutputLineType.Path, Text = path };
-			} else if (dataType == "match") {
+			} break;
+
+			case "match": {
 				var text = data.GetProperty("lines").GetProperty("text").GetString();
 				var number = data.GetProperty("line_number").GetInt32();
-				var matches = data.GetProperty("submatches");
+				var submatches = data.GetProperty("submatches");
+				var matches = OutputLineParser.ParseSubMatches(text, submatches);
 				outputLine = new OutputLine { LineType = OutputLineType.Match, Text = text, Number = number, Matches = matches };
-			} else if (dataType == "context") {
+			} break;
+
+			case "context": {
 				var text = data.GetProperty("lines").GetProperty("text").GetString();
 				var number = data.GetProperty("line_number").GetInt32();
 				outputLine = new OutputLine { LineType = OutputLineType.Context, Text = text, Number = number };
-			} else if (dataType == "end" || dataType == "summary") {
+			} break;
+
+			case "end":
+			case "summary": {
 				var stats = data.GetProperty("stats");
 				var matched_lines = stats.GetProperty("matched_lines").GetInt32();
 				var matches = stats.GetProperty("matches").GetInt32();
@@ -66,9 +75,12 @@ namespace FindInFiles {
 					summary = $"-- total {summary}, total elapsed: {elapsed_total}";
 				}
 				outputLine = new OutputLine { LineType = OutputLineType.Summary, Text = summary };
-			} else {
+			} break;
+
+			default:
 				return;
 			}
+
 			if (MaxContextLine != 0) {
 				if (outputLine.LineType == OutputLineType.Context) {
 					if (afterMatch) {
@@ -89,6 +101,50 @@ namespace FindInFiles {
 				cachedLines.Clear();
 			}
 		}
+
+		private static MatchTextRange[]? ParseSubMatches(string? line, JsonElement submatches) {
+			if (string.IsNullOrEmpty(line) || submatches.ValueKind != JsonValueKind.Array) {
+				return null;
+			}
+			var count = submatches.GetArrayLength();
+			if (count == 0) { // invert
+				return null;
+			}
+			var matches = new MatchTextRange[count];
+			var ascii = Util.GetLeadingAsciiCount(line);
+			var startIndex = ascii;
+			var byteCount = ascii;
+			for (var index = 0; index < count;) {
+				ref var range = ref matches[index];
+				var match = submatches[index++];
+				var start = match.GetProperty("start").GetInt32();
+				var end = match.GetProperty("end").GetInt32() - start;
+				var text = match.GetProperty("match").GetProperty("text").GetString();
+				if (!string.IsNullOrEmpty(text)) {
+					end = text.Length;
+					range.Space = char.IsWhiteSpace(text[0]) || char.IsWhiteSpace(text[end - 1]);
+					// convert byte offset to character index
+					if (start > ascii) {
+						//start = line.IndexOf(text, startIndex, StringComparison.Ordinal);
+						//startIndex = start + end;
+						start = Util.GetCharacterIndex(line, startIndex, ref byteCount, start);
+						if (index < count) {
+							startIndex = start + end;
+							byteCount += Util.GetUTF8ByteCount(text);
+						}
+					}
+				}
+				range.Start = start;
+				range.Length = end;
+			}
+			return matches;
+		}
+	}
+
+	internal struct MatchTextRange {
+		public int Start;
+		public int Length;
+		public bool Space;
 	}
 
 	internal enum OutputLineType {
@@ -101,8 +157,8 @@ namespace FindInFiles {
 
 	internal class OutputLine {
 		public OutputLineType LineType;
-		public string? Text;
 		public int Number;
-		public JsonElement? Matches;
+		public string? Text;
+		public MatchTextRange[]? Matches;
 	}
 }

@@ -42,19 +42,28 @@ namespace FindInFiles {
 			}
 			OutputLine outputLine;
 			var dataType = type.GetString();
-			if (dataType == "begin") {
+			switch (dataType) {
+			case "begin": {
 				var path = data["path"]["text"].GetString();
 				outputLine = new OutputLine { LineType = OutputLineType.Path, Text = path };
-			} else if (dataType == "match") {
+			} break;
+
+			case "match": {
 				var text = data["lines"]["text"].GetString();
 				var number = data["line_number"].GetString();
-				var matches = data["submatches"];
+				var submatches = data["submatches"];
+				var matches = ParseSubMatches(text, submatches);
 				outputLine = new OutputLine { LineType = OutputLineType.Match, Text = text, Number = number, Matches = matches };
-			} else if (dataType == "context") {
+			} break;
+
+			case "context": {
 				var text = data["lines"]["text"].GetString();
 				var number = data["line_number"].GetString();
 				outputLine = new OutputLine { LineType = OutputLineType.Context, Text = text, Number = number };
-			} else if (dataType == "end" || dataType == "summary") {
+			} break;
+
+			case "end":
+			case "summary": {
 				var stats = data["stats"];
 				var matched_lines = stats["matched_lines"].GetString();
 				var matches = stats["matches"].GetString();
@@ -69,7 +78,9 @@ namespace FindInFiles {
 					summary = $"-- total {summary}, total elapsed: {elapsed_total}";
 				}
 				outputLine = new OutputLine { LineType = OutputLineType.Summary, Text = summary };
-			} else {
+			} break;
+
+			default:
 				return;
 			}
 			if (MaxContextLine != 0) {
@@ -92,6 +103,51 @@ namespace FindInFiles {
 				cachedLines.Clear();
 			}
 		}
+
+		private static MatchTextRange[] ParseSubMatches(string line, JsonValue submatches) {
+			if (string.IsNullOrEmpty(line) || submatches.ValueType != JsonValueType.Array) {
+				return null;
+			}
+			var count = submatches.Count;
+			if (count == 0) { // invert
+				return null;
+			}
+			var matches = new MatchTextRange[count];
+			var ascii = Util.GetLeadingAsciiCount(line);
+			var startIndex = ascii;
+			var byteCount = ascii;
+			for (var index = 0; index < count;) {
+				ref var range = ref matches[index];
+				var match = submatches[index++];
+				var start = match["start"].GetInt32();
+				var end = match["end"].GetInt32() - start;
+				var text = match["match"]["text"].GetString();
+				if (!string.IsNullOrEmpty(text)) {
+					end = text.Length;
+					range.Space = char.IsWhiteSpace(text[0]) || char.IsWhiteSpace(text[end - 1]);
+					// convert byte offset to character index
+					if (start > ascii) {
+						//start = line.IndexOf(text, startIndex, StringComparison.Ordinal);
+						//startIndex = start + end;
+						start = Util.GetCharacterIndex(line, startIndex, ref byteCount, start);
+						if (index < count) {
+							startIndex = start + end;
+							byteCount += Util.GetUTF8ByteCount(text);
+						}
+					}
+				}
+				range.Start = start;
+				range.Length = end;
+			}
+			return matches;
+		}
+	}
+
+
+	internal struct MatchTextRange {
+		public int Start;
+		public int Length;
+		public bool Space;
 	}
 
 	internal enum OutputLineType {
@@ -104,8 +160,8 @@ namespace FindInFiles {
 
 	internal class OutputLine {
 		public OutputLineType LineType;
-		public string Text;
 		public string Number;
-		public JsonValue Matches;
+		public string Text;
+		public MatchTextRange[] Matches;
 	}
 }
