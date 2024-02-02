@@ -8,6 +8,7 @@ namespace FindInFiles {
 
 		public int MaxContextLine = 0;
 		public int MaxCachedLine = 0;
+		public int TotalMatchCount = 0;
 		private int contextLineCount = 0;
 		private bool afterMatch = false;
 
@@ -17,6 +18,7 @@ namespace FindInFiles {
 		}
 
 		public void Clear() {
+			TotalMatchCount = 0;
 			contextLineCount = 0;
 			afterMatch = false;
 			cachedLines.Clear();
@@ -71,6 +73,7 @@ namespace FindInFiles {
 					path = Path.GetFileName(path);
 					summary = $"-- {path}, {summary}";
 				} else {
+					TotalMatchCount = matches;
 					var elapsed_total = data.GetProperty("elapsed_total").GetProperty("human").GetString();
 					summary = $"-- total {summary}, total elapsed: {elapsed_total}";
 				}

@@ -9,16 +9,20 @@ namespace FindInFiles {
 			richTextBox.DragEnter += FindInFilesForm_DragEnter;
 			richTextBox.DragDrop += FindInFilesForm_DragDrop;
 			lineParser = new OutputLineParser(this, RenderOutput);
-			var font = Properties.Settings.Default.FindResultFont;
+			var settings = Properties.Settings.Default;
+			var font = settings.FindResultFont;
 			if (font != null) {
 				SetFindResultFont(font);
 			}
+			saveSearchHistoryToolStripMenuItem.Checked = settings.SaveSearchHistory;
+			comboBoxSearchPath.Items.AddRange(settings.SearchPathHistory);
+			comboBoxSearchPattern.Items.AddRange(settings.SearchPatternHistory);
 			textBoxEncoding.Text = defaultEncoding;
 			var searchPath = false;
 			foreach (var arg in args) {
 				if (Util.PathExists(arg).exist) {
 					searchPath = true;
-					textBoxSearchPath.Text = arg;
+					comboBoxSearchPath.Text = arg;
 					break;
 				}
 			}
@@ -33,7 +37,7 @@ namespace FindInFiles {
 				AppendText($"ripgrep (rg.exe) not found!{Environment.NewLine}", Color.Red);
 				return;
 			}
-			var searchPath = textBoxSearchPath.Text.Trim();
+			var searchPath = comboBoxSearchPath.Text.Trim();
 			if (string.IsNullOrEmpty(searchPath)) {
 				AppendText($"drag & drop file or folder to search!{Environment.NewLine}", Color.Red);
 				return;
@@ -43,7 +47,7 @@ namespace FindInFiles {
 				AppendText($"file or folder \"{searchPath}\" not exists!{Environment.NewLine}", Color.Red);
 				return;
 			}
-			var pattern = textBoxPattern.Text;
+			var pattern = comboBoxSearchPattern.Text;
 			if (string.IsNullOrEmpty(pattern)) {
 				AppendText($"empty search pattern!{Environment.NewLine}", Color.Red);
 				return;
@@ -114,6 +118,9 @@ namespace FindInFiles {
 				await process.WaitForExitAsync();
 				lineParser.Flush();
 				richTextBox.Invalidate();
+				if (lineParser.TotalMatchCount > 0) {
+					SaveSearchHistory(searchPath, pattern);
+				}
 				if (!string.IsNullOrEmpty(error)) {
 					AppendText($"{error}{Environment.NewLine}", Color.Red);
 				}
@@ -221,7 +228,7 @@ namespace FindInFiles {
 		private void FindInFilesForm_DragDrop(object? sender, DragEventArgs e) {
 			if (e.Data != null && e.Data.GetDataPresent(DataFormats.FileDrop)) {
 				if (e.Data.GetData(DataFormats.FileDrop) is string[] files && files.Length > 0) {
-					textBoxSearchPath.Text = files[0];
+					comboBoxSearchPath.Text = files[0];
 				}
 			}
 		}
@@ -252,7 +259,7 @@ namespace FindInFiles {
 			}
 		}
 
-		private void clearAllToolStripMenuItem_Click(object sender, EventArgs e) {
+		private void clearFindResultToolStripMenuItem_Click(object sender, EventArgs e) {
 			richTextBox.Clear();
 		}
 
@@ -261,8 +268,9 @@ namespace FindInFiles {
 			fontDialog.Font = font;
 			if (fontDialog.ShowDialog(this) == DialogResult.OK) {
 				font = fontDialog.Font;
-				Properties.Settings.Default.FindResultFont = font;
-				Properties.Settings.Default.Save();
+				var settings = Properties.Settings.Default;
+				settings.FindResultFont = font;
+				settings.Save();
 			}
 			SetFindResultFont(font);
 		}
@@ -277,6 +285,46 @@ namespace FindInFiles {
 
 		private void fontDialog_Apply(object sender, EventArgs e) {
 			SetFindResultFont(fontDialog.Font);
+		}
+
+		private void FindInFilesForm_FormClosing(object sender, FormClosingEventArgs e) {
+			Properties.Settings.Default.Save();
+		}
+
+		private const int MaxSearchHistoryCount = 32;
+
+		private void SaveSearchHistory(string searchPath, string pattern) {
+			comboBoxSearchPath.Items.AddToTop(searchPath);
+			comboBoxSearchPattern.Items.AddToTop(pattern);
+			var settings = Properties.Settings.Default;
+			if (settings.SaveSearchHistory) {
+				var collection = settings.SearchPathHistory;
+				if (Util.AddHistory(ref collection, searchPath, MaxSearchHistoryCount)) {
+					settings.SearchPathHistory = collection;
+				}
+				collection = settings.SearchPatternHistory;
+				if (Util.AddHistory(ref collection, pattern, MaxSearchHistoryCount)) {
+					settings.SearchPatternHistory = collection;
+				}
+			}
+		}
+
+		private void saveSearchHistoryToolStripMenuItem_Click(object sender, EventArgs e) {
+			var save = saveSearchHistoryToolStripMenuItem.Checked;
+			var settings = Properties.Settings.Default;
+			settings.SaveSearchHistory = save;
+			if (!save) {
+				settings.SearchPathHistory?.Clear();
+				settings.SearchPatternHistory?.Clear();
+			}
+		}
+
+		private void clearSearchHistoryToolStripMenuItem_Click(object sender, EventArgs e) {
+			var settings = Properties.Settings.Default;
+			settings.SearchPathHistory?.Clear();
+			settings.SearchPatternHistory?.Clear();
+			comboBoxSearchPath.Items.Clear();
+			comboBoxSearchPattern.Items.Clear();
 		}
 	}
 }

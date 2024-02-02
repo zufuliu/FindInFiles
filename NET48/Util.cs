@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Specialized;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -179,5 +180,50 @@ namespace FindInFiles {
 		static extern int SendMessage(IntPtr hwnd, int msg, IntPtr wParam, TEXTRANGE lParam);
 		[DllImport("user32.dll", CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Unicode)]
 		static extern int SendMessage(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam);
+
+		public static void AddRange(this ComboBox.ObjectCollection collection, StringCollection strings) {
+			if (strings != null) {
+				var count = strings.Count;
+				if (count != 0) {
+					var items = new string[count];
+					strings.CopyTo(items, 0);
+					collection.AddRange(items);
+				}
+			}
+		}
+
+		public static void AddToTop(this ComboBox.ObjectCollection collection, string value) {
+			var index = collection.IndexOf(value);
+			if (index != 0) {
+				collection.Insert(0, value);
+				if (index > 0) {
+					collection.RemoveAt(index);
+				}
+			}
+		}
+
+		public static bool AddHistory(ref StringCollection collection, string value, int maxCount) {
+			if (string.IsNullOrEmpty(value)) {
+				return false;
+			}
+			var created = false;
+			if (collection == null) {
+				created = true;
+				collection = new StringCollection { value };
+			} else {
+				var index = collection.IndexOf(value);
+				if (index != 0) {
+					collection.Insert(0, value);
+					if (index > 0) {
+						collection.RemoveAt(index);
+					}
+					index = collection.Count;
+					if (index > maxCount) {
+						collection.RemoveAt(index - 1);
+					}
+				}
+			}
+			return created;
+		}
 	}
 }

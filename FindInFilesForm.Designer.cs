@@ -25,9 +25,7 @@
 		private void InitializeComponent() {
 			components = new System.ComponentModel.Container();
 			label2 = new Label();
-			textBoxSearchPath = new TextBox();
 			label3 = new Label();
-			textBoxPattern = new TextBox();
 			label4 = new Label();
 			textBoxContexLine = new TextBox();
 			checkBoxMatchCase = new CheckBox();
@@ -46,6 +44,11 @@
 			checkBoxRegex = new CheckBox();
 			textBoxGlob = new TextBox();
 			textBoxEncoding = new TextBox();
+			comboBoxSearchPath = new ComboBox();
+			comboBoxSearchPattern = new ComboBox();
+			saveSearchHistoryToolStripMenuItem = new ToolStripMenuItem();
+			clearSearchHistoryToolStripMenuItem = new ToolStripMenuItem();
+			toolStripMenuItem3 = new ToolStripSeparator();
 			contextMenuStrip.SuspendLayout();
 			SuspendLayout();
 			// 
@@ -58,14 +61,6 @@
 			label2.TabIndex = 3;
 			label2.Text = "Search Path:";
 			// 
-			// textBoxSearchPath
-			// 
-			textBoxSearchPath.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-			textBoxSearchPath.Location = new Point(108, 12);
-			textBoxSearchPath.Name = "textBoxSearchPath";
-			textBoxSearchPath.Size = new Size(562, 23);
-			textBoxSearchPath.TabIndex = 0;
-			// 
 			// label3
 			// 
 			label3.AutoSize = true;
@@ -74,14 +69,6 @@
 			label3.Size = new Size(95, 17);
 			label3.TabIndex = 5;
 			label3.Text = "Search Pattern:";
-			// 
-			// textBoxPattern
-			// 
-			textBoxPattern.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-			textBoxPattern.Location = new Point(108, 38);
-			textBoxPattern.Name = "textBoxPattern";
-			textBoxPattern.Size = new Size(562, 23);
-			textBoxPattern.TabIndex = 1;
 			// 
 			// label4
 			// 
@@ -139,26 +126,26 @@
 			// 
 			// contextMenuStrip
 			// 
-			contextMenuStrip.Items.AddRange(new ToolStripItem[] { clearAllToolStripMenuItem, toolStripMenuItem1, selectFontToolStripMenuItem });
+			contextMenuStrip.Items.AddRange(new ToolStripItem[] { clearAllToolStripMenuItem, toolStripMenuItem1, saveSearchHistoryToolStripMenuItem, clearSearchHistoryToolStripMenuItem, toolStripMenuItem3, selectFontToolStripMenuItem });
 			contextMenuStrip.Name = "contextMenuStrip";
-			contextMenuStrip.Size = new Size(140, 54);
+			contextMenuStrip.Size = new Size(195, 126);
 			// 
 			// clearAllToolStripMenuItem
 			// 
 			clearAllToolStripMenuItem.Name = "clearAllToolStripMenuItem";
-			clearAllToolStripMenuItem.Size = new Size(139, 22);
-			clearAllToolStripMenuItem.Text = "Clear All";
-			clearAllToolStripMenuItem.Click += clearAllToolStripMenuItem_Click;
+			clearAllToolStripMenuItem.Size = new Size(194, 22);
+			clearAllToolStripMenuItem.Text = "Clear Find Result";
+			clearAllToolStripMenuItem.Click += clearFindResultToolStripMenuItem_Click;
 			// 
 			// toolStripMenuItem1
 			// 
 			toolStripMenuItem1.Name = "toolStripMenuItem1";
-			toolStripMenuItem1.Size = new Size(136, 6);
+			toolStripMenuItem1.Size = new Size(191, 6);
 			// 
 			// selectFontToolStripMenuItem
 			// 
 			selectFontToolStripMenuItem.Name = "selectFontToolStripMenuItem";
-			selectFontToolStripMenuItem.Size = new Size(139, 22);
+			selectFontToolStripMenuItem.Size = new Size(194, 22);
 			selectFontToolStripMenuItem.Text = "Select Font";
 			selectFontToolStripMenuItem.Click += selectFontToolStripMenuItem_Click;
 			// 
@@ -249,12 +236,51 @@
 			textBoxEncoding.Size = new Size(151, 23);
 			textBoxEncoding.TabIndex = 11;
 			// 
+			// comboBoxSearchPath
+			// 
+			comboBoxSearchPath.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+			comboBoxSearchPath.FormattingEnabled = true;
+			comboBoxSearchPath.Location = new Point(108, 12);
+			comboBoxSearchPath.Name = "comboBoxSearchPath";
+			comboBoxSearchPath.Size = new Size(562, 25);
+			comboBoxSearchPath.TabIndex = 0;
+			// 
+			// comboBoxSearchPattern
+			// 
+			comboBoxSearchPattern.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+			comboBoxSearchPattern.FormattingEnabled = true;
+			comboBoxSearchPattern.Location = new Point(108, 38);
+			comboBoxSearchPattern.Name = "comboBoxSearchPattern";
+			comboBoxSearchPattern.Size = new Size(562, 25);
+			comboBoxSearchPattern.TabIndex = 1;
+			// 
+			// saveSearchHistoryToolStripMenuItem
+			// 
+			saveSearchHistoryToolStripMenuItem.Name = "saveSearchHistoryToolStripMenuItem";
+			saveSearchHistoryToolStripMenuItem.Size = new Size(194, 22);
+			saveSearchHistoryToolStripMenuItem.Text = "Save Search History";
+			saveSearchHistoryToolStripMenuItem.Click += saveSearchHistoryToolStripMenuItem_Click;
+			// 
+			// clearSearchHistoryToolStripMenuItem
+			// 
+			clearSearchHistoryToolStripMenuItem.Name = "clearSearchHistoryToolStripMenuItem";
+			clearSearchHistoryToolStripMenuItem.Size = new Size(194, 22);
+			clearSearchHistoryToolStripMenuItem.Text = "Clear Search History";
+			clearSearchHistoryToolStripMenuItem.Click += clearSearchHistoryToolStripMenuItem_Click;
+			// 
+			// toolStripMenuItem3
+			// 
+			toolStripMenuItem3.Name = "toolStripMenuItem3";
+			toolStripMenuItem3.Size = new Size(191, 6);
+			// 
 			// FindInFilesForm
 			// 
 			AllowDrop = true;
 			AutoScaleDimensions = new SizeF(7F, 17F);
 			AutoScaleMode = AutoScaleMode.Font;
 			ClientSize = new Size(834, 561);
+			Controls.Add(comboBoxSearchPattern);
+			Controls.Add(comboBoxSearchPath);
 			Controls.Add(textBoxEncoding);
 			Controls.Add(textBoxGlob);
 			Controls.Add(checkBoxRegex);
@@ -268,13 +294,12 @@
 			Controls.Add(checkBoxMatchCase);
 			Controls.Add(textBoxContexLine);
 			Controls.Add(label4);
-			Controls.Add(textBoxPattern);
 			Controls.Add(label3);
-			Controls.Add(textBoxSearchPath);
 			Controls.Add(label2);
 			DoubleBuffered = true;
 			Name = "FindInFilesForm";
 			Text = "Find in Files";
+			FormClosing += FindInFilesForm_FormClosing;
 			DragDrop += FindInFilesForm_DragDrop;
 			DragEnter += FindInFilesForm_DragEnter;
 			contextMenuStrip.ResumeLayout(false);
@@ -284,9 +309,7 @@
 
 		#endregion
 		private Label label2;
-		private TextBox textBoxSearchPath;
 		private Label label3;
-		private TextBox textBoxPattern;
 		private Label label4;
 		private TextBox textBoxContexLine;
 		private CheckBox checkBoxMatchCase;
@@ -305,5 +328,10 @@
 		private CheckBox checkBoxRegex;
 		private TextBox textBoxGlob;
 		private TextBox textBoxEncoding;
+		private ComboBox comboBoxSearchPath;
+		private ComboBox comboBoxSearchPattern;
+		private ToolStripMenuItem saveSearchHistoryToolStripMenuItem;
+		private ToolStripMenuItem clearSearchHistoryToolStripMenuItem;
+		private ToolStripSeparator toolStripMenuItem3;
 	}
 }

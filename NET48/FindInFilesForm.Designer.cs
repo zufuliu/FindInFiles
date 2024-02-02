@@ -27,9 +27,7 @@ namespace FindInFiles {
 		private void InitializeComponent() {
 			this.components = new System.ComponentModel.Container();
 			this.label2 = new System.Windows.Forms.Label();
-			this.textBoxSearchPath = new System.Windows.Forms.TextBox();
 			this.label3 = new System.Windows.Forms.Label();
-			this.textBoxPattern = new System.Windows.Forms.TextBox();
 			this.label4 = new System.Windows.Forms.Label();
 			this.textBoxContexLine = new System.Windows.Forms.TextBox();
 			this.checkBoxMatchCase = new System.Windows.Forms.CheckBox();
@@ -37,7 +35,6 @@ namespace FindInFiles {
 			this.richTextBox = new System.Windows.Forms.RichTextBox();
 			this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.clearAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
 			this.selectFontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.checkBoxInvert = new System.Windows.Forms.CheckBox();
 			this.checkBoxMultiline = new System.Windows.Forms.CheckBox();
@@ -48,6 +45,12 @@ namespace FindInFiles {
 			this.checkBoxWholeWord = new System.Windows.Forms.CheckBox();
 			this.textBoxGlob = new System.Windows.Forms.TextBox();
 			this.textBoxEncoding = new System.Windows.Forms.TextBox();
+			this.saveSearchHistoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.clearSearchHistoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+			this.comboBoxSearchPath = new System.Windows.Forms.ComboBox();
+			this.comboBoxSearchPattern = new System.Windows.Forms.ComboBox();
+			this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
 			this.contextMenuStrip.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -60,16 +63,6 @@ namespace FindInFiles {
 			this.label2.TabIndex = 3;
 			this.label2.Text = "Search Path:";
 			// 
-			// textBoxSearchPath
-			// 
-			this.textBoxSearchPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxSearchPath.Location = new System.Drawing.Point(103, 8);
-			this.textBoxSearchPath.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.textBoxSearchPath.Name = "textBoxSearchPath";
-			this.textBoxSearchPath.Size = new System.Drawing.Size(526, 21);
-			this.textBoxSearchPath.TabIndex = 0;
-			// 
 			// label3
 			// 
 			this.label3.AutoSize = true;
@@ -78,16 +71,6 @@ namespace FindInFiles {
 			this.label3.Size = new System.Drawing.Size(95, 12);
 			this.label3.TabIndex = 5;
 			this.label3.Text = "Search Pattern:";
-			// 
-			// textBoxPattern
-			// 
-			this.textBoxPattern.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxPattern.Location = new System.Drawing.Point(103, 32);
-			this.textBoxPattern.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.textBoxPattern.Name = "textBoxPattern";
-			this.textBoxPattern.Size = new System.Drawing.Size(526, 21);
-			this.textBoxPattern.TabIndex = 1;
 			// 
 			// label4
 			// 
@@ -152,27 +135,25 @@ namespace FindInFiles {
 			// 
 			this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.clearAllToolStripMenuItem,
-            this.toolStripMenuItem1,
+            this.toolStripMenuItem3,
+            this.saveSearchHistoryToolStripMenuItem,
+            this.clearSearchHistoryToolStripMenuItem,
+            this.toolStripMenuItem2,
             this.selectFontToolStripMenuItem});
 			this.contextMenuStrip.Name = "contextMenuStrip";
-			this.contextMenuStrip.Size = new System.Drawing.Size(140, 54);
+			this.contextMenuStrip.Size = new System.Drawing.Size(195, 104);
 			// 
 			// clearAllToolStripMenuItem
 			// 
 			this.clearAllToolStripMenuItem.Name = "clearAllToolStripMenuItem";
-			this.clearAllToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
-			this.clearAllToolStripMenuItem.Text = "Clear All";
-			this.clearAllToolStripMenuItem.Click += new System.EventHandler(this.clearAllToolStripMenuItem_Click);
-			// 
-			// toolStripMenuItem1
-			// 
-			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-			this.toolStripMenuItem1.Size = new System.Drawing.Size(136, 6);
+			this.clearAllToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
+			this.clearAllToolStripMenuItem.Text = "Clear Find Result";
+			this.clearAllToolStripMenuItem.Click += new System.EventHandler(this.clearFindResultToolStripMenuItem_Click);
 			// 
 			// selectFontToolStripMenuItem
 			// 
 			this.selectFontToolStripMenuItem.Name = "selectFontToolStripMenuItem";
-			this.selectFontToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+			this.selectFontToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
 			this.selectFontToolStripMenuItem.Text = "Select Font";
 			this.selectFontToolStripMenuItem.Click += new System.EventHandler(this.selectFontToolStripMenuItem_Click);
 			// 
@@ -270,12 +251,61 @@ namespace FindInFiles {
 			this.textBoxEncoding.Size = new System.Drawing.Size(144, 21);
 			this.textBoxEncoding.TabIndex = 11;
 			// 
+			// saveSearchHistoryToolStripMenuItem
+			// 
+			this.saveSearchHistoryToolStripMenuItem.CheckOnClick = true;
+			this.saveSearchHistoryToolStripMenuItem.Name = "saveSearchHistoryToolStripMenuItem";
+			this.saveSearchHistoryToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
+			this.saveSearchHistoryToolStripMenuItem.Text = "Save Search History";
+			this.saveSearchHistoryToolStripMenuItem.Click += new System.EventHandler(this.saveSearchHistoryToolStripMenuItem_Click);
+			// 
+			// clearSearchHistoryToolStripMenuItem
+			// 
+			this.clearSearchHistoryToolStripMenuItem.Name = "clearSearchHistoryToolStripMenuItem";
+			this.clearSearchHistoryToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
+			this.clearSearchHistoryToolStripMenuItem.Text = "Clear Search History";
+			this.clearSearchHistoryToolStripMenuItem.Click += new System.EventHandler(this.clearSearchHistoryToolStripMenuItem_Click);
+			// 
+			// toolStripMenuItem2
+			// 
+			this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+			this.toolStripMenuItem2.Size = new System.Drawing.Size(191, 6);
+			// 
+			// comboBoxSearchPath
+			// 
+			this.comboBoxSearchPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.comboBoxSearchPath.FormattingEnabled = true;
+			this.comboBoxSearchPath.Location = new System.Drawing.Point(103, 8);
+			this.comboBoxSearchPath.MaxDropDownItems = 16;
+			this.comboBoxSearchPath.Name = "comboBoxSearchPath";
+			this.comboBoxSearchPath.Size = new System.Drawing.Size(526, 20);
+			this.comboBoxSearchPath.TabIndex = 0;
+			// 
+			// comboBoxSearchPattern
+			// 
+			this.comboBoxSearchPattern.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.comboBoxSearchPattern.FormattingEnabled = true;
+			this.comboBoxSearchPattern.Location = new System.Drawing.Point(103, 32);
+			this.comboBoxSearchPattern.MaxDropDownItems = 16;
+			this.comboBoxSearchPattern.Name = "comboBoxSearchPattern";
+			this.comboBoxSearchPattern.Size = new System.Drawing.Size(526, 20);
+			this.comboBoxSearchPattern.TabIndex = 1;
+			// 
+			// toolStripMenuItem3
+			// 
+			this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+			this.toolStripMenuItem3.Size = new System.Drawing.Size(191, 6);
+			// 
 			// FindInFilesForm
 			// 
 			this.AllowDrop = true;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(784, 561);
+			this.Controls.Add(this.comboBoxSearchPattern);
+			this.Controls.Add(this.comboBoxSearchPath);
 			this.Controls.Add(this.textBoxEncoding);
 			this.Controls.Add(this.textBoxGlob);
 			this.Controls.Add(this.checkBoxWholeWord);
@@ -289,14 +319,13 @@ namespace FindInFiles {
 			this.Controls.Add(this.checkBoxMatchCase);
 			this.Controls.Add(this.textBoxContexLine);
 			this.Controls.Add(this.label4);
-			this.Controls.Add(this.textBoxPattern);
 			this.Controls.Add(this.label3);
-			this.Controls.Add(this.textBoxSearchPath);
 			this.Controls.Add(this.label2);
 			this.DoubleBuffered = true;
 			this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.Name = "FindInFilesForm";
 			this.Text = "Find in Files";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FindInFilesForm_FormClosing);
 			this.DragDrop += new System.Windows.Forms.DragEventHandler(this.FindInFilesForm_DragDrop);
 			this.DragEnter += new System.Windows.Forms.DragEventHandler(this.FindInFilesForm_DragEnter);
 			this.contextMenuStrip.ResumeLayout(false);
@@ -307,9 +336,7 @@ namespace FindInFiles {
 
 		#endregion
 		private Label label2;
-		private TextBox textBoxSearchPath;
 		private Label label3;
-		private TextBox textBoxPattern;
 		private Label label4;
 		private TextBox textBoxContexLine;
 		private CheckBox checkBoxMatchCase;
@@ -323,10 +350,15 @@ namespace FindInFiles {
 		private ContextMenuStrip contextMenuStrip;
 		private ToolStripMenuItem selectFontToolStripMenuItem;
 		private ToolStripMenuItem clearAllToolStripMenuItem;
-		private ToolStripSeparator toolStripMenuItem1;
 		private CheckBox checkBoxRegex;
 		private CheckBox checkBoxWholeWord;
 		private TextBox textBoxGlob;
 		private TextBox textBoxEncoding;
+		private ToolStripMenuItem saveSearchHistoryToolStripMenuItem;
+		private ToolStripMenuItem clearSearchHistoryToolStripMenuItem;
+		private ToolStripSeparator toolStripMenuItem2;
+		private ComboBox comboBoxSearchPath;
+		private ComboBox comboBoxSearchPattern;
+		private ToolStripSeparator toolStripMenuItem3;
 	}
 }

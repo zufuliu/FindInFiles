@@ -33,5 +33,39 @@ namespace FindInFiles.Properties {
                 this["FindResultFont"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool SaveSearchHistory {
+            get {
+                return ((bool)(this["SaveSearchHistory"]));
+            }
+            set {
+                this["SaveSearchHistory"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection SearchPathHistory {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["SearchPathHistory"]));
+            }
+            set {
+                this["SearchPathHistory"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection SearchPatternHistory {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["SearchPatternHistory"]));
+            }
+            set {
+                this["SearchPatternHistory"] = value;
+            }
+        }
     }
 }
