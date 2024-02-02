@@ -45,6 +45,7 @@
 			checkBoxWholeWord = new CheckBox();
 			checkBoxRegex = new CheckBox();
 			textBoxGlob = new TextBox();
+			textBoxEncoding = new TextBox();
 			contextMenuStrip.SuspendLayout();
 			SuspendLayout();
 			// 
@@ -62,7 +63,7 @@
 			textBoxSearchPath.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
 			textBoxSearchPath.Location = new Point(108, 12);
 			textBoxSearchPath.Name = "textBoxSearchPath";
-			textBoxSearchPath.Size = new Size(598, 23);
+			textBoxSearchPath.Size = new Size(562, 23);
 			textBoxSearchPath.TabIndex = 0;
 			// 
 			// label3
@@ -79,7 +80,7 @@
 			textBoxPattern.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
 			textBoxPattern.Location = new Point(108, 38);
 			textBoxPattern.Name = "textBoxPattern";
-			textBoxPattern.Size = new Size(710, 23);
+			textBoxPattern.Size = new Size(562, 23);
 			textBoxPattern.TabIndex = 1;
 			// 
 			// label4
@@ -116,7 +117,7 @@
 			buttonFind.Location = new Point(742, 63);
 			buttonFind.Name = "buttonFind";
 			buttonFind.Size = new Size(75, 30);
-			buttonFind.TabIndex = 11;
+			buttonFind.TabIndex = 12;
 			buttonFind.Text = "Find All";
 			buttonFind.UseVisualStyleBackColor = true;
 			buttonFind.Click += buttonStart_Click;
@@ -130,8 +131,8 @@
 			richTextBox.Font = new Font("Consolas", 10.5F, FontStyle.Regular, GraphicsUnit.Point, 0);
 			richTextBox.Location = new Point(7, 95);
 			richTextBox.Name = "richTextBox";
-			richTextBox.Size = new Size(811, 462);
-			richTextBox.TabIndex = 12;
+			richTextBox.Size = new Size(821, 462);
+			richTextBox.TabIndex = 13;
 			richTextBox.Text = "";
 			richTextBox.WordWrap = false;
 			richTextBox.DoubleClick += richTextBox_DoubleClick;
@@ -234,18 +235,27 @@
 			// textBoxGlob
 			// 
 			textBoxGlob.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-			textBoxGlob.Location = new Point(712, 12);
+			textBoxGlob.Location = new Point(676, 12);
 			textBoxGlob.Name = "textBoxGlob";
-			textBoxGlob.Size = new Size(105, 23);
+			textBoxGlob.Size = new Size(151, 23);
 			textBoxGlob.TabIndex = 10;
 			textBoxGlob.Text = "*.*";
+			// 
+			// textBoxEncoding
+			// 
+			textBoxEncoding.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+			textBoxEncoding.Location = new Point(676, 38);
+			textBoxEncoding.Name = "textBoxEncoding";
+			textBoxEncoding.Size = new Size(151, 23);
+			textBoxEncoding.TabIndex = 11;
 			// 
 			// FindInFilesForm
 			// 
 			AllowDrop = true;
 			AutoScaleDimensions = new SizeF(7F, 17F);
 			AutoScaleMode = AutoScaleMode.Font;
-			ClientSize = new Size(824, 561);
+			ClientSize = new Size(834, 561);
+			Controls.Add(textBoxEncoding);
 			Controls.Add(textBoxGlob);
 			Controls.Add(checkBoxRegex);
 			Controls.Add(checkBoxWholeWord);
@@ -294,5 +304,6 @@
 		private CheckBox checkBoxWholeWord;
 		private CheckBox checkBoxRegex;
 		private TextBox textBoxGlob;
+		private TextBox textBoxEncoding;
 	}
 }

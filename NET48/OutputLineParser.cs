@@ -83,6 +83,7 @@ namespace FindInFiles {
 			default:
 				return;
 			}
+
 			if (MaxContextLine != 0) {
 				if (outputLine.LineType == OutputLineType.Context) {
 					if (afterMatch) {
@@ -142,7 +143,6 @@ namespace FindInFiles {
 			return matches;
 		}
 	}
-
 
 	internal struct MatchTextRange {
 		public int Start;

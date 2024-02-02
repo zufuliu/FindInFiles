@@ -5,14 +5,15 @@ namespace FindInFiles {
 	public partial class FindInFilesForm : Form {
 		public FindInFilesForm(string[] args) {
 			InitializeComponent();
+			richTextBox.AllowDrop = true;
+			richTextBox.DragEnter += FindInFilesForm_DragEnter;
+			richTextBox.DragDrop += FindInFilesForm_DragDrop;
 			lineParser = new OutputLineParser(this, RenderOutput);
 			var font = Properties.Settings.Default.FindResultFont;
 			if (font != null) {
 				SetFindResultFont(font);
 			}
-			richTextBox.AllowDrop = true;
-			richTextBox.DragEnter += FindInFilesForm_DragEnter;
-			richTextBox.DragDrop += FindInFilesForm_DragDrop;
+			textBoxEncoding.Text = defaultEncoding;
 			var searchPath = false;
 			foreach (var arg in args) {
 				if (Util.PathExists(arg).exist) {
@@ -72,13 +73,17 @@ namespace FindInFiles {
 			if (checkBoxPcre2.Checked) {
 				argList.Add("-P");
 			}
-			if (!checkBoxRecursive.Checked) {
-				argList.Add("-d 1");
-			}
 			if (checkBoxInvert.Checked) {
 				argList.Add("-v");
 			}
+			text = textBoxEncoding.Text.Trim();
+			if (!string.IsNullOrEmpty(text) && !text.Equals(defaultEncoding, StringComparison.OrdinalIgnoreCase)) {
+				argList.Add($"-E \"{text.ToLowerInvariant()}\"");
+			}
 			if (directory) {
+				if (!checkBoxRecursive.Checked) {
+					argList.Add("-d 1");
+				}
 				var items = textBoxGlob.Text.Split(';');
 				for (var i = 0; i < items.Length; i++) {
 					var item = items[i].Trim();
@@ -123,6 +128,7 @@ namespace FindInFiles {
 		}
 
 		private readonly OutputLineParser lineParser;
+		private static readonly string defaultEncoding = "Unicode (UTF-8, UTF-16)";
 		private static readonly string MarkerPath = "\u200C"; // zero width non-joiner
 		private static readonly string MarkerLine = "\u200D"; // zero width joiner
 		private int visibleDelta = 0;
