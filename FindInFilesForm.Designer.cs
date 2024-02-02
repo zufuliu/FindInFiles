@@ -34,6 +34,9 @@
 			contextMenuStrip = new ContextMenuStrip(components);
 			clearAllToolStripMenuItem = new ToolStripMenuItem();
 			toolStripMenuItem1 = new ToolStripSeparator();
+			saveSearchHistoryToolStripMenuItem = new ToolStripMenuItem();
+			clearSearchHistoryToolStripMenuItem = new ToolStripMenuItem();
+			toolStripMenuItem3 = new ToolStripSeparator();
 			selectFontToolStripMenuItem = new ToolStripMenuItem();
 			checkBoxInvert = new CheckBox();
 			checkBoxMultiline = new CheckBox();
@@ -46,9 +49,8 @@
 			textBoxEncoding = new TextBox();
 			comboBoxSearchPath = new ComboBox();
 			comboBoxSearchPattern = new ComboBox();
-			saveSearchHistoryToolStripMenuItem = new ToolStripMenuItem();
-			clearSearchHistoryToolStripMenuItem = new ToolStripMenuItem();
-			toolStripMenuItem3 = new ToolStripSeparator();
+			openFileToolStripMenuItem = new ToolStripMenuItem();
+			toolStripMenuItem2 = new ToolStripSeparator();
 			contextMenuStrip.SuspendLayout();
 			SuspendLayout();
 			// 
@@ -126,9 +128,9 @@
 			// 
 			// contextMenuStrip
 			// 
-			contextMenuStrip.Items.AddRange(new ToolStripItem[] { clearAllToolStripMenuItem, toolStripMenuItem1, saveSearchHistoryToolStripMenuItem, clearSearchHistoryToolStripMenuItem, toolStripMenuItem3, selectFontToolStripMenuItem });
+			contextMenuStrip.Items.AddRange(new ToolStripItem[] { openFileToolStripMenuItem, toolStripMenuItem2, clearAllToolStripMenuItem, toolStripMenuItem1, saveSearchHistoryToolStripMenuItem, clearSearchHistoryToolStripMenuItem, toolStripMenuItem3, selectFontToolStripMenuItem });
 			contextMenuStrip.Name = "contextMenuStrip";
-			contextMenuStrip.Size = new Size(195, 126);
+			contextMenuStrip.Size = new Size(195, 132);
 			// 
 			// clearAllToolStripMenuItem
 			// 
@@ -141,6 +143,25 @@
 			// 
 			toolStripMenuItem1.Name = "toolStripMenuItem1";
 			toolStripMenuItem1.Size = new Size(191, 6);
+			// 
+			// saveSearchHistoryToolStripMenuItem
+			// 
+			saveSearchHistoryToolStripMenuItem.Name = "saveSearchHistoryToolStripMenuItem";
+			saveSearchHistoryToolStripMenuItem.Size = new Size(194, 22);
+			saveSearchHistoryToolStripMenuItem.Text = "Save Search History";
+			saveSearchHistoryToolStripMenuItem.Click += saveSearchHistoryToolStripMenuItem_Click;
+			// 
+			// clearSearchHistoryToolStripMenuItem
+			// 
+			clearSearchHistoryToolStripMenuItem.Name = "clearSearchHistoryToolStripMenuItem";
+			clearSearchHistoryToolStripMenuItem.Size = new Size(194, 22);
+			clearSearchHistoryToolStripMenuItem.Text = "Clear Search History";
+			clearSearchHistoryToolStripMenuItem.Click += clearSearchHistoryToolStripMenuItem_Click;
+			// 
+			// toolStripMenuItem3
+			// 
+			toolStripMenuItem3.Name = "toolStripMenuItem3";
+			toolStripMenuItem3.Size = new Size(191, 6);
 			// 
 			// selectFontToolStripMenuItem
 			// 
@@ -254,24 +275,17 @@
 			comboBoxSearchPattern.Size = new Size(562, 25);
 			comboBoxSearchPattern.TabIndex = 1;
 			// 
-			// saveSearchHistoryToolStripMenuItem
+			// openFileToolStripMenuItem
 			// 
-			saveSearchHistoryToolStripMenuItem.Name = "saveSearchHistoryToolStripMenuItem";
-			saveSearchHistoryToolStripMenuItem.Size = new Size(194, 22);
-			saveSearchHistoryToolStripMenuItem.Text = "Save Search History";
-			saveSearchHistoryToolStripMenuItem.Click += saveSearchHistoryToolStripMenuItem_Click;
+			openFileToolStripMenuItem.Name = "openFileToolStripMenuItem";
+			openFileToolStripMenuItem.Size = new Size(194, 22);
+			openFileToolStripMenuItem.Text = "Open File";
+			openFileToolStripMenuItem.Click += richTextBox_DoubleClick;
 			// 
-			// clearSearchHistoryToolStripMenuItem
+			// toolStripMenuItem2
 			// 
-			clearSearchHistoryToolStripMenuItem.Name = "clearSearchHistoryToolStripMenuItem";
-			clearSearchHistoryToolStripMenuItem.Size = new Size(194, 22);
-			clearSearchHistoryToolStripMenuItem.Text = "Clear Search History";
-			clearSearchHistoryToolStripMenuItem.Click += clearSearchHistoryToolStripMenuItem_Click;
-			// 
-			// toolStripMenuItem3
-			// 
-			toolStripMenuItem3.Name = "toolStripMenuItem3";
-			toolStripMenuItem3.Size = new Size(191, 6);
+			toolStripMenuItem2.Name = "toolStripMenuItem2";
+			toolStripMenuItem2.Size = new Size(191, 6);
 			// 
 			// FindInFilesForm
 			// 
@@ -333,5 +347,7 @@
 		private ToolStripMenuItem saveSearchHistoryToolStripMenuItem;
 		private ToolStripMenuItem clearSearchHistoryToolStripMenuItem;
 		private ToolStripSeparator toolStripMenuItem3;
+		private ToolStripMenuItem openFileToolStripMenuItem;
+		private ToolStripSeparator toolStripMenuItem2;
 	}
 }
