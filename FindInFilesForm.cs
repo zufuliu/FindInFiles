@@ -19,8 +19,12 @@ namespace FindInFiles {
 			comboBoxSearchPattern.Items.AddRange(settings.SearchPatternHistory);
 			textBoxEncoding.Text = defaultEncoding;
 			var searchPath = false;
-			foreach (var arg in args) {
-				if (Util.PathExists(arg).exist) {
+			for (var index = 0; index < args.Length; index++) {
+				var arg = args[index];
+				if (arg == "-E" && index + 1 < args.Length) {
+					++index;
+					textBoxEncoding.Text = args[index];
+				} else if (Util.PathExists(arg).exist) {
 					searchPath = true;
 					comboBoxSearchPath.Text = arg;
 					break;
