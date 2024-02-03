@@ -4,9 +4,9 @@ using System.IO;
 using System.Windows.Forms;
 
 namespace FindInFiles {
-	internal class OutputLineParser {
+	internal sealed class OutputLineParser {
 		private readonly Control owner;
-		private readonly Action<List<OutputLine>> callback;
+		private readonly OutputLineRender render;
 		private readonly List<OutputLine> cachedLines = new List<OutputLine>();
 
 		public int MaxContextLine = 0;
@@ -15,9 +15,9 @@ namespace FindInFiles {
 		private int contextLineCount = 0;
 		private bool afterMatch = false;
 
-		public OutputLineParser(Control owner, Action<List<OutputLine>> callback) {
+		public OutputLineParser(Control owner, OutputLineRender render) {
 			this.owner = owner;
-			this.callback = callback;
+			this.render = render;
 		}
 
 		public void Clear() {
@@ -27,11 +27,21 @@ namespace FindInFiles {
 			cachedLines.Clear();
 		}
 
+		public void Reset(int cache) {
+			Clear();
+			MaxCachedLine = cache;
+		}
+
 		public void Flush() {
 			if (cachedLines.Count != 0) {
-				callback(cachedLines);
-				cachedLines.Clear();
+				RenderOutput();
 			}
+			render.Invalidate();
+		}
+
+		private void RenderOutput() {
+			render.RenderOutput(cachedLines);
+			cachedLines.Clear();
 		}
 
 		public void Parse(string line) {
@@ -103,8 +113,7 @@ namespace FindInFiles {
 			}
 			cachedLines.Add(outputLine);
 			if (cachedLines.Count >= MaxCachedLine) {
-				owner.Invoke(callback, cachedLines);
-				cachedLines.Clear();
+				owner.Invoke(new Action(RenderOutput));
 			}
 		}
 

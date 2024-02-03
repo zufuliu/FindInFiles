@@ -59,6 +59,7 @@
       <DependentUpon>FindInFilesForm.cs</DependentUpon>
     </Compile>
     <Compile Include="JsonParser.cs" />
+    <Compile Include="OutputLineRender.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="OutputLineParser.cs" />

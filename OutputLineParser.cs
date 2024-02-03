@@ -1,9 +1,9 @@
 using System.Text.Json;
 
 namespace FindInFiles {
-	internal class OutputLineParser {
+	internal sealed class OutputLineParser {
 		private readonly Control owner;
-		private readonly Action<List<OutputLine>> callback;
+		private readonly OutputLineRender render;
 		private readonly List<OutputLine> cachedLines = new();
 
 		public int MaxContextLine = 0;
@@ -12,9 +12,9 @@ namespace FindInFiles {
 		private int contextLineCount = 0;
 		private bool afterMatch = false;
 
-		public OutputLineParser(Control owner, Action<List<OutputLine>> callback) {
+		public OutputLineParser(Control owner, OutputLineRender render) {
 			this.owner = owner;
-			this.callback = callback;
+			this.render = render;
 		}
 
 		public void Clear() {
@@ -24,11 +24,21 @@ namespace FindInFiles {
 			cachedLines.Clear();
 		}
 
+		public void Reset(int cache) {
+			Clear();
+			MaxCachedLine = cache;
+		}
+
 		public void Flush() {
 			if (cachedLines.Count != 0) {
-				callback(cachedLines);
-				cachedLines.Clear();
+				RenderOutput();
 			}
+			render.Invalidate();
+		}
+
+		private void RenderOutput() {
+			render.RenderOutput(cachedLines);
+			cachedLines.Clear();
 		}
 
 		public void Parse(string line) {
@@ -51,7 +61,7 @@ namespace FindInFiles {
 				var text = data.GetProperty("lines").GetProperty("text").GetString();
 				var number = data.GetProperty("line_number").GetInt32();
 				var submatches = data.GetProperty("submatches");
-				var matches = OutputLineParser.ParseSubMatches(text, submatches);
+				var matches = ParseSubMatches(text, submatches);
 				outputLine = new OutputLine { LineType = OutputLineType.Match, Text = text, Number = number, Matches = matches };
 			} break;
 
@@ -100,8 +110,7 @@ namespace FindInFiles {
 			}
 			cachedLines.Add(outputLine);
 			if (cachedLines.Count >= MaxCachedLine) {
-				owner.Invoke(callback, cachedLines);
-				cachedLines.Clear();
+				owner.Invoke(RenderOutput);
 			}
 		}
 
@@ -158,7 +167,7 @@ namespace FindInFiles {
 		Summary,
 	}
 
-	internal class OutputLine {
+	internal sealed class OutputLine {
 		public OutputLineType LineType;
 		public int Number;
 		public string? Text;

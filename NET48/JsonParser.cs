@@ -254,7 +254,7 @@ namespace FindInFiles {
 		Object,
 	}
 
-	internal class JsonValue {
+	internal sealed class JsonValue {
 		public readonly JsonValueType ValueType;
 		private readonly string str;
 		private readonly List<JsonValue> list;
