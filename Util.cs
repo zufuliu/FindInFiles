@@ -81,7 +81,7 @@ namespace FindInFiles {
 		}
 
 		public static void StartEditor(string path, int line, int column) {
-			var exePath = FindExePath("Notepad2.exe");
+			var exePath = FindExePath("Notepad4.exe");
 			if (!File.Exists(exePath)) {
 				return;
 			}
