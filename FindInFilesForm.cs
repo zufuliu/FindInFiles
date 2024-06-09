@@ -16,8 +16,8 @@ namespace FindInFiles {
 				lineRender.Font = font;
 			}
 			saveSearchHistoryToolStripMenuItem.Checked = settings.SaveSearchHistory;
-			comboBoxSearchPath.Items.AddRange(settings.SearchPathHistory);
-			comboBoxSearchPattern.Items.AddRange(settings.SearchPatternHistory);
+			comboBoxSearchPath.AddRange(settings.SearchPathHistory);
+			comboBoxSearchPattern.AddRange(settings.SearchPatternHistory);
 			textBoxEncoding.Text = defaultEncoding;
 			var searchPath = false;
 			for (var index = 0; index < args.Length; index++) {
@@ -194,8 +194,8 @@ namespace FindInFiles {
 		private const int MaxSearchHistoryCount = 32;
 
 		private void SaveSearchHistory(string searchPath, string pattern) {
-			comboBoxSearchPath.Items.AddToTop(searchPath);
-			comboBoxSearchPattern.Items.AddToTop(pattern);
+			comboBoxSearchPath.AddToTop(searchPath);
+			comboBoxSearchPattern.AddToTop(pattern);
 			var settings = Properties.Settings.Default;
 			if (settings.SaveSearchHistory) {
 				var collection = settings.SearchPathHistory;

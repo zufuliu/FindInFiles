@@ -178,24 +178,26 @@ namespace FindInFiles {
 		[DllImport("user32.dll", CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Unicode)]
 		static extern int SendMessage(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam);
 
-		public static void AddRange(this ComboBox.ObjectCollection collection, StringCollection? strings) {
+		public static void AddRange(this ComboBox comboBox, StringCollection? strings) {
 			if (strings != null) {
 				var count = strings.Count;
 				if (count != 0) {
 					var items = new string[count];
 					strings.CopyTo(items, 0);
-					collection.AddRange(items);
+					comboBox.Items.AddRange(items);
 				}
 			}
 		}
 
-		public static void AddToTop(this ComboBox.ObjectCollection collection, string value) {
+		public static void AddToTop(this ComboBox comboBox, string value) {
+			var collection = comboBox.Items;
 			var index = collection.IndexOf(value);
 			if (index != 0) {
 				collection.Insert(0, value);
 				if (index > 0) {
-					collection.RemoveAt(index);
+					collection.RemoveAt(index + 1);
 				}
+				comboBox.SelectedIndex = 0;
 			}
 		}
 
@@ -212,7 +214,7 @@ namespace FindInFiles {
 				if (index != 0) {
 					collection.Insert(0, value);
 					if (index > 0) {
-						collection.RemoveAt(index);
+						collection.RemoveAt(index + 1);
 					}
 					index = collection.Count;
 					if (index > maxCount) {
