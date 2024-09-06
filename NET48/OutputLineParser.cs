@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Windows.Forms;
 
 namespace FindInFiles {
@@ -44,6 +45,18 @@ namespace FindInFiles {
 			cachedLines.Clear();
 		}
 
+		private static string GetText(JsonValue element) {
+			string text;
+			if (element.TryGetValue("text", out var prop)) {
+				text = prop.GetString();
+			} else {
+				text = element["bytes"].GetString();
+				var bytes = Convert.FromBase64String(text ?? "");
+				text = Encoding.UTF8.GetString(bytes);
+			}
+			return text;
+		}
+
 		public void Parse(string line) {
 			var root = JsonParser.Parse(line);
 			if (root == null || root.ValueType != JsonValueType.Object) {
@@ -61,7 +74,7 @@ namespace FindInFiles {
 			} break;
 
 			case "match": {
-				var text = data["lines"]["text"].GetString();
+				var text = GetText(data["lines"]);
 				var number = data["line_number"].GetString();
 				var submatches = data["submatches"];
 				var matches = ParseSubMatches(text, submatches);
@@ -69,7 +82,7 @@ namespace FindInFiles {
 			} break;
 
 			case "context": {
-				var text = data["lines"]["text"].GetString();
+				var text = GetText(data["lines"]);
 				var number = data["line_number"].GetString();
 				outputLine = new OutputLine { LineType = OutputLineType.Context, Text = text, Number = number };
 			} break;

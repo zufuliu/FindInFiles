@@ -1,3 +1,4 @@
+using System.Text;
 using System.Text.Json;
 
 namespace FindInFiles {
@@ -41,6 +42,18 @@ namespace FindInFiles {
 			cachedLines.Clear();
 		}
 
+		private static string? GetText(JsonElement element) {
+			string? text;
+			if (element.TryGetProperty("text", out var prop)) {
+				text = prop.GetString();
+			} else {
+				text = element.GetProperty("bytes").GetString();
+				var bytes = Convert.FromBase64String(text ?? "");
+				text = Encoding.UTF8.GetString(bytes);
+			}
+			return text;
+		}
+
 		public void Parse(string line) {
 			var root = JsonDocument.Parse(line).RootElement;
 			if (root.ValueKind != JsonValueKind.Object) {
@@ -58,7 +71,7 @@ namespace FindInFiles {
 			} break;
 
 			case "match": {
-				var text = data.GetProperty("lines").GetProperty("text").GetString();
+				var text = GetText(data.GetProperty("lines"));
 				var number = data.GetProperty("line_number").GetInt32();
 				var submatches = data.GetProperty("submatches");
 				var matches = ParseSubMatches(text, submatches);
@@ -66,7 +79,7 @@ namespace FindInFiles {
 			} break;
 
 			case "context": {
-				var text = data.GetProperty("lines").GetProperty("text").GetString();
+				var text = GetText(data.GetProperty("lines"));
 				var number = data.GetProperty("line_number").GetInt32();
 				outputLine = new OutputLine { LineType = OutputLineType.Context, Text = text, Number = number };
 			} break;
