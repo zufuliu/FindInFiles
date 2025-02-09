@@ -7,10 +7,10 @@ namespace FindInFiles {
 		private readonly OutputLineRender render;
 		private readonly List<OutputLine> cachedLines = new();
 
-		public int MaxContextLine = 0;
+		public int MaxLinesAfterMatch = 0;
 		public int MaxCachedLine = 0;
 		public int TotalMatchCount = 0;
-		private int contextLineCount = 0;
+		private int linesAfterMatch = 0;
 		private bool afterMatch = false;
 
 		public OutputLineParser(Control owner, OutputLineRender render) {
@@ -20,7 +20,7 @@ namespace FindInFiles {
 
 		public void Clear() {
 			TotalMatchCount = 0;
-			contextLineCount = 0;
+			linesAfterMatch = 0;
 			afterMatch = false;
 			cachedLines.Clear();
 		}
@@ -107,17 +107,17 @@ namespace FindInFiles {
 				return;
 			}
 
-			if (MaxContextLine != 0) {
+			if (MaxLinesAfterMatch != 0) {
 				if (outputLine.LineType == OutputLineType.Context) {
 					if (afterMatch) {
-						++contextLineCount;
-						if (contextLineCount > MaxContextLine) {
+						++linesAfterMatch;
+						if (linesAfterMatch > MaxLinesAfterMatch) {
 							afterMatch = false;
 							cachedLines.Add(new OutputLine { LineType = OutputLineType.Separator, Text = "--" });
 						}
 					}
 				} else {
-					contextLineCount = 0;
+					linesAfterMatch = 0;
 					afterMatch = outputLine.LineType == OutputLineType.Match;
 				}
 			}

@@ -67,11 +67,26 @@ namespace FindInFiles {
 			var argList = new List<string> {
 				"--json --crlf"
 			};
+			lineParser.MaxLinesAfterMatch = 0;
 			var text = textBoxContexLine.Text.Trim();
-			lineParser.MaxContextLine = 0;
-			if (int.TryParse(text, out int line) && line > 0) {
-				lineParser.MaxContextLine = line;
-				argList.Add($"-C {line}");
+			if (text.Length != 0) {
+				var lines = text.Split(',');
+				int.TryParse(lines[0], out var before);
+				if (lines.Length > 1) {
+					int.TryParse(lines[1], out var after);
+					if (before > 0) {
+						argList.Add($"-B {before}");
+					}
+					if (after > 0) {
+						argList.Add($"-A {after}");
+						if (before > 0) {
+							lineParser.MaxLinesAfterMatch = after;
+						}
+					}
+				} else if (before > 0) {
+					lineParser.MaxLinesAfterMatch = before;
+					argList.Add($"-C {before}");
+				}
 			}
 			if (!checkBoxRegex.Checked) {
 				argList.Add("-F");
