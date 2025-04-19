@@ -112,8 +112,8 @@ namespace FindInFiles {
 			if (lineno < 1) {
 				return;
 			}
-			var end = richTextBox.GetFirstCharIndexFromLine(lineno + 1);
-			end = richTextBox.Find(MarkerLine, start, end, RichTextBoxFinds.MatchCase | RichTextBoxFinds.NoHighlight);
+			var lineEnd = richTextBox.GetFirstCharIndexFromLine(lineno + 1);
+			var end = richTextBox.Find(MarkerLine, start, lineEnd, RichTextBoxFinds.MatchCase | RichTextBoxFinds.NoHighlight);
 			if (end > start) {
 				var text = richTextBox.GetTextRange(start, end);
 				if (int.TryParse(text, out var num)) {
@@ -127,6 +127,12 @@ namespace FindInFiles {
 						column = richTextBox.SelectionStart - column;
 						Util.StartEditor(text, num, column);
 					}
+				}
+			} else {
+				end = richTextBox.Find(MarkerPath, start, lineEnd, RichTextBoxFinds.MatchCase | RichTextBoxFinds.NoHighlight);
+				if (end >= start) {
+					var text = richTextBox.GetTextRange(end + MarkerPath.Length, lineEnd).Trim();
+					Util.StartEditor(text, 0, 0);
 				}
 			}
 		}
