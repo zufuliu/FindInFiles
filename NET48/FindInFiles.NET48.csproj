@@ -34,6 +34,7 @@
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Prefer32Bit>false</Prefer32Bit>
+    <PreferNativeArm64>true</PreferNativeArm64>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>FindInFiles.Program</StartupObject>
