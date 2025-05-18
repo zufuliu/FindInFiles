@@ -8,8 +8,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <StartupObject>FindInFiles.Program</StartupObject>
-    <Version>24.09.0.0</Version>
-    <Copyright>Copyright © Zufu Liu 2024</Copyright>
+    <Version>24.05.0.0</Version>
+    <Copyright>Copyright © Zufu Liu 2025</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
