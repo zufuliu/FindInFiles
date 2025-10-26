@@ -265,6 +265,7 @@ namespace FindInFiles {
 			// textBoxGlob
 			// 
 			this.textBoxGlob.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBoxGlob.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
 			this.textBoxGlob.Location = new System.Drawing.Point(635, 8);
 			this.textBoxGlob.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.textBoxGlob.Name = "textBoxGlob";
@@ -275,6 +276,7 @@ namespace FindInFiles {
 			// textBoxEncoding
 			// 
 			this.textBoxEncoding.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBoxEncoding.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
 			this.textBoxEncoding.Location = new System.Drawing.Point(635, 32);
 			this.textBoxEncoding.Name = "textBoxEncoding";
 			this.textBoxEncoding.Size = new System.Drawing.Size(144, 21);
@@ -284,6 +286,7 @@ namespace FindInFiles {
 			// 
 			this.comboBoxSearchPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.comboBoxSearchPath.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
 			this.comboBoxSearchPath.FormattingEnabled = true;
 			this.comboBoxSearchPath.Location = new System.Drawing.Point(103, 8);
 			this.comboBoxSearchPath.MaxDropDownItems = 16;
@@ -295,6 +298,7 @@ namespace FindInFiles {
 			// 
 			this.comboBoxSearchPattern.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.comboBoxSearchPattern.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
 			this.comboBoxSearchPattern.FormattingEnabled = true;
 			this.comboBoxSearchPattern.Location = new System.Drawing.Point(103, 32);
 			this.comboBoxSearchPattern.MaxDropDownItems = 16;
