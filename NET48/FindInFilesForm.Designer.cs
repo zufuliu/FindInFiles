@@ -287,6 +287,7 @@ namespace FindInFiles {
 			this.comboBoxSearchPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.comboBoxSearchPath.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+			this.comboBoxSearchPath.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystem;
 			this.comboBoxSearchPath.FormattingEnabled = true;
 			this.comboBoxSearchPath.Location = new System.Drawing.Point(103, 8);
 			this.comboBoxSearchPath.MaxDropDownItems = 16;
