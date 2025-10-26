@@ -244,7 +244,6 @@
 			// 
 			textBoxGlob.Anchor = AnchorStyles.Top | AnchorStyles.Right;
 			textBoxGlob.AutoCompleteMode = AutoCompleteMode.Suggest;
-			textBoxGlob.AutoCompleteSource = AutoCompleteSource.FileSystem;
 			textBoxGlob.Location = new Point(676, 12);
 			textBoxGlob.Name = "textBoxGlob";
 			textBoxGlob.Size = new Size(151, 23);
@@ -264,6 +263,7 @@
 			// 
 			comboBoxSearchPath.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
 			comboBoxSearchPath.AutoCompleteMode = AutoCompleteMode.Suggest;
+			comboBoxSearchPath.AutoCompleteSource = AutoCompleteSource.FileSystem;
 			comboBoxSearchPath.FormattingEnabled = true;
 			comboBoxSearchPath.Location = new Point(108, 12);
 			comboBoxSearchPath.Name = "comboBoxSearchPath";
