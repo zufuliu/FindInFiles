@@ -243,6 +243,7 @@
 			// textBoxGlob
 			// 
 			textBoxGlob.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+			textBoxGlob.AutoCompleteMode = AutoCompleteMode.Suggest;
 			textBoxGlob.Location = new Point(676, 12);
 			textBoxGlob.Name = "textBoxGlob";
 			textBoxGlob.Size = new Size(151, 23);
@@ -252,6 +253,7 @@
 			// textBoxEncoding
 			// 
 			textBoxEncoding.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+			textBoxEncoding.AutoCompleteMode = AutoCompleteMode.Suggest;
 			textBoxEncoding.Location = new Point(676, 38);
 			textBoxEncoding.Name = "textBoxEncoding";
 			textBoxEncoding.Size = new Size(151, 23);
@@ -260,6 +262,8 @@
 			// comboBoxSearchPath
 			// 
 			comboBoxSearchPath.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+			comboBoxSearchPath.AutoCompleteMode = AutoCompleteMode.Suggest;
+			comboBoxSearchPath.AutoCompleteSource = AutoCompleteSource.FileSystem;
 			comboBoxSearchPath.FormattingEnabled = true;
 			comboBoxSearchPath.Location = new Point(108, 12);
 			comboBoxSearchPath.Name = "comboBoxSearchPath";
@@ -269,6 +273,7 @@
 			// comboBoxSearchPattern
 			// 
 			comboBoxSearchPattern.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+			comboBoxSearchPattern.AutoCompleteMode = AutoCompleteMode.Suggest;
 			comboBoxSearchPattern.FormattingEnabled = true;
 			comboBoxSearchPattern.Location = new Point(108, 38);
 			comboBoxSearchPattern.Name = "comboBoxSearchPattern";
