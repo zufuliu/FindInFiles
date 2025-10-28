@@ -21,17 +21,17 @@ jobs:
       run: |
         dotnet build --configuration Release
 
-    - uses: actions/upload-artifact@v4
+    - uses: actions/upload-artifact@v5
       with:
           name: FindInFiles-net4.8
           path: 'NET48/bin/Release/'
 
-    - uses: actions/upload-artifact@v4
+    - uses: actions/upload-artifact@v5
       with:
           name: FindInFiles-net9.0
           path: 'bin/Release/net9.0-windows/'
 
-    - uses: actions/upload-artifact@v4
+    - uses: actions/upload-artifact@v5
       with:
           name: FindInFiles-net8.0
           path: 'bin/Release/net8.0-windows/'
