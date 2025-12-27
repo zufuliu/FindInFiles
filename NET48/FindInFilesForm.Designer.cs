@@ -34,6 +34,8 @@ namespace FindInFiles {
 			this.buttonFind = new System.Windows.Forms.Button();
 			this.richTextBox = new System.Windows.Forms.RichTextBox();
 			this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.openFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
 			this.clearAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
 			this.saveSearchHistoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,44 +53,45 @@ namespace FindInFiles {
 			this.textBoxEncoding = new System.Windows.Forms.TextBox();
 			this.comboBoxSearchPath = new System.Windows.Forms.ComboBox();
 			this.comboBoxSearchPattern = new System.Windows.Forms.ComboBox();
-			this.openFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
 			this.contextMenuStrip.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(23, 12);
+			this.label2.Location = new System.Drawing.Point(25, 12);
+			this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(77, 12);
+			this.label2.Size = new System.Drawing.Size(72, 15);
 			this.label2.TabIndex = 3;
 			this.label2.Text = "Search Path:";
 			// 
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(6, 36);
+			this.label3.Location = new System.Drawing.Point(9, 36);
+			this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(95, 12);
+			this.label3.Size = new System.Drawing.Size(86, 15);
 			this.label3.TabIndex = 5;
 			this.label3.Text = "Search Pattern:";
 			// 
 			// label4
 			// 
 			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(12, 60);
+			this.label4.Location = new System.Drawing.Point(14, 62);
+			this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(89, 12);
+			this.label4.Size = new System.Drawing.Size(81, 15);
 			this.label4.TabIndex = 7;
 			this.label4.Text = "Context Lines:";
 			// 
 			// textBoxContexLine
 			// 
-			this.textBoxContexLine.Location = new System.Drawing.Point(103, 56);
-			this.textBoxContexLine.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.textBoxContexLine.Location = new System.Drawing.Point(98, 58);
+			this.textBoxContexLine.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
 			this.textBoxContexLine.Name = "textBoxContexLine";
-			this.textBoxContexLine.Size = new System.Drawing.Size(43, 21);
+			this.textBoxContexLine.Size = new System.Drawing.Size(54, 23);
 			this.textBoxContexLine.TabIndex = 2;
 			this.textBoxContexLine.Text = "0";
 			// 
@@ -97,20 +100,20 @@ namespace FindInFiles {
 			this.checkBoxMatchCase.AutoSize = true;
 			this.checkBoxMatchCase.Checked = true;
 			this.checkBoxMatchCase.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.checkBoxMatchCase.Location = new System.Drawing.Point(210, 58);
-			this.checkBoxMatchCase.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.checkBoxMatchCase.Location = new System.Drawing.Point(222, 61);
+			this.checkBoxMatchCase.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
 			this.checkBoxMatchCase.Name = "checkBoxMatchCase";
-			this.checkBoxMatchCase.Size = new System.Drawing.Size(84, 16);
+			this.checkBoxMatchCase.Size = new System.Drawing.Size(86, 19);
 			this.checkBoxMatchCase.TabIndex = 4;
 			this.checkBoxMatchCase.Text = "Match case";
 			this.checkBoxMatchCase.UseVisualStyleBackColor = true;
 			// 
 			// buttonFind
 			// 
-			this.buttonFind.Location = new System.Drawing.Point(678, 55);
-			this.buttonFind.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.buttonFind.Location = new System.Drawing.Point(723, 57);
+			this.buttonFind.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
 			this.buttonFind.Name = "buttonFind";
-			this.buttonFind.Size = new System.Drawing.Size(64, 21);
+			this.buttonFind.Size = new System.Drawing.Size(75, 26);
 			this.buttonFind.TabIndex = 12;
 			this.buttonFind.Text = "Find All";
 			this.buttonFind.UseVisualStyleBackColor = true;
@@ -125,9 +128,10 @@ namespace FindInFiles {
 			this.richTextBox.ContextMenuStrip = this.contextMenuStrip;
 			this.richTextBox.DetectUrls = false;
 			this.richTextBox.Font = new System.Drawing.Font("Consolas", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.richTextBox.Location = new System.Drawing.Point(6, 79);
+			this.richTextBox.Location = new System.Drawing.Point(7, 87);
+			this.richTextBox.Margin = new System.Windows.Forms.Padding(4);
 			this.richTextBox.Name = "richTextBox";
-			this.richTextBox.Size = new System.Drawing.Size(773, 480);
+			this.richTextBox.Size = new System.Drawing.Size(815, 457);
 			this.richTextBox.TabIndex = 13;
 			this.richTextBox.Text = "";
 			this.richTextBox.WordWrap = false;
@@ -146,6 +150,18 @@ namespace FindInFiles {
             this.selectFontToolStripMenuItem});
 			this.contextMenuStrip.Name = "contextMenuStrip";
 			this.contextMenuStrip.Size = new System.Drawing.Size(195, 132);
+			// 
+			// openFileToolStripMenuItem
+			// 
+			this.openFileToolStripMenuItem.Name = "openFileToolStripMenuItem";
+			this.openFileToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
+			this.openFileToolStripMenuItem.Text = "Open File";
+			this.openFileToolStripMenuItem.Click += new System.EventHandler(this.richTextBox_DoubleClick);
+			// 
+			// toolStripMenuItem1
+			// 
+			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+			this.toolStripMenuItem1.Size = new System.Drawing.Size(191, 6);
 			// 
 			// clearAllToolStripMenuItem
 			// 
@@ -189,10 +205,10 @@ namespace FindInFiles {
 			// checkBoxInvert
 			// 
 			this.checkBoxInvert.AutoSize = true;
-			this.checkBoxInvert.Location = new System.Drawing.Point(613, 58);
-			this.checkBoxInvert.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.checkBoxInvert.Location = new System.Drawing.Point(659, 61);
+			this.checkBoxInvert.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
 			this.checkBoxInvert.Name = "checkBoxInvert";
-			this.checkBoxInvert.Size = new System.Drawing.Size(60, 16);
+			this.checkBoxInvert.Size = new System.Drawing.Size(56, 19);
 			this.checkBoxInvert.TabIndex = 9;
 			this.checkBoxInvert.Text = "Invert";
 			this.checkBoxInvert.UseVisualStyleBackColor = true;
@@ -200,10 +216,10 @@ namespace FindInFiles {
 			// checkBoxMultiline
 			// 
 			this.checkBoxMultiline.AutoSize = true;
-			this.checkBoxMultiline.Location = new System.Drawing.Point(388, 58);
-			this.checkBoxMultiline.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.checkBoxMultiline.Location = new System.Drawing.Point(416, 61);
+			this.checkBoxMultiline.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
 			this.checkBoxMultiline.Name = "checkBoxMultiline";
-			this.checkBoxMultiline.Size = new System.Drawing.Size(78, 16);
+			this.checkBoxMultiline.Size = new System.Drawing.Size(73, 19);
 			this.checkBoxMultiline.TabIndex = 6;
 			this.checkBoxMultiline.Text = "Multiline";
 			this.checkBoxMultiline.UseVisualStyleBackColor = true;
@@ -211,10 +227,10 @@ namespace FindInFiles {
 			// checkBoxPcre2
 			// 
 			this.checkBoxPcre2.AutoSize = true;
-			this.checkBoxPcre2.Location = new System.Drawing.Point(471, 58);
-			this.checkBoxPcre2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.checkBoxPcre2.Location = new System.Drawing.Point(502, 61);
+			this.checkBoxPcre2.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
 			this.checkBoxPcre2.Name = "checkBoxPcre2";
-			this.checkBoxPcre2.Size = new System.Drawing.Size(54, 16);
+			this.checkBoxPcre2.Size = new System.Drawing.Size(60, 19);
 			this.checkBoxPcre2.TabIndex = 7;
 			this.checkBoxPcre2.Text = "PCRE2";
 			this.checkBoxPcre2.UseVisualStyleBackColor = true;
@@ -224,10 +240,10 @@ namespace FindInFiles {
 			this.checkBoxRecursive.AutoSize = true;
 			this.checkBoxRecursive.Checked = true;
 			this.checkBoxRecursive.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.checkBoxRecursive.Location = new System.Drawing.Point(530, 58);
-			this.checkBoxRecursive.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.checkBoxRecursive.Location = new System.Drawing.Point(570, 61);
+			this.checkBoxRecursive.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
 			this.checkBoxRecursive.Name = "checkBoxRecursive";
-			this.checkBoxRecursive.Size = new System.Drawing.Size(78, 16);
+			this.checkBoxRecursive.Size = new System.Drawing.Size(76, 19);
 			this.checkBoxRecursive.TabIndex = 8;
 			this.checkBoxRecursive.Text = "Recursive";
 			this.checkBoxRecursive.UseVisualStyleBackColor = true;
@@ -243,10 +259,10 @@ namespace FindInFiles {
 			this.checkBoxRegex.AutoSize = true;
 			this.checkBoxRegex.Checked = true;
 			this.checkBoxRegex.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.checkBoxRegex.Location = new System.Drawing.Point(151, 58);
-			this.checkBoxRegex.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.checkBoxRegex.Location = new System.Drawing.Point(156, 61);
+			this.checkBoxRegex.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
 			this.checkBoxRegex.Name = "checkBoxRegex";
-			this.checkBoxRegex.Size = new System.Drawing.Size(54, 16);
+			this.checkBoxRegex.Size = new System.Drawing.Size(57, 19);
 			this.checkBoxRegex.TabIndex = 3;
 			this.checkBoxRegex.Text = "Regex";
 			this.checkBoxRegex.UseVisualStyleBackColor = true;
@@ -254,10 +270,10 @@ namespace FindInFiles {
 			// checkBoxWholeWord
 			// 
 			this.checkBoxWholeWord.AutoSize = true;
-			this.checkBoxWholeWord.Location = new System.Drawing.Point(299, 58);
-			this.checkBoxWholeWord.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.checkBoxWholeWord.Location = new System.Drawing.Point(316, 61);
+			this.checkBoxWholeWord.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
 			this.checkBoxWholeWord.Name = "checkBoxWholeWord";
-			this.checkBoxWholeWord.Size = new System.Drawing.Size(84, 16);
+			this.checkBoxWholeWord.Size = new System.Drawing.Size(90, 19);
 			this.checkBoxWholeWord.TabIndex = 5;
 			this.checkBoxWholeWord.Text = "Whole word";
 			this.checkBoxWholeWord.UseVisualStyleBackColor = true;
@@ -266,10 +282,10 @@ namespace FindInFiles {
 			// 
 			this.textBoxGlob.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxGlob.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-			this.textBoxGlob.Location = new System.Drawing.Point(635, 8);
-			this.textBoxGlob.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.textBoxGlob.Location = new System.Drawing.Point(654, 8);
+			this.textBoxGlob.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
 			this.textBoxGlob.Name = "textBoxGlob";
-			this.textBoxGlob.Size = new System.Drawing.Size(144, 21);
+			this.textBoxGlob.Size = new System.Drawing.Size(159, 23);
 			this.textBoxGlob.TabIndex = 10;
 			this.textBoxGlob.Text = "*.*";
 			// 
@@ -277,9 +293,10 @@ namespace FindInFiles {
 			// 
 			this.textBoxEncoding.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxEncoding.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-			this.textBoxEncoding.Location = new System.Drawing.Point(635, 32);
+			this.textBoxEncoding.Location = new System.Drawing.Point(654, 33);
+			this.textBoxEncoding.Margin = new System.Windows.Forms.Padding(4);
 			this.textBoxEncoding.Name = "textBoxEncoding";
-			this.textBoxEncoding.Size = new System.Drawing.Size(144, 21);
+			this.textBoxEncoding.Size = new System.Drawing.Size(159, 23);
 			this.textBoxEncoding.TabIndex = 11;
 			// 
 			// comboBoxSearchPath
@@ -289,10 +306,11 @@ namespace FindInFiles {
 			this.comboBoxSearchPath.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
 			this.comboBoxSearchPath.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystem;
 			this.comboBoxSearchPath.FormattingEnabled = true;
-			this.comboBoxSearchPath.Location = new System.Drawing.Point(103, 8);
+			this.comboBoxSearchPath.Location = new System.Drawing.Point(98, 8);
+			this.comboBoxSearchPath.Margin = new System.Windows.Forms.Padding(4);
 			this.comboBoxSearchPath.MaxDropDownItems = 16;
 			this.comboBoxSearchPath.Name = "comboBoxSearchPath";
-			this.comboBoxSearchPath.Size = new System.Drawing.Size(526, 20);
+			this.comboBoxSearchPath.Size = new System.Drawing.Size(549, 23);
 			this.comboBoxSearchPath.TabIndex = 0;
 			// 
 			// comboBoxSearchPattern
@@ -301,30 +319,19 @@ namespace FindInFiles {
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.comboBoxSearchPattern.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
 			this.comboBoxSearchPattern.FormattingEnabled = true;
-			this.comboBoxSearchPattern.Location = new System.Drawing.Point(103, 32);
+			this.comboBoxSearchPattern.Location = new System.Drawing.Point(98, 32);
+			this.comboBoxSearchPattern.Margin = new System.Windows.Forms.Padding(4);
 			this.comboBoxSearchPattern.MaxDropDownItems = 16;
 			this.comboBoxSearchPattern.Name = "comboBoxSearchPattern";
-			this.comboBoxSearchPattern.Size = new System.Drawing.Size(526, 20);
+			this.comboBoxSearchPattern.Size = new System.Drawing.Size(549, 23);
 			this.comboBoxSearchPattern.TabIndex = 1;
-			// 
-			// openFileToolStripMenuItem
-			// 
-			this.openFileToolStripMenuItem.Name = "openFileToolStripMenuItem";
-			this.openFileToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
-			this.openFileToolStripMenuItem.Text = "Open File";
-			this.openFileToolStripMenuItem.Click += new System.EventHandler(this.richTextBox_DoubleClick);
-			// 
-			// toolStripMenuItem1
-			// 
-			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-			this.toolStripMenuItem1.Size = new System.Drawing.Size(191, 6);
 			// 
 			// FindInFilesForm
 			// 
 			this.AllowDrop = true;
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(784, 561);
+			this.ClientSize = new System.Drawing.Size(828, 548);
 			this.Controls.Add(this.comboBoxSearchPattern);
 			this.Controls.Add(this.comboBoxSearchPath);
 			this.Controls.Add(this.textBoxEncoding);
@@ -343,7 +350,8 @@ namespace FindInFiles {
 			this.Controls.Add(this.label3);
 			this.Controls.Add(this.label2);
 			this.DoubleBuffered = true;
-			this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
 			this.Name = "FindInFilesForm";
 			this.Text = "Find in Files";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FindInFilesForm_FormClosing);
