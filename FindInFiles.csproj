@@ -9,8 +9,8 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <RollForward>major</RollForward>
     <StartupObject>FindInFiles.Program</StartupObject>
-    <Version>25.11.0.0</Version>
-    <Copyright>Copyright © Zufu Liu 2025</Copyright>
+    <Version>26.01.0.0</Version>
+    <Copyright>Copyright © Zufu Liu 2026</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
