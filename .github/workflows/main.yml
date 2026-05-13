@@ -4,9 +4,9 @@ on: [push, pull_request]
 
 jobs:
 
-  vs2022:
-    name: Visual Studio 2022
-    runs-on: windows-2022
+  build:
+    name: Visual Studio 2026
+    runs-on: windows-2025-vs2026
     steps:
     - uses: actions/checkout@v6
 
@@ -15,23 +15,23 @@ jobs:
       with:
         dotnet-version: |
           8.0.x
-          9.0.x
+          10.0.x
 
     - name: Build
       run: |
         dotnet build --configuration Release
 
-    - uses: actions/upload-artifact@v6
+    - uses: actions/upload-artifact@v7
       with:
           name: FindInFiles-net4.8
           path: 'NET48/bin/Release/'
 
-    - uses: actions/upload-artifact@v6
+    - uses: actions/upload-artifact@v7
       with:
-          name: FindInFiles-net9.0
-          path: 'bin/Release/net9.0-windows/'
+          name: FindInFiles-net10.0
+          path: 'bin/Release/net10.0-windows/'
 
-    - uses: actions/upload-artifact@v6
+    - uses: actions/upload-artifact@v7
       with:
           name: FindInFiles-net8.0
           path: 'bin/Release/net8.0-windows/'
