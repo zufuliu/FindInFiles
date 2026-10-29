@@ -9,6 +9,7 @@ using System.Windows.Forms;
 
 namespace FindInFiles {
 	public partial class FindInFilesForm : Form {
+		private Process process = null;
 		public FindInFilesForm(string[] args) {
 			InitializeComponent();
 			richTextBox.AllowDrop = true;
@@ -43,6 +44,11 @@ namespace FindInFiles {
 		}
 
 		private async void buttonStart_Click(object sender, EventArgs e) {
+			if (process != null) {
+				StopFind();
+				return;
+			}
+
 			var exePath = Util.FindExePath("rg.exe");
 			if (!File.Exists(exePath)) {
 				lineRender.AppendText($"ripgrep (rg.exe) not found!{Environment.NewLine}", Color.Red);
@@ -128,7 +134,9 @@ namespace FindInFiles {
 			ResetMatch();
 			lineRender.AppendText($"{argument}{Environment.NewLine}", Color.Gray);
 
-			using (var process = new Process()) {
+			buttonFind.Text = "Stop";
+			try {
+				process = new Process();
 				process.StartInfo.UseShellExecute = false;
 				process.StartInfo.RedirectStandardOutput = true;
 				process.StartInfo.RedirectStandardError = true;
@@ -141,13 +149,35 @@ namespace FindInFiles {
 				process.Start();
 				process.BeginOutputReadLine();
 				var error = await process.StandardError.ReadToEndAsync();
-			 	await Task.Run(() => process.WaitForExit());
+				if (process != null) {
+					await Task.Run(() => process?.WaitForExit());
+				}
 				lineParser.Flush();
 				if (lineParser.TotalMatchCount > 0) {
 					SaveSearchHistory(searchPath, pattern);
 				}
 				if (!string.IsNullOrEmpty(error)) {
 					lineRender.AppendText($"{error}{Environment.NewLine}", Color.Red);
+				}
+			} catch (Exception ex) {
+				lineRender.ShowException("Start: ", ex);
+			} finally {
+				buttonFind.Text = "Find All";
+				process?.Dispose();
+				process = null;
+			}
+		}
+
+		private void StopFind() {
+			buttonFind.Text = "Find All";
+			if (process != null && !process.HasExited) {
+				try {
+					process.Kill();
+				} catch (Exception ex) {
+					lineRender.ShowException("Stop: ", ex);
+				} finally {
+					process?.Dispose();
+					process = null;
 				}
 			}
 		}
@@ -209,6 +239,7 @@ namespace FindInFiles {
 		}
 
 		private void FindInFilesForm_FormClosing(object sender, FormClosingEventArgs e) {
+			StopFind();
 			Properties.Settings.Default.Save();
 		}
 

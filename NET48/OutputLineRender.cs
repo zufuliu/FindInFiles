@@ -48,6 +48,10 @@ namespace FindInFiles {
 			richTextBox.SelectedText = text;
 		}
 
+		public void ShowException(string tag, Exception ex) {
+			AppendText($"{Environment.NewLine}{tag}{ex.Message}{Environment.NewLine}{ex.StackTrace}{Environment.NewLine}", Color.Red);
+		}
+
 		public void RenderOutput(IList<OutputLine> lines) {
 			var visible = richTextBox.Focused;
 			if (!visible) {
