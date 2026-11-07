@@ -12,6 +12,7 @@ namespace FindInFiles {
 		private Process process = null;
 		public FindInFilesForm(string[] args) {
 			InitializeComponent();
+			AcceptButton = buttonFind;
 			richTextBox.AllowDrop = true;
 			richTextBox.DragEnter += FindInFilesForm_DragEnter;
 			richTextBox.DragDrop += FindInFilesForm_DragDrop;
