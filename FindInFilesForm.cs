@@ -34,7 +34,7 @@ namespace FindInFiles {
 				}
 			}
 			if (!searchPath) {
-				lineRender.AppendText($"drag & drop file or folder to search!{Environment.NewLine}", Color.Gray);
+				lineRender.ShowComment($"drag & drop file or folder to search!{Environment.NewLine}");
 			}
 		}
 
@@ -46,22 +46,22 @@ namespace FindInFiles {
 
 			var exePath = Util.FindExePath("rg.exe");
 			if (!File.Exists(exePath)) {
-				lineRender.AppendText($"ripgrep (rg.exe) not found!{Environment.NewLine}", Color.Red);
+				lineRender.ShowError($"ripgrep (rg.exe) not found!{Environment.NewLine}");
 				return;
 			}
 			var searchPath = comboBoxSearchPath.Text.Trim();
 			if (string.IsNullOrEmpty(searchPath)) {
-				lineRender.AppendText($"drag & drop file or folder to search!{Environment.NewLine}", Color.Red);
+				lineRender.ShowError($"drag & drop file or folder to search!{Environment.NewLine}");
 				return;
 			}
 			var (exist, directory) = Util.PathExists(searchPath);
 			if (!exist) {
-				lineRender.AppendText($"file or folder \"{searchPath}\" not exists!{Environment.NewLine}", Color.Red);
+				lineRender.ShowError($"file or folder \"{searchPath}\" not exists!{Environment.NewLine}");
 				return;
 			}
 			var pattern = comboBoxSearchPattern.Text;
 			if (string.IsNullOrEmpty(pattern)) {
-				lineRender.AppendText($"empty search pattern!{Environment.NewLine}", Color.Red);
+				lineRender.ShowError($"empty search pattern!{Environment.NewLine}");
 				return;
 			}
 
@@ -127,7 +127,7 @@ namespace FindInFiles {
 			argList.Add($"\"{searchPath}\"");
 			var argument = string.Join(" ", argList);
 			ResetMatch();
-			lineRender.AppendText($"{argument}{Environment.NewLine}", Color.Gray);
+			lineRender.ShowComment($"{argument}{Environment.NewLine}");
 
 			buttonFind.Text = "Stop";
 			try {
@@ -152,7 +152,7 @@ namespace FindInFiles {
 					SaveSearchHistory(searchPath, pattern);
 				}
 				if (!string.IsNullOrEmpty(error)) {
-					lineRender.AppendText($"{error}{Environment.NewLine}", Color.Red);
+					lineRender.ShowError($"{error}{Environment.NewLine}");
 				}
 			} catch (Exception ex) {
 				lineRender.ShowException("Start: ", ex);

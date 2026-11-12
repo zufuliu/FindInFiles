@@ -11,6 +11,11 @@ namespace FindInFiles {
 		private static readonly string MarkerLine = "\u200D"; // zero width joiner
 		private int visibleDelta = 0;
 
+		private readonly Color ErrorTextColor = Color.Red;
+		private readonly Color CommentTextColor = Color.Gray;
+		private readonly Color PathTextColor = Color.Blue;
+		private readonly Color MatchTextColor = Color.Red;
+
 		public OutputLineRender(RichTextBox richTextBox) {
 			this.richTextBox = richTextBox;
 		}
@@ -48,8 +53,14 @@ namespace FindInFiles {
 			richTextBox.SelectedText = text;
 		}
 
+		public void ShowError(string message) {
+			AppendText(message, ErrorTextColor);
+		}
+		public void ShowComment(string message) {
+			AppendText(message, CommentTextColor);
+		}
 		public void ShowException(string tag, Exception ex) {
-			AppendText($"{Environment.NewLine}{tag}{ex.Message}{Environment.NewLine}{ex.StackTrace}{Environment.NewLine}", Color.Red);
+			AppendText($"{Environment.NewLine}{tag}{ex.Message}{Environment.NewLine}{ex.StackTrace}{Environment.NewLine}", ErrorTextColor);
 		}
 
 		public void RenderOutput(IList<OutputLine> lines) {
@@ -67,7 +78,7 @@ namespace FindInFiles {
 			foreach (var line in lines) {
 				switch (line.LineType) {
 				case OutputLineType.Path:
-					AppendText($"{MarkerPath}{line.Text}{Environment.NewLine}", Color.Blue);
+					AppendText($"{MarkerPath}{line.Text}{Environment.NewLine}", PathTextColor);
 					break;
 
 				case OutputLineType.Match:
@@ -79,7 +90,7 @@ namespace FindInFiles {
 					break;
 
 				default:
-					AppendText($"{line.Text}{Environment.NewLine}", Color.Gray);
+					AppendText($"{line.Text}{Environment.NewLine}", CommentTextColor);
 					break;
 				}
 			}
@@ -107,9 +118,9 @@ namespace FindInFiles {
 			}
 			foreach (var match in matches) {
 				richTextBox.Select(match.Start + docOffset, match.Length);
-				richTextBox.SelectionColor = Color.Red;
+				richTextBox.SelectionColor = MatchTextColor;
 				if (match.Space) {
-					richTextBox.SelectionBackColor = Color.Green;
+					richTextBox.SelectionBackColor = Color.OliveDrab;
 				}
 			}
 		}

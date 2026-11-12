@@ -1,9 +1,26 @@
+using Microsoft.Win32;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 namespace FindInFiles {
 	internal static class Util {
+		public static bool AppsUseDarkTheme() {
+			try {
+				var key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize");
+				if (key != null) {
+					var value = key.GetValue("AppsUseLightTheme");
+					if (value != null && (int)value == 0) {
+						if (SystemInformation.HighContrast) {
+							return false;
+						}
+						return true;
+					}
+				}
+			} catch (Exception) { }
+			return false;
+		}
+
 		public static string RemoveLineEnding(string? line) {
 			if (string.IsNullOrEmpty(line)) {
 				return string.Empty;

@@ -9,6 +9,12 @@ namespace FindInFiles {
 			// see https://aka.ms/applicationconfiguration.
 			ApplicationConfiguration.Initialize();
 			AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+#if NET10_0_OR_GREATER
+			if (Util.AppsUseDarkTheme()) {
+				// SystemColorMode.System not work on Win10
+				Application.SetColorMode(SystemColorMode.Dark);
+			}
+#endif
 			Application.Run(new FindInFilesForm(args));
 		}
 
