@@ -7,6 +7,13 @@ namespace FindInFiles {
 	internal static class Util {
 		public static bool AppsUseDarkTheme() {
 			try {
+				var theme = Properties.Settings.Default.StyleTheme;
+				if (theme == 0) {
+					return false;
+				}
+				if (theme > 0) {
+					return true;
+				}
 				var key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize");
 				if (key != null) {
 					var value = key.GetValue("AppsUseLightTheme");

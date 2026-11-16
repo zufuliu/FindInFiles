@@ -1,4 +1,4 @@
-﻿namespace FindInFiles {
+namespace FindInFiles {
 	partial class FindInFilesForm {
 		/// <summary>
 		///  Required designer variable.
@@ -32,6 +32,8 @@
 			buttonFind = new Button();
 			richTextBox = new RichTextBox();
 			contextMenuStrip = new ContextMenuStrip(components);
+			openFileToolStripMenuItem = new ToolStripMenuItem();
+			toolStripMenuItem2 = new ToolStripSeparator();
 			clearAllToolStripMenuItem = new ToolStripMenuItem();
 			toolStripMenuItem1 = new ToolStripSeparator();
 			saveSearchHistoryToolStripMenuItem = new ToolStripMenuItem();
@@ -49,8 +51,10 @@
 			textBoxEncoding = new TextBox();
 			comboBoxSearchPath = new ComboBox();
 			comboBoxSearchPattern = new ComboBox();
-			openFileToolStripMenuItem = new ToolStripMenuItem();
-			toolStripMenuItem2 = new ToolStripSeparator();
+			themeToolStripMenuItem = new ToolStripMenuItem();
+			followSystemToolStripMenuItem = new ToolStripMenuItem();
+			lightToolStripMenuItem = new ToolStripMenuItem();
+			darkToolStripMenuItem = new ToolStripMenuItem();
 			contextMenuStrip.SuspendLayout();
 			SuspendLayout();
 			// 
@@ -128,9 +132,21 @@
 			// 
 			// contextMenuStrip
 			// 
-			contextMenuStrip.Items.AddRange(new ToolStripItem[] { openFileToolStripMenuItem, toolStripMenuItem2, clearAllToolStripMenuItem, toolStripMenuItem1, saveSearchHistoryToolStripMenuItem, clearSearchHistoryToolStripMenuItem, toolStripMenuItem3, selectFontToolStripMenuItem });
+			contextMenuStrip.Items.AddRange(new ToolStripItem[] { openFileToolStripMenuItem, toolStripMenuItem2, clearAllToolStripMenuItem, toolStripMenuItem1, saveSearchHistoryToolStripMenuItem, clearSearchHistoryToolStripMenuItem, toolStripMenuItem3, themeToolStripMenuItem, selectFontToolStripMenuItem });
 			contextMenuStrip.Name = "contextMenuStrip";
-			contextMenuStrip.Size = new Size(195, 132);
+			contextMenuStrip.Size = new Size(195, 176);
+			// 
+			// openFileToolStripMenuItem
+			// 
+			openFileToolStripMenuItem.Name = "openFileToolStripMenuItem";
+			openFileToolStripMenuItem.Size = new Size(194, 22);
+			openFileToolStripMenuItem.Text = "&Open File";
+			openFileToolStripMenuItem.Click += richTextBox_DoubleClick;
+			// 
+			// toolStripMenuItem2
+			// 
+			toolStripMenuItem2.Name = "toolStripMenuItem2";
+			toolStripMenuItem2.Size = new Size(191, 6);
 			// 
 			// clearAllToolStripMenuItem
 			// 
@@ -280,17 +296,33 @@
 			comboBoxSearchPattern.Size = new Size(562, 25);
 			comboBoxSearchPattern.TabIndex = 1;
 			// 
-			// openFileToolStripMenuItem
+			// themeToolStripMenuItem
 			// 
-			openFileToolStripMenuItem.Name = "openFileToolStripMenuItem";
-			openFileToolStripMenuItem.Size = new Size(194, 22);
-			openFileToolStripMenuItem.Text = "&Open File";
-			openFileToolStripMenuItem.Click += richTextBox_DoubleClick;
+			themeToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { followSystemToolStripMenuItem, lightToolStripMenuItem, darkToolStripMenuItem });
+			themeToolStripMenuItem.Name = "themeToolStripMenuItem";
+			themeToolStripMenuItem.Size = new Size(194, 22);
+			themeToolStripMenuItem.Text = "&Theme";
 			// 
-			// toolStripMenuItem2
+			// followSystemToolStripMenuItem
 			// 
-			toolStripMenuItem2.Name = "toolStripMenuItem2";
-			toolStripMenuItem2.Size = new Size(191, 6);
+			followSystemToolStripMenuItem.Name = "followSystemToolStripMenuItem";
+			followSystemToolStripMenuItem.Size = new Size(180, 22);
+			followSystemToolStripMenuItem.Text = "Follow &System";
+			followSystemToolStripMenuItem.Click += followSystemToolStripMenuItem_Click;
+			// 
+			// lightToolStripMenuItem
+			// 
+			lightToolStripMenuItem.Name = "lightToolStripMenuItem";
+			lightToolStripMenuItem.Size = new Size(180, 22);
+			lightToolStripMenuItem.Text = "&Light";
+			lightToolStripMenuItem.Click += lightToolStripMenuItem_Click;
+			// 
+			// darkToolStripMenuItem
+			// 
+			darkToolStripMenuItem.Name = "darkToolStripMenuItem";
+			darkToolStripMenuItem.Size = new Size(180, 22);
+			darkToolStripMenuItem.Text = "&Dark";
+			darkToolStripMenuItem.Click += darkToolStripMenuItem_Click;
 			// 
 			// FindInFilesForm
 			// 
@@ -354,5 +386,9 @@
 		private ToolStripSeparator toolStripMenuItem3;
 		private ToolStripMenuItem openFileToolStripMenuItem;
 		private ToolStripSeparator toolStripMenuItem2;
+		private ToolStripMenuItem themeToolStripMenuItem;
+		private ToolStripMenuItem followSystemToolStripMenuItem;
+		private ToolStripMenuItem lightToolStripMenuItem;
+		private ToolStripMenuItem darkToolStripMenuItem;
 	}
 }

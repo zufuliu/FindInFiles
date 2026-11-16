@@ -36,6 +36,14 @@ namespace FindInFiles {
 			if (!searchPath) {
 				lineRender.ShowComment($"drag & drop file or folder to search!{Environment.NewLine}");
 			}
+			var theme = settings.StyleTheme;
+			if (theme < 0) {
+				followSystemToolStripMenuItem.Checked = true;
+			} else if (theme == 0) {
+				lightToolStripMenuItem.Checked = true;
+			} else {
+				darkToolStripMenuItem.Checked = true;
+			}
 		}
 
 		private async void buttonStart_Click(object sender, EventArgs e) {
@@ -272,6 +280,18 @@ namespace FindInFiles {
 			settings.SearchPatternHistory?.Clear();
 			comboBoxSearchPath.Items.Clear();
 			comboBoxSearchPattern.Items.Clear();
+		}
+
+		private void followSystemToolStripMenuItem_Click(object sender, EventArgs e) {
+			Properties.Settings.Default.StyleTheme = -1;
+		}
+
+		private void lightToolStripMenuItem_Click(object sender, EventArgs e) {
+			Properties.Settings.Default.StyleTheme = 0;
+		}
+
+		private void darkToolStripMenuItem_Click(object sender, EventArgs e) {
+			Properties.Settings.Default.StyleTheme = 1;
 		}
 	}
 }
