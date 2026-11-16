@@ -8,6 +8,7 @@ namespace FindInFiles {
 		/// </summary>
 		[STAThread]
 		static void Main(string[] args) {
+			DarkMode.InitDarkMode();
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 			AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;

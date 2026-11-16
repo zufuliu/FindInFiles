@@ -53,6 +53,10 @@ namespace FindInFiles {
 			this.textBoxEncoding = new System.Windows.Forms.TextBox();
 			this.comboBoxSearchPath = new System.Windows.Forms.ComboBox();
 			this.comboBoxSearchPattern = new System.Windows.Forms.ComboBox();
+			this.themeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.followSystemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.lightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.darkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenuStrip.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -82,7 +86,7 @@ namespace FindInFiles {
 			this.label4.Location = new System.Drawing.Point(14, 62);
 			this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(81, 15);
+			this.label4.Size = new System.Drawing.Size(82, 15);
 			this.label4.TabIndex = 7;
 			this.label4.Text = "Context &Lines:";
 			// 
@@ -147,9 +151,10 @@ namespace FindInFiles {
             this.saveSearchHistoryToolStripMenuItem,
             this.clearSearchHistoryToolStripMenuItem,
             this.toolStripMenuItem2,
+            this.themeToolStripMenuItem,
             this.selectFontToolStripMenuItem});
 			this.contextMenuStrip.Name = "contextMenuStrip";
-			this.contextMenuStrip.Size = new System.Drawing.Size(195, 132);
+			this.contextMenuStrip.Size = new System.Drawing.Size(195, 176);
 			// 
 			// openFileToolStripMenuItem
 			// 
@@ -262,7 +267,7 @@ namespace FindInFiles {
 			this.checkBoxRegex.Location = new System.Drawing.Point(156, 61);
 			this.checkBoxRegex.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
 			this.checkBoxRegex.Name = "checkBoxRegex";
-			this.checkBoxRegex.Size = new System.Drawing.Size(57, 19);
+			this.checkBoxRegex.Size = new System.Drawing.Size(58, 19);
 			this.checkBoxRegex.TabIndex = 3;
 			this.checkBoxRegex.Text = "&Regex";
 			this.checkBoxRegex.UseVisualStyleBackColor = true;
@@ -325,6 +330,37 @@ namespace FindInFiles {
 			this.comboBoxSearchPattern.Name = "comboBoxSearchPattern";
 			this.comboBoxSearchPattern.Size = new System.Drawing.Size(549, 23);
 			this.comboBoxSearchPattern.TabIndex = 1;
+			// 
+			// themeToolStripMenuItem
+			// 
+			this.themeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.followSystemToolStripMenuItem,
+            this.lightToolStripMenuItem,
+            this.darkToolStripMenuItem});
+			this.themeToolStripMenuItem.Name = "themeToolStripMenuItem";
+			this.themeToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
+			this.themeToolStripMenuItem.Text = "&Theme";
+			// 
+			// followSystemToolStripMenuItem
+			// 
+			this.followSystemToolStripMenuItem.Name = "followSystemToolStripMenuItem";
+			this.followSystemToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.followSystemToolStripMenuItem.Text = "Follow &System";
+			this.followSystemToolStripMenuItem.Click += new System.EventHandler(this.followSystemToolStripMenuItem_Click);
+			// 
+			// lightToolStripMenuItem
+			// 
+			this.lightToolStripMenuItem.Name = "lightToolStripMenuItem";
+			this.lightToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.lightToolStripMenuItem.Text = "&Light";
+			this.lightToolStripMenuItem.Click += new System.EventHandler(this.lightToolStripMenuItem_Click);
+			// 
+			// darkToolStripMenuItem
+			// 
+			this.darkToolStripMenuItem.Name = "darkToolStripMenuItem";
+			this.darkToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.darkToolStripMenuItem.Text = "&Dark";
+			this.darkToolStripMenuItem.Click += new System.EventHandler(this.darkToolStripMenuItem_Click);
 			// 
 			// FindInFilesForm
 			// 
@@ -391,5 +427,9 @@ namespace FindInFiles {
 		private ToolStripSeparator toolStripMenuItem3;
 		private ToolStripMenuItem openFileToolStripMenuItem;
 		private ToolStripSeparator toolStripMenuItem1;
+		private ToolStripMenuItem themeToolStripMenuItem;
+		private ToolStripMenuItem followSystemToolStripMenuItem;
+		private ToolStripMenuItem lightToolStripMenuItem;
+		private ToolStripMenuItem darkToolStripMenuItem;
 	}
 }

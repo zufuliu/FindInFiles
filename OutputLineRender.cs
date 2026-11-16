@@ -6,6 +6,7 @@ namespace FindInFiles {
 		private static readonly string MarkerLine = "\u200D"; // zero width joiner
 		private int visibleDelta = 0;
 
+		private Color TextColor = SystemColors.WindowText;
 		private Color ErrorTextColor = Color.Red;
 		private readonly Color CommentTextColor = Color.Gray;
 		private Color PathTextColor = Color.Blue;
@@ -13,12 +14,14 @@ namespace FindInFiles {
 
 		public OutputLineRender(RichTextBox richTextBox) {
 			this.richTextBox = richTextBox;
-#if NET10_0_OR_GREATER
-			if (Application.ColorMode == SystemColorMode.Dark) {
-				MatchTextColor = ErrorTextColor = Color.FromArgb(0xED1C24);
-				PathTextColor = Color.FromArgb(0x0078D7);
-			}
+			if (DarkMode.OutputUseDarkTheme) {
+#if !NET10_0_OR_GREATER
+				richTextBox.BackColor = DarkMode.WindowColor;
+				richTextBox.ForeColor = TextColor = DarkMode.WindowTextColor;
 #endif
+				MatchTextColor = ErrorTextColor = Color.FromArgb(0xED, 0x1C, 0x24);
+				PathTextColor = Color.FromArgb(0x00, 0x78, 0xD7);
+			}
 		}
 
 		public Font Font {
@@ -105,7 +108,7 @@ namespace FindInFiles {
 			AppendText($"{number}{MarkerLine}-", Color.Olive);
 			line = Util.RemoveLineEnding(line);
 			var padding = (line.Length == 0) ? "" : " ";
-			AppendText($"{padding}{line}{Environment.NewLine}", SystemColors.WindowText);
+			AppendText($"{padding}{line}{Environment.NewLine}", TextColor);
 		}
 
 		private void AddMatchLine(int number, string? line, MatchTextRange[]? matches) {
@@ -113,7 +116,7 @@ namespace FindInFiles {
 			line = Util.RemoveLineEnding(line);
 			var padding = (line.Length == 0) ? "" : " ";
 			var docOffset = richTextBox.TextLength + padding.Length;
-			AppendText($"{padding}{line}{Environment.NewLine}", SystemColors.WindowText);
+			AppendText($"{padding}{line}{Environment.NewLine}", TextColor);
 			if (matches == null) {
 				return;
 			}

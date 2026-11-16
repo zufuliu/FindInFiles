@@ -5,16 +5,11 @@ namespace FindInFiles {
 		/// </summary>
 		[STAThread]
 		static void Main(string[] args) {
+			DarkMode.InitDarkMode();
 			// To customize application configuration such as set high DPI settings or default font,
 			// see https://aka.ms/applicationconfiguration.
 			ApplicationConfiguration.Initialize();
 			AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-#if NET10_0_OR_GREATER
-			if (Util.AppsUseDarkTheme()) {
-				// SystemColorMode.System not work on Win10
-				Application.SetColorMode(SystemColorMode.Dark);
-			}
-#endif
 			Application.Run(new FindInFilesForm(args));
 		}
 
