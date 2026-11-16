@@ -64,7 +64,7 @@ namespace FindInFiles {
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(72, 15);
 			this.label2.TabIndex = 3;
-			this.label2.Text = "Search Path:";
+			this.label2.Text = "&Search Path:";
 			// 
 			// label3
 			// 
@@ -74,7 +74,7 @@ namespace FindInFiles {
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(86, 15);
 			this.label3.TabIndex = 5;
-			this.label3.Text = "Search Pattern:";
+			this.label3.Text = "Search &Pattern:";
 			// 
 			// label4
 			// 
@@ -84,7 +84,7 @@ namespace FindInFiles {
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(81, 15);
 			this.label4.TabIndex = 7;
-			this.label4.Text = "Context Lines:";
+			this.label4.Text = "Context &Lines:";
 			// 
 			// textBoxContexLine
 			// 
@@ -105,7 +105,7 @@ namespace FindInFiles {
 			this.checkBoxMatchCase.Name = "checkBoxMatchCase";
 			this.checkBoxMatchCase.Size = new System.Drawing.Size(86, 19);
 			this.checkBoxMatchCase.TabIndex = 4;
-			this.checkBoxMatchCase.Text = "Match case";
+			this.checkBoxMatchCase.Text = "Match &case";
 			this.checkBoxMatchCase.UseVisualStyleBackColor = true;
 			// 
 			// buttonFind
@@ -115,7 +115,7 @@ namespace FindInFiles {
 			this.buttonFind.Name = "buttonFind";
 			this.buttonFind.Size = new System.Drawing.Size(75, 26);
 			this.buttonFind.TabIndex = 12;
-			this.buttonFind.Text = "Find All";
+			this.buttonFind.Text = "&Find All";
 			this.buttonFind.UseVisualStyleBackColor = true;
 			this.buttonFind.Click += new System.EventHandler(this.buttonStart_Click);
 			// 
@@ -155,7 +155,7 @@ namespace FindInFiles {
 			// 
 			this.openFileToolStripMenuItem.Name = "openFileToolStripMenuItem";
 			this.openFileToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
-			this.openFileToolStripMenuItem.Text = "Open File";
+			this.openFileToolStripMenuItem.Text = "&Open File";
 			this.openFileToolStripMenuItem.Click += new System.EventHandler(this.richTextBox_DoubleClick);
 			// 
 			// toolStripMenuItem1
@@ -167,7 +167,7 @@ namespace FindInFiles {
 			// 
 			this.clearAllToolStripMenuItem.Name = "clearAllToolStripMenuItem";
 			this.clearAllToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
-			this.clearAllToolStripMenuItem.Text = "Clear Find Result";
+			this.clearAllToolStripMenuItem.Text = "Clear Find &Result";
 			this.clearAllToolStripMenuItem.Click += new System.EventHandler(this.clearFindResultToolStripMenuItem_Click);
 			// 
 			// toolStripMenuItem3
@@ -180,14 +180,14 @@ namespace FindInFiles {
 			this.saveSearchHistoryToolStripMenuItem.CheckOnClick = true;
 			this.saveSearchHistoryToolStripMenuItem.Name = "saveSearchHistoryToolStripMenuItem";
 			this.saveSearchHistoryToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
-			this.saveSearchHistoryToolStripMenuItem.Text = "Save Search History";
+			this.saveSearchHistoryToolStripMenuItem.Text = "&Save Search History";
 			this.saveSearchHistoryToolStripMenuItem.Click += new System.EventHandler(this.saveSearchHistoryToolStripMenuItem_Click);
 			// 
 			// clearSearchHistoryToolStripMenuItem
 			// 
 			this.clearSearchHistoryToolStripMenuItem.Name = "clearSearchHistoryToolStripMenuItem";
 			this.clearSearchHistoryToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
-			this.clearSearchHistoryToolStripMenuItem.Text = "Clear Search History";
+			this.clearSearchHistoryToolStripMenuItem.Text = "&Clear Search History";
 			this.clearSearchHistoryToolStripMenuItem.Click += new System.EventHandler(this.clearSearchHistoryToolStripMenuItem_Click);
 			// 
 			// toolStripMenuItem2
@@ -199,7 +199,7 @@ namespace FindInFiles {
 			// 
 			this.selectFontToolStripMenuItem.Name = "selectFontToolStripMenuItem";
 			this.selectFontToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
-			this.selectFontToolStripMenuItem.Text = "Select Font";
+			this.selectFontToolStripMenuItem.Text = "Select &Font";
 			this.selectFontToolStripMenuItem.Click += new System.EventHandler(this.selectFontToolStripMenuItem_Click);
 			// 
 			// checkBoxInvert
@@ -210,7 +210,7 @@ namespace FindInFiles {
 			this.checkBoxInvert.Name = "checkBoxInvert";
 			this.checkBoxInvert.Size = new System.Drawing.Size(56, 19);
 			this.checkBoxInvert.TabIndex = 9;
-			this.checkBoxInvert.Text = "Invert";
+			this.checkBoxInvert.Text = "&Invert";
 			this.checkBoxInvert.UseVisualStyleBackColor = true;
 			// 
 			// checkBoxMultiline
@@ -221,7 +221,7 @@ namespace FindInFiles {
 			this.checkBoxMultiline.Name = "checkBoxMultiline";
 			this.checkBoxMultiline.Size = new System.Drawing.Size(73, 19);
 			this.checkBoxMultiline.TabIndex = 6;
-			this.checkBoxMultiline.Text = "Multiline";
+			this.checkBoxMultiline.Text = "&Multiline";
 			this.checkBoxMultiline.UseVisualStyleBackColor = true;
 			// 
 			// checkBoxPcre2
@@ -232,7 +232,7 @@ namespace FindInFiles {
 			this.checkBoxPcre2.Name = "checkBoxPcre2";
 			this.checkBoxPcre2.Size = new System.Drawing.Size(60, 19);
 			this.checkBoxPcre2.TabIndex = 7;
-			this.checkBoxPcre2.Text = "PCRE2";
+			this.checkBoxPcre2.Text = "PCRE&2";
 			this.checkBoxPcre2.UseVisualStyleBackColor = true;
 			// 
 			// checkBoxRecursive
@@ -245,7 +245,7 @@ namespace FindInFiles {
 			this.checkBoxRecursive.Name = "checkBoxRecursive";
 			this.checkBoxRecursive.Size = new System.Drawing.Size(76, 19);
 			this.checkBoxRecursive.TabIndex = 8;
-			this.checkBoxRecursive.Text = "Recursive";
+			this.checkBoxRecursive.Text = "Rec&ursive";
 			this.checkBoxRecursive.UseVisualStyleBackColor = true;
 			// 
 			// fontDialog
@@ -264,7 +264,7 @@ namespace FindInFiles {
 			this.checkBoxRegex.Name = "checkBoxRegex";
 			this.checkBoxRegex.Size = new System.Drawing.Size(57, 19);
 			this.checkBoxRegex.TabIndex = 3;
-			this.checkBoxRegex.Text = "Regex";
+			this.checkBoxRegex.Text = "&Regex";
 			this.checkBoxRegex.UseVisualStyleBackColor = true;
 			// 
 			// checkBoxWholeWord
@@ -275,7 +275,7 @@ namespace FindInFiles {
 			this.checkBoxWholeWord.Name = "checkBoxWholeWord";
 			this.checkBoxWholeWord.Size = new System.Drawing.Size(90, 19);
 			this.checkBoxWholeWord.TabIndex = 5;
-			this.checkBoxWholeWord.Text = "Whole word";
+			this.checkBoxWholeWord.Text = "&Whole word";
 			this.checkBoxWholeWord.UseVisualStyleBackColor = true;
 			// 
 			// textBoxGlob

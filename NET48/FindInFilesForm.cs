@@ -135,7 +135,7 @@ namespace FindInFiles {
 			ResetMatch();
 			lineRender.ShowComment($"{argument}{Environment.NewLine}");
 
-			buttonFind.Text = "Stop";
+			buttonFind.Text = "S&top";
 			try {
 				process = new Process();
 				process.StartInfo.UseShellExecute = false;
@@ -163,14 +163,14 @@ namespace FindInFiles {
 			} catch (Exception ex) {
 				lineRender.ShowException("Start: ", ex);
 			} finally {
-				buttonFind.Text = "Find All";
+				buttonFind.Text = "&Find All";
 				process?.Dispose();
 				process = null;
 			}
 		}
 
 		private void StopFind() {
-			buttonFind.Text = "Find All";
+			buttonFind.Text = "&Find All";
 			if (process != null && !process.HasExited) {
 				try {
 					process.Kill();

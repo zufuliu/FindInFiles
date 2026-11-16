@@ -61,7 +61,7 @@
 			label2.Name = "label2";
 			label2.Size = new Size(79, 17);
 			label2.TabIndex = 3;
-			label2.Text = "Search Path:";
+			label2.Text = "&Search Path:";
 			// 
 			// label3
 			// 
@@ -70,7 +70,7 @@
 			label3.Name = "label3";
 			label3.Size = new Size(95, 17);
 			label3.TabIndex = 5;
-			label3.Text = "Search Pattern:";
+			label3.Text = "Search &Pattern:";
 			// 
 			// label4
 			// 
@@ -79,7 +79,7 @@
 			label4.Name = "label4";
 			label4.Size = new Size(88, 17);
 			label4.TabIndex = 7;
-			label4.Text = "Context Lines:";
+			label4.Text = "Context &Lines:";
 			// 
 			// textBoxContexLine
 			// 
@@ -98,7 +98,7 @@
 			checkBoxMatchCase.Name = "checkBoxMatchCase";
 			checkBoxMatchCase.Size = new Size(93, 21);
 			checkBoxMatchCase.TabIndex = 4;
-			checkBoxMatchCase.Text = "Match case";
+			checkBoxMatchCase.Text = "Match &case";
 			checkBoxMatchCase.UseVisualStyleBackColor = true;
 			// 
 			// buttonFind
@@ -107,7 +107,7 @@
 			buttonFind.Name = "buttonFind";
 			buttonFind.Size = new Size(75, 30);
 			buttonFind.TabIndex = 12;
-			buttonFind.Text = "Find All";
+			buttonFind.Text = "&Find All";
 			buttonFind.UseVisualStyleBackColor = true;
 			buttonFind.Click += buttonStart_Click;
 			// 
@@ -136,7 +136,7 @@
 			// 
 			clearAllToolStripMenuItem.Name = "clearAllToolStripMenuItem";
 			clearAllToolStripMenuItem.Size = new Size(194, 22);
-			clearAllToolStripMenuItem.Text = "Clear Find Result";
+			clearAllToolStripMenuItem.Text = "Clear Find &Result";
 			clearAllToolStripMenuItem.Click += clearFindResultToolStripMenuItem_Click;
 			// 
 			// toolStripMenuItem1
@@ -148,14 +148,14 @@
 			// 
 			saveSearchHistoryToolStripMenuItem.Name = "saveSearchHistoryToolStripMenuItem";
 			saveSearchHistoryToolStripMenuItem.Size = new Size(194, 22);
-			saveSearchHistoryToolStripMenuItem.Text = "Save Search History";
+			saveSearchHistoryToolStripMenuItem.Text = "&Save Search History";
 			saveSearchHistoryToolStripMenuItem.Click += saveSearchHistoryToolStripMenuItem_Click;
 			// 
 			// clearSearchHistoryToolStripMenuItem
 			// 
 			clearSearchHistoryToolStripMenuItem.Name = "clearSearchHistoryToolStripMenuItem";
 			clearSearchHistoryToolStripMenuItem.Size = new Size(194, 22);
-			clearSearchHistoryToolStripMenuItem.Text = "Clear Search History";
+			clearSearchHistoryToolStripMenuItem.Text = "&Clear Search History";
 			clearSearchHistoryToolStripMenuItem.Click += clearSearchHistoryToolStripMenuItem_Click;
 			// 
 			// toolStripMenuItem3
@@ -167,7 +167,7 @@
 			// 
 			selectFontToolStripMenuItem.Name = "selectFontToolStripMenuItem";
 			selectFontToolStripMenuItem.Size = new Size(194, 22);
-			selectFontToolStripMenuItem.Text = "Select Font";
+			selectFontToolStripMenuItem.Text = "Select &Font";
 			selectFontToolStripMenuItem.Click += selectFontToolStripMenuItem_Click;
 			// 
 			// checkBoxInvert
@@ -177,7 +177,7 @@
 			checkBoxInvert.Name = "checkBoxInvert";
 			checkBoxInvert.Size = new Size(60, 21);
 			checkBoxInvert.TabIndex = 9;
-			checkBoxInvert.Text = "Invert";
+			checkBoxInvert.Text = "&Invert";
 			checkBoxInvert.UseVisualStyleBackColor = true;
 			// 
 			// checkBoxMultiline
@@ -187,7 +187,7 @@
 			checkBoxMultiline.Name = "checkBoxMultiline";
 			checkBoxMultiline.Size = new Size(76, 21);
 			checkBoxMultiline.TabIndex = 6;
-			checkBoxMultiline.Text = "Multiline";
+			checkBoxMultiline.Text = "&Multiline";
 			checkBoxMultiline.UseVisualStyleBackColor = true;
 			// 
 			// checkBoxPcre2
@@ -197,7 +197,7 @@
 			checkBoxPcre2.Name = "checkBoxPcre2";
 			checkBoxPcre2.Size = new Size(64, 21);
 			checkBoxPcre2.TabIndex = 7;
-			checkBoxPcre2.Text = "PCRE2";
+			checkBoxPcre2.Text = "PCRE&2";
 			checkBoxPcre2.UseVisualStyleBackColor = true;
 			// 
 			// checkBoxRecursive
@@ -209,7 +209,7 @@
 			checkBoxRecursive.Name = "checkBoxRecursive";
 			checkBoxRecursive.Size = new Size(82, 21);
 			checkBoxRecursive.TabIndex = 8;
-			checkBoxRecursive.Text = "Recursive";
+			checkBoxRecursive.Text = "Rec&ursive";
 			checkBoxRecursive.UseVisualStyleBackColor = true;
 			// 
 			// fontDialog
@@ -225,7 +225,7 @@
 			checkBoxWholeWord.Name = "checkBoxWholeWord";
 			checkBoxWholeWord.Size = new Size(98, 21);
 			checkBoxWholeWord.TabIndex = 5;
-			checkBoxWholeWord.Text = "Whole word";
+			checkBoxWholeWord.Text = "&Whole word";
 			checkBoxWholeWord.UseVisualStyleBackColor = true;
 			// 
 			// checkBoxRegex
@@ -237,7 +237,7 @@
 			checkBoxRegex.Name = "checkBoxRegex";
 			checkBoxRegex.Size = new Size(63, 21);
 			checkBoxRegex.TabIndex = 3;
-			checkBoxRegex.Text = "Regex";
+			checkBoxRegex.Text = "&Regex";
 			checkBoxRegex.UseVisualStyleBackColor = true;
 			// 
 			// textBoxGlob
@@ -284,7 +284,7 @@
 			// 
 			openFileToolStripMenuItem.Name = "openFileToolStripMenuItem";
 			openFileToolStripMenuItem.Size = new Size(194, 22);
-			openFileToolStripMenuItem.Text = "Open File";
+			openFileToolStripMenuItem.Text = "&Open File";
 			openFileToolStripMenuItem.Click += richTextBox_DoubleClick;
 			// 
 			// toolStripMenuItem2
