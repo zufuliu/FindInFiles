@@ -15,10 +15,10 @@ namespace FindInFiles {
 		public OutputLineRender(RichTextBox richTextBox) {
 			this.richTextBox = richTextBox;
 			if (DarkMode.OutputUseDarkTheme) {
-#if !NET10_0_OR_GREATER
-				richTextBox.BackColor = DarkMode.WindowColor;
-				richTextBox.ForeColor = TextColor = DarkMode.WindowTextColor;
-#endif
+				if (!DarkMode.UseSystemColorMode) {
+					richTextBox.BackColor = DarkMode.WindowColor;
+					richTextBox.ForeColor = TextColor = DarkMode.WindowTextColor;
+				}
 				MatchTextColor = ErrorTextColor = Color.FromArgb(0xED, 0x1C, 0x24);
 				PathTextColor = Color.FromArgb(0x00, 0x78, 0xD7);
 			}

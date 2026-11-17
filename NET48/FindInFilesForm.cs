@@ -11,6 +11,7 @@ namespace FindInFiles {
 		private Process process = null;
 		public FindInFilesForm(string[] args) {
 			InitializeComponent();
+			DarkMode.ApplyDarkTheme(this, contextMenuStrip);
 			AcceptButton = buttonFind;
 			richTextBox.AllowDrop = true;
 			richTextBox.DragEnter += FindInFilesForm_DragEnter;
