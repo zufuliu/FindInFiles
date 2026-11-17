@@ -36,13 +36,10 @@ namespace FindInFiles {
 			if (!searchPath) {
 				lineRender.ShowComment($"drag & drop file or folder to search!{Environment.NewLine}");
 			}
-			var theme = settings.StyleTheme;
-			if (theme < 0) {
-				followSystemToolStripMenuItem.Checked = true;
-			} else if (theme == 0) {
-				lightToolStripMenuItem.Checked = true;
-			} else {
-				darkToolStripMenuItem.Checked = true;
+			var theme = settings.StyleTheme + 1;
+			theme = Math.Clamp(theme, 0, 2);
+			if (themeToolStripMenuItem.DropDownItems[theme] is ToolStripMenuItem menuItem) {
+				menuItem.Checked = true;
 			}
 		}
 
@@ -283,15 +280,18 @@ namespace FindInFiles {
 		}
 
 		private void followSystemToolStripMenuItem_Click(object sender, EventArgs e) {
-			Properties.Settings.Default.StyleTheme = -1;
-		}
-
-		private void lightToolStripMenuItem_Click(object sender, EventArgs e) {
-			Properties.Settings.Default.StyleTheme = 0;
-		}
-
-		private void darkToolStripMenuItem_Click(object sender, EventArgs e) {
-			Properties.Settings.Default.StyleTheme = 1;
+			var index = -1;
+			var value = -1;
+			foreach (ToolStripMenuItem menuItem in themeToolStripMenuItem.DropDownItems) {
+				if (menuItem == sender) {
+					menuItem.Checked = true;
+					value = index;
+				} else {
+					menuItem.Checked = false;
+				}
+				++index;
+			}
+			Properties.Settings.Default.StyleTheme = value;
 		}
 	}
 }

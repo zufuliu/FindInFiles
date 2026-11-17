@@ -315,14 +315,14 @@ namespace FindInFiles {
 			lightToolStripMenuItem.Name = "lightToolStripMenuItem";
 			lightToolStripMenuItem.Size = new Size(180, 22);
 			lightToolStripMenuItem.Text = "&Light";
-			lightToolStripMenuItem.Click += lightToolStripMenuItem_Click;
+			lightToolStripMenuItem.Click += followSystemToolStripMenuItem_Click;
 			// 
 			// darkToolStripMenuItem
 			// 
 			darkToolStripMenuItem.Name = "darkToolStripMenuItem";
 			darkToolStripMenuItem.Size = new Size(180, 22);
 			darkToolStripMenuItem.Text = "&Dark";
-			darkToolStripMenuItem.Click += darkToolStripMenuItem_Click;
+			darkToolStripMenuItem.Click += followSystemToolStripMenuItem_Click;
 			// 
 			// FindInFilesForm
 			// 
