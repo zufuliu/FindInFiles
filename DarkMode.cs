@@ -87,10 +87,10 @@ namespace FindInFiles {
 		}
 
 		public static void ApplyDarkTheme(Form form, ContextMenuStrip contextMenu) {
-			contextMenu.ShowImageMargin = false;
 			if (buildNumber == 0) {
 				return;
 			}
+			contextMenu.ShowImageMargin = false;
 			if (UseSystemColorMode) {
 				FixDarkTheme(form.Controls);
 			} else {
@@ -161,6 +161,13 @@ namespace FindInFiles {
 						ApplyDarkColor(menuItem.DropDownItems);
 					}
 				}
+			}
+		}
+
+		public static void SetMenuChecked(ToolStripMenuItem menuItem, bool isChecked) {
+			menuItem.Checked = isChecked;
+			if (buildNumber != 0) {
+				menuItem.ForeColor = isChecked ? Color.Green : (UseSystemColorMode ? SystemColors.WindowText : WindowTextColor);
 			}
 		}
 

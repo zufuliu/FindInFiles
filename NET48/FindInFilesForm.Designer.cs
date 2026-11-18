@@ -181,7 +181,6 @@ namespace FindInFiles {
 			// 
 			// saveSearchHistoryToolStripMenuItem
 			// 
-			this.saveSearchHistoryToolStripMenuItem.CheckOnClick = true;
 			this.saveSearchHistoryToolStripMenuItem.Name = "saveSearchHistoryToolStripMenuItem";
 			this.saveSearchHistoryToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
 			this.saveSearchHistoryToolStripMenuItem.Text = "&Save Search History";

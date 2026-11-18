@@ -84,8 +84,8 @@ namespace FindInFiles {
 		}
 
 		public static void ApplyDarkTheme(Form form, ContextMenuStrip contextMenu) {
-			contextMenu.ShowImageMargin = false;
 			if (buildNumber != 0) {
+				contextMenu.ShowImageMargin = false;
 				if (buildNumber >= win10Build2004) {
 					int dark = 1;
 					DwmSetWindowAttribute(form.Handle, DWMWA_USE_IMMERSIVE_DARK_MODE, ref dark, 4);
@@ -132,6 +132,13 @@ namespace FindInFiles {
 						ApplyDarkColor(menuItem.DropDownItems);
 					}
 				}
+			}
+		}
+
+		public static void SetMenuChecked(ToolStripMenuItem menuItem, bool isChecked) {
+			menuItem.Checked = isChecked;
+			if (buildNumber != 0) {
+				menuItem.ForeColor = isChecked ? Color.Green : WindowTextColor;
 			}
 		}
 

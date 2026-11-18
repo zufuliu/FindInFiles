@@ -19,7 +19,7 @@ namespace FindInFiles {
 			lineRender = new OutputLineRender(richTextBox);
 			lineParser = new OutputLineParser(this, lineRender);
 			var settings = AppSettings.Default;
-			saveSearchHistoryToolStripMenuItem.Checked = settings.SaveSearchHistory;
+			DarkMode.SetMenuChecked(saveSearchHistoryToolStripMenuItem, settings.SaveSearchHistory);
 			comboBoxSearchPath.AddRange(settings.SearchPathHistory);
 			comboBoxSearchPattern.AddRange(settings.SearchPatternHistory);
 			textBoxEncoding.Text = defaultEncoding;
@@ -254,12 +254,10 @@ namespace FindInFiles {
 		}
 
 		private void saveSearchHistoryToolStripMenuItem_Click(object sender, EventArgs e) {
-			var save = saveSearchHistoryToolStripMenuItem.Checked;
 			var settings = AppSettings.Default;
+			var save = !settings.SaveSearchHistory;
 			settings.SaveSearchHistory = save;
-			if (!save) {
-				settings.ClearSearchHistory();
-			}
+			DarkMode.SetMenuChecked(saveSearchHistoryToolStripMenuItem, save);
 		}
 
 		private void clearSearchHistoryToolStripMenuItem_Click(object sender, EventArgs e) {
