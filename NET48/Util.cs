@@ -1,5 +1,5 @@
 using System;
-using System.Collections.Specialized;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -181,14 +181,12 @@ namespace FindInFiles {
 		[DllImport("user32.dll", CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Unicode)]
 		static extern int SendMessage(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam);
 
-		public static void AddRange(this ComboBox comboBox, StringCollection strings) {
-			if (strings != null) {
-				var count = strings.Count;
-				if (count != 0) {
-					var items = new string[count];
-					strings.CopyTo(items, 0);
-					comboBox.Items.AddRange(items);
-				}
+		public static void AddRange(this ComboBox comboBox, List<string> strings) {
+			var count = strings.Count;
+			if (count != 0) {
+				var items = new string[count];
+				strings.CopyTo(items, 0);
+				comboBox.Items.AddRange(items);
 			}
 		}
 
@@ -204,15 +202,8 @@ namespace FindInFiles {
 			}
 		}
 
-		public static bool AddHistory(ref StringCollection collection, string value, int maxCount) {
-			if (string.IsNullOrEmpty(value)) {
-				return false;
-			}
-			var created = false;
-			if (collection == null) {
-				created = true;
-				collection = new StringCollection { value };
-			} else {
+		public static void AddHistory(List<string> collection, string value, int maxCount) {
+			if (!string.IsNullOrEmpty(value)) {
 				var index = collection.IndexOf(value);
 				if (index != 0) {
 					collection.Insert(0, value);
@@ -225,7 +216,6 @@ namespace FindInFiles {
 					}
 				}
 			}
-			return created;
 		}
 	}
 }

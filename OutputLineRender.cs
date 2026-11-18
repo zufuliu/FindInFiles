@@ -14,6 +14,10 @@ namespace FindInFiles {
 
 		public OutputLineRender(RichTextBox richTextBox) {
 			this.richTextBox = richTextBox;
+			var font = AppSettings.Default.FindResultFont;
+			if (font != null) {
+				richTextBox.Font = font;
+			}
 			if (DarkMode.OutputUseDarkTheme) {
 				if (!DarkMode.UseSystemColorMode) {
 					richTextBox.BackColor = DarkMode.WindowColor;

@@ -121,7 +121,6 @@ namespace FindInFiles {
 			richTextBox.BorderStyle = BorderStyle.FixedSingle;
 			richTextBox.ContextMenuStrip = contextMenuStrip;
 			richTextBox.DetectUrls = false;
-			richTextBox.Font = new Font("Consolas", 10.5F, FontStyle.Regular, GraphicsUnit.Point, 0);
 			richTextBox.Location = new Point(7, 95);
 			richTextBox.Name = "richTextBox";
 			richTextBox.Size = new Size(821, 462);

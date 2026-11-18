@@ -13,11 +13,7 @@ namespace FindInFiles {
 			richTextBox.DragDrop += FindInFilesForm_DragDrop;
 			lineRender = new OutputLineRender(richTextBox);
 			lineParser = new OutputLineParser(this, lineRender);
-			var settings = Properties.Settings.Default;
-			var font = settings.FindResultFont;
-			if (font != null) {
-				lineRender.Font = font;
-			}
+			var settings = AppSettings.Default;
 			saveSearchHistoryToolStripMenuItem.Checked = settings.SaveSearchHistory;
 			comboBoxSearchPath.AddRange(settings.SearchPathHistory);
 			comboBoxSearchPattern.AddRange(settings.SearchPatternHistory);
@@ -38,7 +34,6 @@ namespace FindInFiles {
 				lineRender.ShowComment($"drag & drop file or folder to search!{Environment.NewLine}");
 			}
 			var theme = settings.StyleTheme + 1;
-			theme = Math.Clamp(theme, 0, 2);
 			if (themeToolStripMenuItem.DropDownItems[theme] is ToolStripMenuItem menuItem) {
 				menuItem.Checked = true;
 			}
@@ -228,9 +223,7 @@ namespace FindInFiles {
 			fontDialog.Font = font;
 			if (fontDialog.ShowDialog(this) == DialogResult.OK) {
 				font = fontDialog.Font;
-				var settings = Properties.Settings.Default;
-				settings.FindResultFont = font;
-				settings.Save();
+				AppSettings.Default.FindResultFont = font;
 			}
 			lineRender.Font = font;
 		}
@@ -241,41 +234,31 @@ namespace FindInFiles {
 
 		private void FindInFilesForm_FormClosing(object sender, FormClosingEventArgs e) {
 			StopFind();
-			Properties.Settings.Default.Save();
+			AppSettings.Default.Save();
 		}
-
-		private const int MaxSearchHistoryCount = 32;
 
 		private void SaveSearchHistory(string searchPath, string pattern) {
 			comboBoxSearchPath.AddToTop(searchPath);
 			comboBoxSearchPattern.AddToTop(pattern);
-			var settings = Properties.Settings.Default;
+			var settings = AppSettings.Default;
 			if (settings.SaveSearchHistory) {
-				var collection = settings.SearchPathHistory;
-				if (Util.AddHistory(ref collection, searchPath, MaxSearchHistoryCount)) {
-					settings.SearchPathHistory = collection;
-				}
-				collection = settings.SearchPatternHistory;
-				if (Util.AddHistory(ref collection, pattern, MaxSearchHistoryCount)) {
-					settings.SearchPatternHistory = collection;
-				}
+				var count = AppSettings.MaxSearchHistoryCount;
+				Util.AddHistory(settings.SearchPathHistory, searchPath, count);
+				Util.AddHistory(settings.SearchPatternHistory, pattern, count);
 			}
 		}
 
 		private void saveSearchHistoryToolStripMenuItem_Click(object sender, EventArgs e) {
 			var save = saveSearchHistoryToolStripMenuItem.Checked;
-			var settings = Properties.Settings.Default;
+			var settings = AppSettings.Default;
 			settings.SaveSearchHistory = save;
 			if (!save) {
-				settings.SearchPathHistory?.Clear();
-				settings.SearchPatternHistory?.Clear();
+				settings.ClearSearchHistory();
 			}
 		}
 
 		private void clearSearchHistoryToolStripMenuItem_Click(object sender, EventArgs e) {
-			var settings = Properties.Settings.Default;
-			settings.SearchPathHistory?.Clear();
-			settings.SearchPatternHistory?.Clear();
+			AppSettings.Default.ClearSearchHistory();
 			comboBoxSearchPath.Items.Clear();
 			comboBoxSearchPattern.Items.Clear();
 		}
@@ -292,7 +275,7 @@ namespace FindInFiles {
 				}
 				++index;
 			}
-			Properties.Settings.Default.StyleTheme = value;
+			AppSettings.Default.StyleTheme = value;
 		}
 	}
 }

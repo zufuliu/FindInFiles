@@ -24,7 +24,7 @@ namespace FindInFiles {
 
 		private static bool IsAppsUseDarkTheme() {
 			try {
-				var theme = Properties.Settings.Default.StyleTheme;
+				var theme = AppSettings.Default.StyleTheme;
 				if (theme == 0) {
 					return false;
 				}
@@ -65,8 +65,7 @@ namespace FindInFiles {
 						buildNumber = version.dwBuildNumber;
 						if (buildNumber > win11Build25H2) {
 							supportDarkTheme = true;
-						}
-						else if (buildNumber >= win11Build24H2) {
+						} else if (buildNumber >= win11Build24H2) {
 							const int minWin11Revision = 6899; // 2025-10-14
 							try {
 								var key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion");
@@ -144,7 +143,7 @@ namespace FindInFiles {
 			public int dwMinorVersion;
 			public int dwBuildNumber;
 			public int dwPlatformId;
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst =128)]
+			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
 			public string szCSDVersion;
 		}
 		[DllImport("ntdll.dll", CallingConvention = CallingConvention.StdCall)]
