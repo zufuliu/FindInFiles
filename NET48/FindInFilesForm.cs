@@ -229,8 +229,8 @@ namespace FindInFiles {
 			if (fontDialog.ShowDialog(this) == DialogResult.OK) {
 				font = fontDialog.Font;
 				AppSettings.Default.FindResultFont = font;
+				lineRender.Font = font;
 			}
-			lineRender.Font = font;
 		}
 
 		private void fontDialog_Apply(object sender, EventArgs e) {

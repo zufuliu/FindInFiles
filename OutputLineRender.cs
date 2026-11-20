@@ -17,6 +17,7 @@ namespace FindInFiles {
 			var font = AppSettings.Default.FindResultFont;
 			if (font != null) {
 				richTextBox.Font = font;
+				richTextBox.SelectionFont = font;
 			}
 			if (DarkMode.OutputUseDarkTheme) {
 				if (!DarkMode.UseSystemColorMode) {
@@ -36,6 +37,7 @@ namespace FindInFiles {
 					return; // highlighting is lost when change font
 				}
 				richTextBox.Font = value;
+				richTextBox.SelectionFont = value;
 			}
 		}
 
