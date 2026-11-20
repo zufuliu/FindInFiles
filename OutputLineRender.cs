@@ -6,11 +6,11 @@ namespace FindInFiles {
 		private static readonly string MarkerLine = "\u200D"; // zero width joiner
 		private int visibleDelta = 0;
 
-		private Color TextColor = SystemColors.WindowText;
-		private Color ErrorTextColor = Color.Red;
+		private readonly Color TextColor = SystemColors.WindowText;
+		private readonly Color ErrorTextColor = Color.Red;
 		private readonly Color CommentTextColor = Color.Gray;
-		private Color PathTextColor = Color.Blue;
-		private Color MatchTextColor = Color.Red;
+		private readonly Color PathTextColor = Color.Blue;
+		private readonly Color MatchTextColor = Color.Red;
 
 		public OutputLineRender(RichTextBox richTextBox) {
 			this.richTextBox = richTextBox;

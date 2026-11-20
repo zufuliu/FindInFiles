@@ -55,7 +55,11 @@ namespace FindInFiles {
 		}
 
 		public void Parse(string line) {
-			var root = JsonDocument.Parse(line).RootElement;
+			var jsonDocument = JsonDocument.Parse(line);
+			if (jsonDocument == null) {
+				return;
+			}
+			var root = jsonDocument.RootElement;
 			if (root.ValueKind != JsonValueKind.Object) {
 				return;
 			}

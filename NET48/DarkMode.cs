@@ -75,8 +75,7 @@ namespace FindInFiles {
 										supportDarkTheme = true;
 									}
 								}
-							}
-							catch (Exception) { }
+							} catch (Exception) { }
 						}
 					}
 				}
