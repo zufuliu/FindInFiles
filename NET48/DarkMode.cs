@@ -35,9 +35,6 @@ namespace FindInFiles {
 				if (key != null) {
 					var value = key.GetValue("AppsUseLightTheme");
 					if (value != null && (int)value == 0) {
-						if (SystemInformation.HighContrast) {
-							return false;
-						}
 						return true;
 					}
 				}
