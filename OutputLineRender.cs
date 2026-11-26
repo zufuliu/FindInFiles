@@ -33,7 +33,7 @@ namespace FindInFiles {
 			get { return richTextBox.Font; }
 			set {
 				var current = richTextBox.Font;
-				if (value == current || (value.Name == current.Name && value.Style == current.Style && value.Size == current.Size)) {
+				if (current.Equals(value)) {
 					return; // highlighting is lost when change font
 				}
 				richTextBox.Font = value;

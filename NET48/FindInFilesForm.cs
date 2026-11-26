@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
@@ -223,18 +224,26 @@ namespace FindInFiles {
 			lineRender.Clear();
 		}
 
+		private Font GetSelectedFont() {
+			var font = fontDialog.Font;
+			var size = font.Size;
+			size = ((int)(size * 2.0f)) / 2.0f;
+			font = new Font(font.FontFamily, size, font.Style);
+			return font;
+		}
+
 		private void selectFontToolStripMenuItem_Click(object sender, EventArgs e) {
 			var font = lineRender.Font;
 			fontDialog.Font = font;
 			if (fontDialog.ShowDialog(this) == DialogResult.OK) {
-				font = fontDialog.Font;
+				font = GetSelectedFont();
 				AppSettings.Default.FindResultFont = font;
-				lineRender.Font = font;
 			}
+			lineRender.Font = font;
 		}
 
 		private void fontDialog_Apply(object sender, EventArgs e) {
-			lineRender.Font = fontDialog.Font;
+			lineRender.Font = GetSelectedFont();
 		}
 
 		private void FindInFilesForm_FormClosing(object sender, FormClosingEventArgs e) {

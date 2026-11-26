@@ -102,7 +102,7 @@ namespace FindInFiles {
 			var eol = Environment.NewLine;
 			var builder = new StringBuilder(section);
 			builder.Append(eol);
-			if (FindResultFont != null && FindResultFont != DefaultFont) {
+			if (FindResultFont != null && !FindResultFont.Equals(DefaultFont)) {
 				var converter = TypeDescriptor.GetConverter(typeof(Font));
 				var value = converter.ConvertToString(FindResultFont);
 				builder.AppendFormat("FindResultFont={0}{1}", value, eol);
